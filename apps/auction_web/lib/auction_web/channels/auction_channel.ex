@@ -42,6 +42,12 @@ defmodule AuctionWeb.AuctionChannel do
     {:reply, {:ok, payload}, socket}
   end
 
+  def handle_in("new_bid", payload, socket) do
+    broadcast! socket, "on_new_bid", %{new_bid: payload["increase"]}
+    :timer.send_after(1000, {:countdown, 29})
+    {:reply, {:ok, %{}}, socket}
+  end
+
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (auction:lobby).
   def handle_in("shout", payload, socket) do

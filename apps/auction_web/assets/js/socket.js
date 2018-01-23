@@ -69,7 +69,11 @@ channel.on("countdown", msg => {
 
 channel.on("bid_endded", msg => {
   $('.countdown').text('拍卖结束')
-})
+});
 
+channel.on("on_new_bid", msg => {
+  $('.top-bid').text(msg.new_bid);
+});
 
-export default socket
+export {socket, channel}
+//export default socket

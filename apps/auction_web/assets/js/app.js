@@ -18,18 +18,31 @@ import "phoenix_html"
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-import socket from "./socket"
+import {socket, channel} from "./socket"
 // import jquery from "./jquery.min"
 import Swiper from "./swiper.min"
 // window.jQuery = jquery
 // window.$ = jquery
 // window.Swiper
 
+$(function(){
+  var swiper = new Swiper('.swiper7', {
+    pagination: '.swiper-pagination',
+    paginationClickable: true,
+    autoplay: 2500
+  });
+})
 
-$().ready(function(){
-    var swiper = new Swiper('.swiper7', {
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        autoplay: 2500
-    });
-  })
+$(".offer200").on("click", () => {
+  channel.push("new_bid", {increase: 200})
+});
+
+
+$(".offer500").on("click", () => {
+  channel.push("new_bid", {increase: 500})
+});
+
+
+$(".offer1000").on("click", () => {
+  channel.push("new_bid", {increase: 1000})
+});

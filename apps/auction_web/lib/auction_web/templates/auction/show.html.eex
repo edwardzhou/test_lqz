@@ -20,15 +20,15 @@
 		</div>
 	</div>
 	<div class="quick-info">
-		<p>当前最高价： <span class="top-bid">888888.00</span> <em class="commission">（加佣金3％即2400元）</em></p>
+		<p>当前最高价： <span class="top-bid">0</span> <em class="commission">（加佣金3％即2400元）</em></p>
 		<p>最高竞价：天籁之音</p>
 		<p>当前应价：30人</p>
 		<p>围观人员：7877人</p>
 	</div>
 	<div class="offer clear">
-		<div><a class="offer200" href=""></a></div>
-		<div><a class="offer500" href=""></a></div>
-		<div><a class="offer1000" href=""></a></div>
+		<div><a class="offer200" href="javascript:void(0)"></a></div>
+		<div><a class="offer500" href="javascript:void(0)"></a></div>
+		<div><a class="offer1000" href="javascript:void(0)"></a></div>
 	</div>
 	<div class="quick-info">
 		<p>起拍底价：0.00</p>
