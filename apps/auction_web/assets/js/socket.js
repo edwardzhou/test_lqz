@@ -59,8 +59,14 @@ channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
 
+let render_msg = (msg) => {
+  $(".bidder_count").text(msg.bidders.length)
+  $(".participant_count").text(msg.participant_count)
+}
+
 channel.on("bidder_join", msg => {
   console.log("Bidder join: ", msg)
+  render_msg(msg)
 })
 
 channel.on("countdown", msg => {
@@ -74,6 +80,7 @@ channel.on("bid_endded", msg => {
 channel.on("on_new_bid", msg => {
   $('.top-bid').text(msg.top_bid.bid)
   console.log("on_new_bid:" , msg)
+  render_msg(msg)
 });
 
 export {socket, channel}
