@@ -1,8 +1,12 @@
 defmodule AuctionWeb.Application do
   use Application
 
+  alias AuctionWeb.Auction.AuctionServer
+
   def start(_type, _args) do
     import Supervisor.Spec
+
+    AuctionServer.start_link
 
     # Define workers and child supervisors to be supervised
     children = [

@@ -20,8 +20,8 @@ defmodule AuctionWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket) do
-    {:ok, socket}
+  def connect(%{"user_id" => user_id} = _params, socket) do
+    {:ok, assign(socket, :user_id, user_id)}
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:

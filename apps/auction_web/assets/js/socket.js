@@ -5,7 +5,7 @@
 // and connect at the socket path in "lib/web/endpoint.ex":
 import {Socket} from "phoenix"
 
-let socket = new Socket("/socket", {params: {token: window.userToken}})
+let socket = new Socket("/socket", {params: {token: window.userToken, user_id: window.user_id}})
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
@@ -54,7 +54,7 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("auction:" + window.auction_id, {user_id: (new Date).getTime()})
+let channel = socket.channel("auction:" + window.auction_id)
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
@@ -72,7 +72,8 @@ channel.on("bid_endded", msg => {
 });
 
 channel.on("on_new_bid", msg => {
-  $('.top-bid').text(msg.new_bid);
+  $('.top-bid').text(msg.top_bid.bid)
+  console.log("on_new_bid:" , msg)
 });
 
 export {socket, channel}

@@ -1,5 +1,6 @@
 defmodule AuctionWeb.AuctionChannel do
   use AuctionWeb, :channel
+  alias AuctionWeb.Auction.AuctionServer
 
   def join("auction:lobby", payload, socket) do
     if authorized?(payload) do
@@ -11,8 +12,8 @@ defmodule AuctionWeb.AuctionChannel do
 
   def join("auction:" <> _auction_id, payload, socket) do
     if authorized?(payload) do
-      send(self(), {:after_join, payload["user_id"]})
-      :timer.send_after(1000, {:countdown, 29})
+      send(self(), {:after_join, socket.assigns.user_id})
+      # :timer.send_after(1000, {:countdown, 29})
       # send(self(), {:after_join, payload.user_id})
       {:ok, socket}
     else
@@ -21,10 +22,11 @@ defmodule AuctionWeb.AuctionChannel do
   end
 
   def handle_info({:after_join, user_id}, socket) do
-    broadcast! socket, "bidder_join", %{user_id: user_id}
+    # broadcast! socket, "bidder_join", %{user_id: user_id}
+    AuctionServer.bidder_join(socket.assigns.user_id)
+
     {:noreply, socket}
   end
-
 
   def handle_info({:countdown, 0}, socket) do
     broadcast! socket, "bid_endded", %{}
@@ -43,8 +45,9 @@ defmodule AuctionWeb.AuctionChannel do
   end
 
   def handle_in("new_bid", payload, socket) do
-    broadcast! socket, "on_new_bid", %{new_bid: payload["increase"]}
-    :timer.send_after(1000, {:countdown, 29})
+    # broadcast! socket, "on_new_bid", %{new_bid: payload["increase"]}
+    # :timer.send_after(1000, {:countdown, 29})
+    AuctionServer.new_bid(socket.assigns.user_id, payload["increase"])
     {:reply, {:ok, %{}}, socket}
   end
 
