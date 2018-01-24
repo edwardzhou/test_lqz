@@ -16,7 +16,7 @@
 			<p class="p2">拍卖倒计时<em class="countdown">30</em>秒</p>
 		</div>
 		<div class="cancel-price">
-			<a href="">撤销出价</a>
+			<a href="javascript:void(0)" class="restart_bid">重新开始拍卖</a>
 		</div>
 	</div>
 	<div class="quick-info">

@@ -46,3 +46,8 @@ $(".offer500").on("click", () => {
 $(".offer1000").on("click", () => {
   channel.push("new_bid", {increase: 1000})
 });
+
+$(".restart_bid").on("click", () => {
+  channel.push("restart")
+});
+

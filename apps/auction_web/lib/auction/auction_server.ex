@@ -49,22 +49,26 @@ defmodule AuctionWeb.Auction.AuctionServer do
     if not Map.has_key?(state.participants, bidder_name) do
       state = put_in(state.participants[bidder_name], %{bid: 0})
       state = put_in(state.participant_count, Map.size(state.participants))
-    end
 
-    push_state = state 
-    |> Map.delete(:last_timer_id)
-    |> Map.delete(:participants)
-    
-    AuctionWeb.Endpoint.broadcast! "auction:1", "bidder_join", push_state
+      push_state = state 
+      |> Map.delete(:last_timer_id)
+      |> Map.delete(:participants)
+      
+      AuctionWeb.Endpoint.broadcast! "auction:1", "bidder_join", push_state
+    end
 
     {:reply, state, state}
   end
 
   def handle_call({:bid, bidder_name, bid}, _from, state) do
-    if Map.has_key?(state.participants, bidder_name) do
+    if not Map.has_key?(state.participants, bidder_name) do
+      state = put_in(state.participants[bidder_name], %{bid: 0})
+      state = put_in(state.participant_count, Map.size(state.participants))
+    end
+
       new_top_bid = %{bidder: bidder_name, bid: state.top_bid.bid + bid}
       state = put_in(state.participants[bidder_name][:bid], bid)
-      state = put_in(state.bid_list, [%{bidder_name => %{bid: bid}} | state.bid_list])
+      # state = put_in(state.bid_list, [%{bidder_name => %{bid: bid}} | state.bid_list])
       state = put_in(state.bidders[bidder_name], %{bid: bid})
       state = put_in(state.top_bid, new_top_bid)
 
@@ -82,7 +86,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
       {:ok, timer_id} = :timer.send_after(100, {:countdown, state.countdown})
       state = put_in(state.last_timer_id, timer_id)  
       # state = put_in(state.last_timer_id, :timer.send_after(100, {:countdown, state.countdown}))
-    end
+    # end
 
     {:reply, state, state}
   end
@@ -97,6 +101,15 @@ defmodule AuctionWeb.Auction.AuctionServer do
     state = put_in(state.bid_list, [])
     state = put_in(state.last_timer_id, nil)
     state = put_in(state.countdown, 30)
+    state = put_in(state.participants, %{})
+    state = put_in(state.participant_count, 0)
+
+    push_state = state 
+    |> Map.delete(:last_timer_id)
+    |> Map.delete(:participants)
+
+    AuctionWeb.Endpoint.broadcast! "auction:1", "on_restart", push_state
+  
     {:reply, state, state}
   end
 
