@@ -60,6 +60,11 @@ channel.join()
   .receive("error", resp => { console.log("Unable to join", resp) })
 
 let render_msg = (msg) => {
+  if (msg.top_bid.bid > 0 ) {
+    $('.top-bid').text(msg.top_bid.bid)
+    $('.top-bidder').text(msg.top_bid.bidder)
+  }
+
   $(".bidder_count").text(Object.keys(msg.bidders).length)
   $(".participant_count").text(msg.participant_count)
 }
@@ -78,8 +83,6 @@ channel.on("bid_endded", msg => {
 });
 
 channel.on("on_new_bid", msg => {
-  $('.top-bid').text(msg.top_bid.bid)
-  $('.top-bidder').text(msg.top_bid.bidder)
   console.log("on_new_bid:" , msg)
   render_msg(msg)
 });
