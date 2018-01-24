@@ -13,8 +13,6 @@ defmodule AuctionWeb.AuctionChannel do
   def join("auction:" <> _auction_id, payload, socket) do
     if authorized?(payload) do
       send(self(), {:after_join, socket.assigns.user_id})
-      # :timer.send_after(1000, {:countdown, 29})
-      # send(self(), {:after_join, payload.user_id})
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
@@ -22,19 +20,8 @@ defmodule AuctionWeb.AuctionChannel do
   end
 
   def handle_info({:after_join, user_id}, socket) do
-    # broadcast! socket, "bidder_join", %{user_id: user_id}
     AuctionServer.bidder_join(socket.assigns.user_id)
 
-    {:noreply, socket}
-  end
-
-  def handle_info({:countdown, 0}, socket) do
-    broadcast! socket, "bid_endded", %{}
-    {:noreply, socket}
-  end
-  def handle_info({:countdown, counter}, socket) do
-    broadcast! socket, "countdown", %{counter: counter}
-    :timer.send_after(1000, {:countdown, counter - 1})
     {:noreply, socket}
   end
 

@@ -6,7 +6,7 @@ defmodule AuctionWeb.Application do
   def start(_type, _args) do
     import Supervisor.Spec
 
-    AuctionServer.start_link
+    # AuctionServer.start_link
 
     # Define workers and child supervisors to be supervised
     children = [
@@ -14,6 +14,7 @@ defmodule AuctionWeb.Application do
       supervisor(AuctionWeb.Endpoint, []),
       # Start your own worker by calling: AuctionWeb.Worker.start_link(arg1, arg2, arg3)
       # worker(AuctionWeb.Worker, [arg1, arg2, arg3]),
+      worker(AuctionServer, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

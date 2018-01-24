@@ -1,5 +1,11 @@
 defmodule AuctionWeb.Auction.AuctionState do
-  defstruct top_bid: %{}, bidders: [], participants: %{}, participant_count: 0, last_timer_id: nil, countdown: 30
+  defstruct top_bid: %{bidder: nil, bid: 0}, 
+            bidders: %{},
+            bid_list: [], 
+            participants: %{}, 
+            participant_count: 0, 
+            last_timer_id: nil, 
+            countdown: 30
 end
 
 defmodule AuctionWeb.Auction.AuctionServer do
@@ -56,9 +62,11 @@ defmodule AuctionWeb.Auction.AuctionServer do
 
   def handle_call({:bid, bidder_name, bid}, _from, state) do
     if Map.has_key?(state.participants, bidder_name) do
+      new_top_bid = %{bidder: bidder_name, bid: state.top_bid.bid + bid}
       state = put_in(state.participants[bidder_name][:bid], bid)
-      state = put_in(state.bidders, [%{bidder_name => %{bid: bid}} | state.bidders])
-      state = put_in(state.top_bid, %{bidder: bidder_name, bid: bid})
+      state = put_in(state.bid_list, [%{bidder_name => %{bid: bid}} | state.bid_list])
+      state = put_in(state.bidders[bidder_name], %{bid: bid})
+      state = put_in(state.top_bid, new_top_bid)
 
       if state.last_timer_id != nil do
         :timer.cancel(state.last_timer_id)
@@ -80,8 +88,15 @@ defmodule AuctionWeb.Auction.AuctionServer do
   end
 
   def handle_call({:restart}, _from, state) do
+    if state.last_timer_id != nil do
+      :timer.cancel(state.last_timer_id)
+    end
+
     state = put_in(state.top_bid, %{bidder: nil, bid: 0})
-    state = put_in(state.bidder, [])
+    state = put_in(state.bidders, %{})
+    state = put_in(state.bid_list, [])
+    state = put_in(state.last_timer_id, nil)
+    state = put_in(state.countdown, 30)
     {:reply, state, state}
   end
 
