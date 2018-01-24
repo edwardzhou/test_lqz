@@ -70,12 +70,13 @@ let render_msg = (msg) => {
 }
 
 channel.on("bidder_join", msg => {
-  console.log("Bidder join: ", msg)
+  // console.log("Bidder join: ", msg)
   render_msg(msg)
 })
 
 channel.on("countdown", msg => {
-  $('.countdown').text(msg.counter)
+  // $('.countdown').text(msg.counter)
+  render_msg(msg)
 })
 
 channel.on("bid_endded", msg => {
@@ -83,9 +84,13 @@ channel.on("bid_endded", msg => {
 });
 
 channel.on("on_new_bid", msg => {
-  console.log("on_new_bid:" , msg)
+  // console.log("on_new_bid:" , msg)
   render_msg(msg)
 });
+
+channel.on("on_restart", msg => {
+  channel.push("ping")
+})
 
 export {socket, channel}
 //export default socket
