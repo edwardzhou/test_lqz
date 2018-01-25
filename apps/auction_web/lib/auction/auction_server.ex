@@ -86,8 +86,8 @@ defmodule AuctionWeb.Auction.AuctionServer do
                     |> Map.delete(:participants)
 
       AuctionWeb.Endpoint.broadcast! "auction:1", "on_new_bid", push_state
-      timer_id = Process.send_after(self(), {:countdown, state.countdown}, 1000)
-      state = put_in(state.last_timer_id, timer_id)  
+      # timer_id = Process.send_after(self(), {:countdown, state.countdown}, 1000)
+      # state = put_in(state.last_timer_id, timer_id)  
       # state = put_in(state.last_timer_id, :timer.send_after(100, {:countdown, state.countdown}))
     # end
 
