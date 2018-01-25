@@ -4,3 +4,4 @@
 /.vscode
 erl_crash.dump
 *.ez
+**/log
