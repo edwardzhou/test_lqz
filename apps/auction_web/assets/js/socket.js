@@ -75,8 +75,8 @@ channel.on("bidder_join", msg => {
 })
 
 channel.on("countdown", msg => {
-  // $('.countdown').text(msg.counter)
-  render_msg(msg)
+  $('.countdown').text(msg.counter)
+  // render_msg(msg)
 })
 
 channel.on("bid_endded", msg => {
