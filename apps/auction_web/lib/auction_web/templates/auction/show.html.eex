@@ -41,6 +41,6 @@
 </script>
 
 <script>
-  window.auction_id = "<%= assigns[:auction_id] %>";
-  window.user_id = "<%= @conn.params["name"] %>";
+  window.auction_id = "<%= @auction_id %>";
+  window.user_id = "<%= @suer_id %>";
 </script>

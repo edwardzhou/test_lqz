@@ -27,8 +27,16 @@ defmodule AuctionWeb.AuctionController do
 
   def show(conn, %{"id" => id}) do
     # auction = Auctions.get_auction!(id)
-    assign(conn, :auction_id, id)
-    |> assign(:user_id, "abc")
+    case get_session(conn, :current_user) do
+      nil -> conn
+              |> redirect(to: "/auth/wechat")
+              |> halt
+      current_user -> current_user
+    end
+
+    conn
+    |> assign(:auction_id, id)
+    |> assign(:user_id, current_user.name)
     |> render("show.html", auction: nil)
   end
 
