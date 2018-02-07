@@ -7,7 +7,16 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :auction_web, AuctionWeb.Endpoint,
-  http: [port: System.get_env("PORT") || 4000],
+  http: [
+    ip: fn -> 
+      case :inet_parse.address(to_charlist(System.get_env("IP"))) do
+        {:ok, ip} -> ip
+        _ -> nil
+      end
+    end.() || {0, 0, 0, 0},
+    port: System.get_env("PORT") || 4000
+  ],
+  url: [host: System.get_env("URL_HOST"), port: System.get_env("URL_PORT") || 80],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
@@ -41,4 +50,10 @@ config :auction_web, AuctionWeb.Endpoint,
     ]
   ]
 
+config :ueberauth, Ueberauth.Strategy.Github.OAuth,
+  client_id: System.get_env("GITHUB_CLIENT_ID") || "d56a3ee4d38a342af999",
+  client_secret: System.get_env("GITHUB_CLIENT_SECRET") || "f3717f94cb98cf7f632123fc589f38e5ac11a128"
 
+config :ueberauth, Ueberauth.Strategy.Wechat.OAuth,
+  client_id: System.get_env("WECHAT_APPID") || "wx65998e39016f4fa0",
+  client_secret: System.get_env("WECHAT_SECRET") || "4923340552db56f51f889f239d69961e"

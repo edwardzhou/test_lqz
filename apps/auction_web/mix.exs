@@ -24,7 +24,12 @@ defmodule AuctionWeb.Mixfile do
   def application do
     [
       mod: {AuctionWeb.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, 
+        :runtime_tools, 
+        :ueberauth,
+        :ueberauth_github,
+        :ueberauth_wechat
+      ]
     ]
   end
 
@@ -44,6 +49,10 @@ defmodule AuctionWeb.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:auction, in_umbrella: true},
+      {:ueberauth, "~> 0.4"},
+      {:ueberauth_github, "~> 0.6"},
+      {:guardian, "~> 1.0"},
+      {:ueberauth_wechat, github: "sllt/ueberauth_wechat"},
       {:cowboy, "~> 1.0"}
     ]
   end

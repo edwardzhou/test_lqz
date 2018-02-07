@@ -1,6 +1,19 @@
 <div class="jumbotron">
   <h2><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h2>
   <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
+
+  <%= if @current_user do %>
+    <h2>Welcome, <%= @current_user.name %>! </h2>
+    <img src="<%= @current_user.avatar %>" />
+    <%= link("Logout", to: authentication_url(@conn, :delete)) %>
+    <br/>
+  <% else %>
+    <p>
+      We're going to now talk to the GitHub API. Ready?
+      <a href="https://github.com/login/oauth/authorize?scope=user:email&client_id=d56a3ee4d38a342af999">Click here</a> to begin!</a>
+      <a href="/auth/github">Click here</a> github to begin!</a>
+    </p>
+  <% end %>
 </div>
 
 <div class="row marketing">

@@ -19,6 +19,17 @@ defmodule AuctionWeb.Router do
     get "/", PageController, :index
 
     resources "/auctions", AuctionController
+
+    resources "/users", UserController
+  end
+
+  scope "/auth", AuctionWeb do
+    pipe_through :browser
+
+    get "/logout", AuthenticationController, :delete
+    get "/:provider", AuthenticationController, :request
+    get "/:provider/callback", AuthenticationController, :callback
+    post "/:provider/callback", AuthenticationController, :callback
   end
 
   # Other scopes may use custom stacks.

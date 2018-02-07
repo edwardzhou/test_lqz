@@ -18,21 +18,27 @@ config :auction_web, AuctionWeb.Endpoint,
   pubsub: [name: AuctionWeb.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
-config :logger, format: "$message\n", backends: [{LoggerFileBackend, :log_file}, :console]
+# config :logger, format: "$message\n", backends: [{LoggerFileBackend, :log_file}, :console]
 
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :logger, :log_file,
-  format: "$time $metadata[$level] $message\n",
-  level: :debug,
-  metadata: [:request_id],
-  path: "log/auction.log"
+# config :logger, :log_file,
+#   format: "$time $metadata[$level] $message\n",
+#   level: :debug,
+#   metadata: [:request_id],
+#   path: "log/auction.log"
   
 config :auction_web, :generators,
   context_app: :auction
+
+config :ueberauth, Ueberauth,
+  providers: [
+    github: {Ueberauth.Strategy.Github, []},
+    wechat: {Ueberauth.Strategy.Wechat, []}
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
