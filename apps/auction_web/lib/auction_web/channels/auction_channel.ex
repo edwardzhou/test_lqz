@@ -21,7 +21,7 @@ defmodule AuctionWeb.AuctionChannel do
   end
 
   def handle_info({:after_join, user_id}, socket) do
-    # AuctionServer.bidder_join(socket.assigns.user_id)
+    AuctionServer.bidder_join(socket.assigns.user_id)
 
     {:noreply, socket}
   end
@@ -29,16 +29,16 @@ defmodule AuctionWeb.AuctionChannel do
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
   def handle_in("ping", payload, socket) do
-    # AuctionServer.bidder_join(socket.assigns.user_id)    
+    AuctionServer.bidder_join(socket.assigns.user_id)
     {:reply, {:ok, payload}, socket}
   end
 
   def handle_in("new_bid", payload, socket) do
     # broadcast! socket, "on_new_bid", %{new_bid: payload["increase"]}
     # :timer.send_after(1000, {:countdown, 29})
-    state = %AuctionState{ top_bid: %{bidder: socket.assigns.user_id, bid: payload["increase"] } }
-    # AuctionServer.new_bid(socket.assigns.user_id, payload["increase"])
-    broadcast socket, "on_new_bid", state
+    AuctionServer.new_bid(socket.assigns.user_id, payload["increase"])
+    # state = %AuctionState{ top_bid: %{bidder: socket.assigns.user_id, bid: payload["increase"] } }
+    # broadcast socket, "on_new_bid", state
     {:reply, {:ok, %{}}, socket}
   end
 
