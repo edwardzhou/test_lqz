@@ -42,5 +42,5 @@
 
 <script>
   window.auction_id = "<%= @auction_id %>";
-  window.user_id = "<%= @suer_id %>";
+  window.user_id = "<%= @user_id %>";
 </script>
