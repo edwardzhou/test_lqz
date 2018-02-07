@@ -19,7 +19,7 @@ defmodule AuctionWeb.AuthenticationController do
     conn
     |> put_flash(:info, "Successfully authenticated.")
     |> put_session(:current_user, user)
-    |> redirect(to: "/")
+    |> redirect(to: "/auctions/1")
   end
 
   def delete(conn, _params) do
