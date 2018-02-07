@@ -27,11 +27,11 @@ defmodule AuctionWeb.AuctionController do
 
   def show(conn, %{"id" => id}) do
     # auction = Auctions.get_auction!(id)
-    case get_session(conn, :current_user) do
-      nil -> conn
-              |> redirect(to: "/auth/wechat")
-              |> halt
-      current_user -> current_user
+    current_user = get_session(conn, :current_user)
+    if current_user == nil do
+      conn
+      |> redirect(to: "/auth/wechat")
+      |> halt
     end
 
     conn
