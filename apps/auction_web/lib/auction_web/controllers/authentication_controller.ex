@@ -13,7 +13,7 @@ defmodule AuctionWeb.AuthenticationController do
   end
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, params) do
-    user = %{id: auth.uid, name: auth.info.name, avatar: auth.info.image}
+    user = %{id: auth.uid, name: auth.info.name || auth.info.nickname, avatar: auth.info.image}
     IO.puts "auth: #{inspect(auth)}"
     IO.puts "User: #{inspect(user)}"
     conn
