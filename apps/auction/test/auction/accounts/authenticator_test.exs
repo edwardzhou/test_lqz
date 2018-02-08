@@ -6,7 +6,7 @@ defmodule Accounts.AuthenticatorTest do
   alias Auction.Accounts.User
 
   @auth_attrs %{ 
-    provider: "github", 
+    provider: "wechat", 
     uid: "10001", 
     email: "test@test.com", 
     image: "some image", 
@@ -19,7 +19,7 @@ defmodule Accounts.AuthenticatorTest do
   }
 
   @existing_auth_attrs %{ 
-    provider: "github", 
+    provider: "wechat", 
     uid: "10002", 
     email: "test2@test.com", 
     image: "some image", 
@@ -53,7 +53,6 @@ defmodule Accounts.AuthenticatorTest do
       fixture(:authentication)
       
       assert {:ok, %Authentication{} = auth} = Authenticator.authenticate(@existing_auth_attrs)
-      
     end
   end
 end
