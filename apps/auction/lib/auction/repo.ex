@@ -1,5 +1,6 @@
 defmodule Auction.Repo do
   use Ecto.Repo, otp_app: :auction
+  use Scrivener, page_size: 10  # <--- add this
 
   @doc """
   Dynamically loads the repository url from the

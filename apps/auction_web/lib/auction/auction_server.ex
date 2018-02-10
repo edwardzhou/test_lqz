@@ -13,13 +13,6 @@ defmodule AuctionWeb.Auction.AuctionServer do
 
   alias AuctionWeb.Auction.AuctionState
 
-  def get_ip do
-    case :inet_parse.address(to_charlist(System.get_env("IP"))) do
-      {:ok, ip} -> ip
-      _ -> nil
-    end
-  end
-
   ## Client API
   
   @doc """

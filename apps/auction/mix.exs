@@ -23,7 +23,7 @@ defmodule Auction.Mixfile do
   def application do
     [
       mod: {Auction.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :scrivener]
     ]
   end
 
@@ -37,6 +37,7 @@ defmodule Auction.Mixfile do
   defp deps do
     [
       {:postgrex, ">= 0.0.0"},
+      {:scrivener, "~> 2.0"},
       {:ecto, "~> 2.1"}
     ]
   end
