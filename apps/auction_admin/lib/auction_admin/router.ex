@@ -21,12 +21,6 @@ defmodule AuctionAdmin.Router do
     admin_routes()
   end
 
-  scope "/admin", ExAdmin do
-    pipe_through :browser
-
-    admin_routes()
-  end
-
   # Other scopes may use custom stacks.
   # scope "/api", AuctionAdmin do
   #   pipe_through :api
