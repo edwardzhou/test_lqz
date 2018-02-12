@@ -201,7 +201,7 @@ defmodule Auction.Accounts do
   @doc """
   create new user from authentication
   """
-  def new_user_from_authentication(%Authentication{} = authentication) do
+  def new_user_from_auth(%Authentication{} = authentication) do
     {:ok, new_user} = create_user(Authentication.to_user_attributes(authentication))
     {:ok, _} = update_authentication(authentication, %{user_id: new_user.id})
     {:ok, new_user}

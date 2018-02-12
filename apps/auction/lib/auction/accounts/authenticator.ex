@@ -9,7 +9,7 @@ defmodule Auction.Accounts.Authenticator do
     case find_auth(params.uid) do
       nil -> 
         {:ok, auth} = Accounts.create_authentication(params)
-        Accounts.create_user_from_authentication(auth)
+        Accounts.new_user_from_auth(auth)
       prior_auth -> 
         {:ok, Accounts.get_user!(prior_auth.user_id)}
     end
