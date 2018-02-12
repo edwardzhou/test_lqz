@@ -34,6 +34,7 @@ defmodule Accounts.AuthenticatorTest do
   describe "authenticator" do
     def fixture(:authentication) do
       {:ok, authentication} = Accounts.create_authentication(@existing_auth_attrs)
+      {:ok, _user} = Accounts.new_user_from_auth(authentication)
       authentication
     end
 
@@ -42,17 +43,17 @@ defmodule Accounts.AuthenticatorTest do
     end
 
     test "authenticate/1 create new authentication" do
-      assert {:ok, %Authentication{} = auth} = Authenticator.authenticate(@auth_attrs)
-      IO.puts "auth => #{inspect(auth)}"
-      assert auth.uid == "10001"
-      assert auth.email == "test@test.com"
-      assert auth.image == "some image"
+      assert {:ok, %User{} = user} = Authenticator.authenticate(@auth_attrs)
+      IO.puts "user => #{inspect(user)}"
+      assert user.nickname == "tester"
+      assert user.email == "test@test.com"
+      # assert user.image == "some image"
     end
 
     test "authenticate/1 returns existing authentication" do
       fixture(:authentication)
       
-      assert {:ok, %Authentication{} = auth} = Authenticator.authenticate(@existing_auth_attrs)
+      assert {:ok, %User{} = user} = Authenticator.authenticate(@existing_auth_attrs)
     end
   end
 end

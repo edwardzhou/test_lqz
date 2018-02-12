@@ -1,18 +1,24 @@
 defmodule Auction.Accounts.Authenticator do
   alias Auction.Accounts
   alias Auction.Accounts.Authentication
+  alias Auction.Accounts.User
   alias Auction.Repo
   import Ecto.Query
 
-  def authenticate(%{} = _params) do
-    case Authentication
-          |> where([au], au.uid == ^_params.uid)
-          |> Repo.one do
-      nil -> Accounts.create_authentication(_params)
-      prior_auth -> {:ok, prior_auth}
+  def authenticate(%{} = params) do
+    case find_auth(params.uid) do
+      nil -> 
+        {:ok, auth} = Accounts.create_authentication(params)
+        Accounts.create_user_from_authentication(auth)
+      prior_auth -> 
+        {:ok, Accounts.get_user!(prior_auth.user_id)}
     end
-    
-    #Accounts.create_authentication(_params)
-    # {:ok, %Authentication{}}
   end
+
+  def find_auth(uid) do
+    Authentication
+    |> where([auth], auth.uid == ^uid)
+    |> Repo.one
+  end
+  
 end

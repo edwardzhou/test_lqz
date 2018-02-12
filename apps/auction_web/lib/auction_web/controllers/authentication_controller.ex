@@ -40,7 +40,8 @@ defmodule AuctionWeb.AuthenticationController do
       image: auth.info.image,
       provider: to_string(auth.provider),
       strategy: to_string(auth.strategy),
-      token: Poison.decode!(auth.credentials.token)["access_token"],
+      # union_id: get_in(auth, [])
+      token: auth.credentials.token,
       refresh_token: auth.credentials.refresh_token
     }
   end
