@@ -1,0 +1,23 @@
+
+language: elixir
+elixir: 
+  - '1.6'
+otp_release:
+  - '20.2'
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.6"
+
+before_script:
+  - mix local.rebar --force # for Elixir 1.3.0 and up
+  - mix local.hex --force
+  - mix deps.get
+  - nvm install 6.2 && nvm use 6.2
+  - psql -c 'create database auction_test;' -U postgres
+
+script:
+  - mix ecto.create
+  - mix test

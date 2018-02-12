@@ -29,7 +29,7 @@ defmodule AuctionWeb.AuctionChannel do
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
   def handle_in("ping", payload, socket) do
-    AuctionServer.bidder_join(socket.assigns.user_id)
+    # AuctionServer.bidder_join(socket.assigns.user_id)
     {:reply, {:ok, payload}, socket}
   end
 
