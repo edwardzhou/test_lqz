@@ -24,7 +24,7 @@ defmodule Accounts.AuthenticatorTest do
     email: "test2@test.com", 
     image: "some image", 
     name: "tester", 
-    nickname: "tester", 
+    nickname: "existing_tester", 
     refresh_token: "some refresh_token", 
     token: "some token", 
     token_secret: "some token_secret", 
@@ -53,7 +53,7 @@ defmodule Accounts.AuthenticatorTest do
     test "authenticate/1 returns existing authentication" do
       fixture(:authentication)
       
-      assert {:ok, %User{} = user} = Authenticator.authenticate(@existing_auth_attrs)
+      assert {:ok, %User{nickname: "existing_tester"} = user} = Authenticator.authenticate(@existing_auth_attrs)
     end
   end
 end
