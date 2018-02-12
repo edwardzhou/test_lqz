@@ -19,5 +19,5 @@ before_script:
   - psql -c 'create database auction_test;' -U postgres
 
 script:
-  - run: mix ecto.create
-  - run: mix test
+  - mix ecto.create
+  - mix test
