@@ -18,7 +18,9 @@ config :auction_web, AuctionWeb.Endpoint,
   pubsub: [name: AuctionWeb.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
-# config :logger, format: "$message\n", backends: [{LoggerFileBackend, :log_file}, :console]
+# config :logger, 
+#   format: "$message\n", 
+#   backends: [{LoggerFileBackend, :log_file}, :console]
 
 # Configures Elixir's Logger
 config :logger, :console,

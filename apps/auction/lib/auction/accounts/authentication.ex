@@ -29,4 +29,11 @@ defmodule Auction.Accounts.Authentication do
     |> unsafe_validate_unique([:uid], Repo)
     |> unsafe_validate_unique([:email], Repo)
   end
+
+  def to_user_attributes(%Authentication{} = authentication) do
+    %{
+      nickname: authentication.nickname,
+      email: authentication.email
+    }
+  end
 end

@@ -131,7 +131,12 @@ defmodule Auction.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_authentication!(id), do: Repo.get!(Authentication, id)
+  def get_authentication!(id) when is_integer(id), do: Repo.get!(Authentication, id)
+  def get_authentication(uid) when is_bitstring(uid) do
+    Authentication
+    |> where([auth], auth.uid == ^uid)
+    |> Repo.one
+  end
 
   @doc """
   Creates a authentication.
@@ -196,5 +201,14 @@ defmodule Auction.Accounts do
   """
   def change_authentication(%Authentication{} = authentication) do
     Authentication.changeset(authentication, %{})
+  end
+
+  @doc """
+  create new user from authentication
+  """
+  def new_user_from_auth(%Authentication{} = authentication) do
+    {:ok, new_user} = create_user(Authentication.to_user_attributes(authentication))
+    {:ok, _} = update_authentication(authentication, %{user_id: new_user.id})
+    {:ok, new_user}
   end
 end
