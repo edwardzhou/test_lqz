@@ -31,7 +31,8 @@ config :ex_admin,
   module: AuctionAdmin,
   modules: [
     AuctionAdmin.ExAdmin.Dashboard,
-    AuctionAdmin.ExAdmin.Authentication
+    AuctionAdmin.ExAdmin.Authentication,
+    AuctionAdmin.ExAdmin.Auction
   ]
 
 # Import environment specific config. This must remain at the bottom
