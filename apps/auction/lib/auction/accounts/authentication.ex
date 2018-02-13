@@ -1,7 +1,7 @@
 defmodule Auction.Accounts.Authentication do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Auction.Accounts.Authentication
+  alias Auction.Accounts.{Authentication, User}
   alias Auction.Repo
 
 
@@ -16,9 +16,11 @@ defmodule Auction.Accounts.Authentication do
     field :token_secret, :string
     field :uid, :string
     field :union_id, :string
-    field :user_id, :integer
+    # field :user_id, :integer
 
     timestamps()
+
+    belongs_to :user, User
   end
 
   @doc false
@@ -28,5 +30,12 @@ defmodule Auction.Accounts.Authentication do
     |> validate_required([:uid, :provider, :token])
     |> unsafe_validate_unique([:uid], Repo)
     |> unsafe_validate_unique([:email], Repo)
+  end
+
+  def to_user_attributes(%Authentication{} = authentication) do
+    %{
+      nickname: authentication.nickname,
+      email: authentication.email
+    }
   end
 end

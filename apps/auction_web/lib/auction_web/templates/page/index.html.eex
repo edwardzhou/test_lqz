@@ -5,7 +5,7 @@
   <%= if @current_user do %>
     <h2>Welcome, <%= @current_user.name %>! </h2>
     <img src="<%= @current_user.avatar %>" />
-    <%= link("Logout", to: authentication_url(@conn, :delete)) %>
+    <%= link("Logout", to: auth_url(@conn, :delete)) %>
     <br/>
   <% else %>
     <p>

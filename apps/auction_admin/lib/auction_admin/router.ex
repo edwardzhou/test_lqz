@@ -14,10 +14,15 @@ defmodule AuctionAdmin.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", ExAdmin do
+  scope "/", AuctionAdmin do
     pipe_through :browser # Use the default browser stack
 
-    # get "/", PageController, :index
+    get "/", PageController, :index
+  end
+
+  scope "/admin", ExAdmin do
+    pipe_through :browser
+
     admin_routes()
   end
 

@@ -26,10 +26,10 @@ defmodule AuctionWeb.Router do
   scope "/auth", AuctionWeb do
     pipe_through :browser
 
-    get "/logout", AuthenticationController, :delete
-    get "/:provider", AuthenticationController, :request
-    get "/:provider/callback", AuthenticationController, :callback
-    post "/:provider/callback", AuthenticationController, :callback
+    get "/logout", AuthenticationController, :delete, as: :auth
+    get "/:provider", AuthenticationController, :request, as: :auth
+    get "/:provider/callback", AuthenticationController, :callback, as: :auth
+    post "/:provider/callback", AuthenticationController, :callback, as: :auth
   end
 
   # Other scopes may use custom stacks.

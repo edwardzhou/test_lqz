@@ -2,6 +2,8 @@ defmodule Auction.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias Auction.Accounts.User
+  alias Auction.Repo
+  alias Auction.Accounts.Authentication
 
 
   schema "users" do
@@ -12,12 +14,16 @@ defmodule Auction.Accounts.User do
     field :username, :string
 
     timestamps()
+
+    has_many :authentications, Authentication
   end
 
   @doc false
   def changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:username, :nickname, :encrypted_password, :telephone, :email])
-    |> validate_required([:username, :nickname, :encrypted_password, :telephone, :email])
+    |> validate_required([:nickname])
+    |> unsafe_validate_unique([:username], Repo)
+    |> unsafe_validate_unique([:telephone], Repo)
   end
 end
