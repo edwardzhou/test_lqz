@@ -65,7 +65,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
     |> Map.delete(:participants)
   end
 
-  def add_bidder(state, bidder_name) do
+  defp add_bidder(state, bidder_name) do
     case Map.has_key?(state.participants, bidder_name) do
       false ->
         state
