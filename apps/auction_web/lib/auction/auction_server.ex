@@ -51,7 +51,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
       countdown: 30
     }
 
-    {:ok, new_state }
+    {:ok, new_state}
   end
 
   defp update_participant_count(state) do
