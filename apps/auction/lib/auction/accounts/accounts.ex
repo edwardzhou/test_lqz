@@ -132,6 +132,10 @@ defmodule Auction.Accounts do
 
   """
   def get_authentication!(id) when is_integer(id), do: Repo.get!(Authentication, id)
+
+  @doc """
+  通过uid获取认证
+  """
   def get_authentication(uid) when is_bitstring(uid) do
     Authentication |> Repo.get_by(uid: uid)
   end
