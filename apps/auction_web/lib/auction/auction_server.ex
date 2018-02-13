@@ -42,12 +42,12 @@ defmodule AuctionWeb.Auction.AuctionServer do
   ## Server Callback
   def init(:ok) do
     new_state = %{
-      top_bid: %{bidder: nil, bid: 0}, 
+      top_bid: %{bidder: nil, bid: 0},
       bidders: %{},
-      bid_list: [], 
-      participants: %{}, 
-      participant_count: 0, 
-      last_timer_id: nil, 
+      bid_list: [],
+      participants: %{},
+      participant_count: 0,
+      last_timer_id: nil,
       countdown: 30
     }
 
