@@ -5,10 +5,10 @@ defmodule Auction.Auctions.Auction do
 
 
   schema "auctions" do
-    field :auction_name, :string
-    field :auction_img, :string
-    field :start_at, :naive_datetime, comment: "开始时间"
-    field :end_at, :naive_datetime, comment: "结束时间"
+    field :name, :string
+    field :logo, :string
+    field :starts_at, :utc_datetime, comment: "开始时间"
+    field :ends_at, :utc_datetime, comment: "结束时间"
 
     timestamps()
   end
@@ -16,7 +16,7 @@ defmodule Auction.Auctions.Auction do
   @doc false
   def changeset(%Auction{} = auction, attrs) do
     auction
-    |> cast(attrs, [:auction_name, :auction_img, :start_at, :end_at])
-    |> validate_required([:auction_name, :auction_img, :start_at, :end_at])
+    |> cast(attrs, [:name, :logo, :starts_at, :ends_at])
+    |> validate_required([:name, :logo, :starts_at, :ends_at])
   end
 end

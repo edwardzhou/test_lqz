@@ -4,7 +4,7 @@ defmodule Auction.Repo.Migrations.CreateProducts do
   def change do
     create table(:products) do
       add :name, :string
-      add :price, :float, comment: "价格"
+      add :price, :decimal, comment: "价格"
       add :specification, :string, comment: "拍品规格"
       add :grade, :string, comment: "品相等级"
       add :description, :text

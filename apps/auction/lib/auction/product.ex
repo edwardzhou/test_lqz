@@ -1,5 +1,4 @@
-defmodule
-  do
+defmodule Auction.Product do
   use Ecto.Schema
   import Ecto.Changeset
   alias Auction.Product
@@ -9,7 +8,7 @@ defmodule
     field :description, :string
     field :grade, :string, comment: "品相等级"
     field :name, :string
-    field :price, :float
+    field :price, :decimal
     field :specification, :string, comment: "拍品规格"
 
     timestamps()
