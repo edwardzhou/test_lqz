@@ -3,6 +3,7 @@ defmodule Auction.Accounts.User do
   import Ecto.Changeset
   alias Auction.Accounts.User
   alias Auction.Repo
+  alias Auction.Accounts.Authentication
 
 
   schema "users" do
@@ -13,6 +14,8 @@ defmodule Auction.Accounts.User do
     field :username, :string
 
     timestamps()
+
+    has_many :authentications, Authentication
   end
 
   @doc false

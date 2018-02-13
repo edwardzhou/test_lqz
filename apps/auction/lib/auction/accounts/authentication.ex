@@ -1,7 +1,7 @@
 defmodule Auction.Accounts.Authentication do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Auction.Accounts.Authentication
+  alias Auction.Accounts.{Authentication, User}
   alias Auction.Repo
 
 
@@ -16,9 +16,11 @@ defmodule Auction.Accounts.Authentication do
     field :token_secret, :string
     field :uid, :string
     field :union_id, :string
-    field :user_id, :integer
+    # field :user_id, :integer
 
     timestamps()
+
+    belongs_to :user, User
   end
 
   @doc false
