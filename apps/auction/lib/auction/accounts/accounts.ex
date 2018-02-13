@@ -133,7 +133,7 @@ defmodule Auction.Accounts do
   """
   def get_authentication!(id) when is_integer(id), do: Repo.get!(Authentication, id)
   def get_authentication(uid) when is_bitstring(uid) do
-    Authentication |> Repo.get_by(uid: uid       )
+    Authentication |> Repo.get_by(uid: uid)
   end
 
   @doc """
