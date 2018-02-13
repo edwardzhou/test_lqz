@@ -12,6 +12,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
   use GenServer
 
   alias AuctionWeb.Auction.AuctionState
+  alias AuctionWeb.Endpoint
 
   ## Client API
   
@@ -46,7 +47,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
   end
 
   defp update_participiant_count(state) do
-    state 
+    state
     |> put_in([:participiant_count], Map.size(state.participiants))
   end
 
@@ -58,7 +59,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
 
   defp add_bidder(state, bidder_name) do
     case Map.has_key?(state.participants, bidder_name) do
-      false -> 
+      false ->
         state
         |> put_in([:participants, :bidder_name], %{bid: 0})
         |> update_participiant_count()
@@ -71,7 +72,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
   def handle_cast({:bidder_join, bidder_name}, state) do
     state = state
             |> add_bidder(bidder_name)
-    AuctionWeb.Endpoint.broadcast! "auction:1", "bidder_join", push_back_state(state)
+    Endpoint.broadcast! "auction:1", "bidder_join", push_back_state(state)
 
     {:noreply, state}
   end
@@ -80,11 +81,12 @@ defmodule AuctionWeb.Auction.AuctionServer do
   def handle_cast({:bid, bidder_name, bid}, state) do
     state = state
             |> add_bidder(bidder_name)
-            |> put_in([:top_bid], %{bidder: bidder_name, bid: state.top_bid.bid + bid})
+            |> put_in([:top_bid, :bidder], bidder_name)
+            |> put_in([:top_bid, :bid], state.top_bid.bid + bid)
             |> put_in([:participiants, bidder_name, :bid], bid)
             |> put_in([:bidders, bidder_name], %{bid: bid})
 
-    AuctionWeb.Endpoint.broadcast! "auction:1", "on_new_bid", push_back_state(state)
+    Endpoint.broadcast! "auction:1", "on_new_bid", push_back_state(state)
 
     {:noreply, state}
   end
@@ -102,18 +104,18 @@ defmodule AuctionWeb.Auction.AuctionServer do
             |> put_in([:participiants], %{})
             |> put_in([:participaint_count], 0)
 
-    AuctionWeb.Endpoint.broadcast! "auction:1", "on_restart", push_back_state(state)
+    Endpoint.broadcast! "auction:1", "on_restart", push_back_state(state)
   
     {:reply, state, state}
   end
 
   def handle_info({:countdown, 0}, state) do
-    AuctionWeb.Endpoint.broadcast! "auction:1", "bid_endded", %{}
+    Endpoint.broadcast! "auction:1", "bid_endded", %{}
     {:noreply, state}
   end
   def handle_info({:countdown, _counter}, state) do
     Process.cancel_timer(state.last_timer_id)
-    AuctionWeb.Endpoint.broadcast! "auction:1", "countdown", %{counter: state.countdown}
+    Endpoint.broadcast! "auction:1", "countdown", %{counter: state.countdown}
     state = put_in(state.countdown, state.countdown - 1)
     timer_id = Process.send_after(self(), {:countdown, state.countdown}, 1000)
     state = put_in(state.last_timer_id, timer_id)
