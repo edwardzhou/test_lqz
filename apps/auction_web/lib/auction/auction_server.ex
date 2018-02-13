@@ -41,14 +41,22 @@ defmodule AuctionWeb.Auction.AuctionServer do
 
   ## Server Callback
   def init(:ok) do
-    new_state = %AuctionState{}
+    new_state = %{
+      top_bid: %{bidder: nil, bid: 0}, 
+      bidders: %{},
+      bid_list: [], 
+      participants: %{}, 
+      participant_count: 0, 
+      last_timer_id: nil, 
+      countdown: 30
+    }
 
     {:ok, new_state }
   end
 
-  defp update_participiant_count(state) do
+  defp update_participant_count(state) do
     state
-    |> put_in([:participiant_count], Map.size(state.participiants))
+    |> put_in([:participant_count], Map.size(state.participants))
   end
 
   defp push_back_state(state) do
@@ -57,12 +65,12 @@ defmodule AuctionWeb.Auction.AuctionServer do
     |> Map.delete(:participants)
   end
 
-  defp add_bidder(state, bidder_name) do
+  def add_bidder(state, bidder_name) do
     case Map.has_key?(state.participants, bidder_name) do
       false ->
         state
-        |> put_in([:participants, :bidder_name], %{bid: 0})
-        |> update_participiant_count()
+        |> put_in([:participants, bidder_name], %{bid: 0})
+        |> update_participant_count()
       _ ->
         state
     end
@@ -83,7 +91,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
             |> add_bidder(bidder_name)
             |> put_in([:top_bid, :bidder], bidder_name)
             |> put_in([:top_bid, :bid], state.top_bid.bid + bid)
-            |> put_in([:participiants, bidder_name, :bid], bid)
+            |> put_in([:participants, bidder_name, :bid], bid)
             |> put_in([:bidders, bidder_name], %{bid: bid})
 
     Endpoint.broadcast! "auction:1", "on_new_bid", push_back_state(state)
@@ -101,8 +109,8 @@ defmodule AuctionWeb.Auction.AuctionServer do
             |> put_in([:bidders], %{})
             |> put_in([:bid_list], [])
             |> put_in([:countdown], 30)
-            |> put_in([:participiants], %{})
-            |> put_in([:participaint_count], 0)
+            |> put_in([:participants], %{})
+            |> put_in([:participant_count], 0)
 
     Endpoint.broadcast! "auction:1", "on_restart", push_back_state(state)
   
