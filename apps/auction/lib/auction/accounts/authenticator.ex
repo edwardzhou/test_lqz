@@ -1,9 +1,5 @@
 defmodule Auction.Accounts.Authenticator do
   alias Auction.Accounts
-  alias Auction.Accounts.Authentication
-  alias Auction.Accounts.User
-  alias Auction.Repo
-  import Ecto.Query
 
   def authenticate(%{uid: uid} = params) do
     case Accounts.get_authentication(uid) do
