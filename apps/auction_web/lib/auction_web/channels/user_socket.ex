@@ -23,6 +23,9 @@ defmodule AuctionWeb.UserSocket do
   def connect(%{"user_id" => user_id} = _params, socket) do
     {:ok, assign(socket, :user_id, user_id)}
   end
+  def connect(%{} = _params, socket) do
+    {:ok, socket}
+  end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
   #
