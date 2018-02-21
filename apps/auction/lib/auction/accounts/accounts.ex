@@ -138,6 +138,7 @@ defmodule Auction.Accounts do
   通过uid获取认证
   """
   def get_authentication(uid: nil), do: nil
+
   def get_authentication(uid: uid) do
     Authentication |> Repo.get_by(uid: uid)
   end
@@ -146,11 +147,12 @@ defmodule Auction.Accounts do
   通过union_id获取认证
   """
   def get_authentication(union_id: nil), do: nil
+
   def get_authentication(union_id: union_id) do
-    Authentication 
+    Authentication
     |> where(union_id: ^union_id)
     |> first
-    |> Repo.one
+    |> Repo.one()
   end
 
   @doc """
@@ -230,7 +232,7 @@ defmodule Auction.Accounts do
   @doc """
   create new user from authentication
   """
-  def user_from_auth(%Authentication{:union_id => union_id} = authentication) do
+  def user_from_auth(%Authentication{:union_id => union_id} = auth) do
     prior_auth =
       case union_id do
         nil -> nil
@@ -239,12 +241,12 @@ defmodule Auction.Accounts do
 
     case prior_auth do
       nil ->
-        {:ok, new_user} = create_user(Authentication.to_user_attributes(authentication))
-        {:ok, _} = update_authentication(authentication, %{user_id: new_user.id})
-        {:ok, new_user}
+        {:ok, user} = create_user(auth)
+        {:ok, _} = update_authentication(auth, %{user_id: user.id})
+        {:ok, user}
 
       _ ->
-        {:ok, _} = update_authentication(authentication, %{user_id: prior_auth.user_id})
+        {:ok, _} = update_authentication(auth, %{user_id: prior_auth.user_id})
         {:ok, prior_auth |> assoc(:user) |> Repo.one()}
     end
   end

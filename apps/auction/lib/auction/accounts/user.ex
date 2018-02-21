@@ -26,4 +26,14 @@ defmodule Auction.Accounts.User do
     |> unsafe_validate_unique([:username], Repo)
     |> unsafe_validate_unique([:telephone], Repo)
   end
+
+  @doc false
+  def changeset(%User{} = user, %Authentication{} = authentication) do
+    attrs = %{
+      nickname: authentication.nickname,
+      email: authentication.email
+    }
+
+    changeset(user, attrs)
+  end
 end
