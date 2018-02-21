@@ -38,12 +38,14 @@ defmodule Auction.Mixfile do
     [
       {:postgrex, ">= 0.0.0"},
       {:scrivener, "~> 2.0"},
-      {:ecto, "~> 2.1"}
+      {:ecto, "~> 2.1"},
+      {:arc, "~> 0.8.0"},
+      {:arc_ecto, "~> 0.7.0"}
     ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
-  # For example, to create, migrate and run the seeds file at once:
+  # For example, to create, migrate and run the seeds file at once:image.ex
   #
   #     $ mix ecto.setup
   #
