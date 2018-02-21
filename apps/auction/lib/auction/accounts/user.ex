@@ -19,15 +19,6 @@ defmodule Auction.Accounts.User do
   end
 
   @doc false
-  def changeset(%User{} = user, attrs) do
-    user
-    |> cast(attrs, [:username, :nickname, :encrypted_password, :telephone, :email])
-    |> validate_required([:nickname])
-    |> unsafe_validate_unique([:username], Repo)
-    |> unsafe_validate_unique([:telephone], Repo)
-  end
-
-  @doc false
   def changeset(%User{} = user, %Authentication{} = authentication) do
     attrs = %{
       nickname: authentication.nickname,
@@ -35,5 +26,14 @@ defmodule Auction.Accounts.User do
     }
 
     changeset(user, attrs)
+  end
+
+  @doc false
+  def changeset(%User{} = user, attrs) do
+    user
+    |> cast(attrs, [:username, :nickname, :encrypted_password, :telephone, :email])
+    |> validate_required([:nickname])
+    |> unsafe_validate_unique([:username], Repo)
+    |> unsafe_validate_unique([:telephone], Repo)
   end
 end

@@ -34,7 +34,7 @@ defmodule Accounts.AuthenticatorTest do
   describe "authenticator" do
     def fixture(:authentication) do
       {:ok, authentication} = Accounts.create_authentication(@existing_auth_attrs)
-      {:ok, _user} = Accounts.new_user_from_auth(authentication)
+      {:ok, _user} = Accounts.user_from_auth(authentication, nil)
       authentication
     end
 
