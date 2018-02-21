@@ -21,8 +21,8 @@ defmodule AuctionWeb.AuthenticationController do
     authentication = Authenticator.authenticate(auth_params(auth))
     IO.puts "authentication: #{inspect(authentication)}"
     IO.puts "User: #{inspect(user)}"
-    Logger.error "authentication: #{inspect(authentication)}"
-    Logger.error "User: #{inspect(user)}"
+    # Logger.error "authentication: #{inspect(authentication)}"
+    # Logger.error "User: #{inspect(user)}"
     conn
     |> put_flash(:info, "Successfully authenticated.")
     |> put_session(:current_user, user)
