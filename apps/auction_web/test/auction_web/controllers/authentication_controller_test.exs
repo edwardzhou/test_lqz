@@ -1,23 +1,25 @@
 defmodule AuctionWeb.AuthenticationControllerTest do
   use AuctionWeb.ConnCase
   alias Auction.Accounts
+  alias Auction.Accounts.{User}
+  alias Auction.Repo
 
   require Ueberauth
   require Logger
 
   @create_attrs %{
-    email: "some email",
+    email: "test@test.com",
     image: "some image",
-    name: "some name",
-    nickname: "some nickname",
-    provider: "some provider",
+    name: "tester",
+    nickname: "tester",
+    provider: "wechat",
     refresh_token: "some refresh_token",
     token: "some token",
     token_secret: "some token_secret",
     uid: "some uid",
-    union_id: "some union_id",
-    user_id: 42
+    union_id: "the_union_id"
   }
+
   @update_attrs %{
     email: "some updated email",
     image: "some updated image",
@@ -31,6 +33,7 @@ defmodule AuctionWeb.AuthenticationControllerTest do
     union_id: "some updated union_id",
     user_id: 43
   }
+
   @invalid_attrs %{
     email: nil,
     image: nil,
@@ -43,6 +46,11 @@ defmodule AuctionWeb.AuthenticationControllerTest do
     uid: nil,
     union_id: nil,
     user_id: nil
+  }
+
+  @user_attrs %{
+    email: "test@test.com",
+    nickname: "tester"
   }
 
   @wechat_auth %Ueberauth.Auth{
@@ -77,7 +85,8 @@ defmodule AuctionWeb.AuthenticationControllerTest do
           "openid" => "o4VnTwMHwR3bex-rikSbEsx2ksi4",
           "privilege" => [],
           "province" => "Guangdong",
-          "sex" => 1
+          "sex" => 1,
+          "unionid" => "the_union_id"
         }
       }
     },
@@ -104,6 +113,21 @@ defmodule AuctionWeb.AuthenticationControllerTest do
     authentication
   end
 
+  def fixture(:user) do
+    {:ok, user} = Accounts.create_user(@user_attrs)
+    user
+  end
+
+  def fixture(:user_with_auth) do
+    auth = fixture(:authentication)
+    user = fixture(:user)
+
+    {:ok, auth} = Accounts.update_authentication(auth, %{user_id: user.id})
+
+    user
+    |> Repo.preload(:authentications)
+  end
+
   defp create_authentication(_) do
     authentication = fixture(:authentication)
     {:ok, authentication: authentication}
@@ -111,15 +135,32 @@ defmodule AuctionWeb.AuthenticationControllerTest do
 
   describe "new authentication" do
     test "create new user", %{conn: conn} do
-      assert Accounts.get_authentication("o4VnTwMHwR3bex-rikSbEsx2ksi4") == nil
+      assert Accounts.get_authentication(uid: "o4VnTwMHwR3bex-rikSbEsx2ksi4") == nil
 
       conn =
         conn
         |> assign(:ueberauth_auth, @wechat_auth)
         |> get(auth_path(conn, :callback, :wechat), %{"code" => "test_code"})
-      
+
       assert html_response(conn, 302)
-      assert Accounts.get_authentication("o4VnTwMHwR3bex-rikSbEsx2ksi4") != nil
+      assert Accounts.get_authentication(uid: "o4VnTwMHwR3bex-rikSbEsx2ksi4") != nil
+    end
+
+    test "associate existing user with union_id", %{conn: conn} do
+      assert Accounts.get_authentication(uid: "o4VnTwMHwR3bex-rikSbEsx2ksi4") == nil
+      user = fixture(:user_with_auth)
+      user_count = User |> Repo.aggregate(:count, :id)
+
+      conn =
+        conn
+        |> assign(:ueberauth_auth, @wechat_auth)
+        |> get(auth_path(conn, :callback, :wechat), %{"code" => "test_code"})
+        assert html_response(conn, 302)
+
+      auth = Accounts.get_authentication(uid: "o4VnTwMHwR3bex-rikSbEsx2ksi4")
+      assert auth != nil
+      assert user_count == User |> Repo.aggregate(:count, :id)
+      assert auth.user_id == user.id
     end
   end
 end
