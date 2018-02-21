@@ -52,7 +52,7 @@ defmodule AuctionWeb.Mixfile do
       {:ueberauth, "~> 0.4"},
       {:ueberauth_github, "~> 0.6"},
       {:guardian, "~> 1.0"},
-      {:ueberauth_wechat, github: "sllt/ueberauth_wechat"},
+      {:ueberauth_wechat, github: "edwardzhou/ueberauth_wechat"},
       {:cowboy, "~> 1.0"}
     ]
   end

@@ -40,7 +40,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
   end
 
   def new_bid(bidder_name, bid) do
-    GenServer.cast(__MODULE__, {:bid, bidder_name, bid})
+    GenServer.call(__MODULE__, {:bid, bidder_name, bid})
   end
 
   def shutdown() do
@@ -100,8 +100,8 @@ defmodule AuctionWeb.Auction.AuctionServer do
     {:noreply, state}
   end
 
-  # def handle_call({:bid, bidder_name, bid}, _from, state) do
-  def handle_cast({:bid, bidder_name, bid}, state) do
+  def handle_call({:bid, bidder_name, bid}, _from, state) do
+  # def handle_cast({:bid, bidder_name, bid}, state) do
     state =
       state
       |> add_bidder(bidder_name)
@@ -111,7 +111,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
       |> put_in([:bidders, bidder_name], %{bid: bid})
 
     Endpoint.broadcast!("auction:1", "on_new_bid", push_back_state(state))
-    {:noreply, state}
+    {:reply, state, state}
   end
 
   def handle_call({:restart}, _from, state) do
