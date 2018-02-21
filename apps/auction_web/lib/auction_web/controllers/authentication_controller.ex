@@ -1,6 +1,6 @@
 defmodule AuctionWeb.AuthenticationController do
   use AuctionWeb, :controller
-  plug Ueberauth
+  plug(Ueberauth)
 
   # alias Auction.Accounts
   # alias Auction.Accounts.Authentication
@@ -9,7 +9,7 @@ defmodule AuctionWeb.AuthenticationController do
   require Logger
 
   def callback(%{assigns: %{ueberauth_failure: fails}} = conn, _params) do
-    IO.puts "ueberauth_failure: #{inspect(fails)}"
+    IO.puts("ueberauth_failure: #{inspect(fails)}")
 
     conn
     |> put_flash(:error, "Failed to authenticate.")
@@ -19,10 +19,7 @@ defmodule AuctionWeb.AuthenticationController do
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     user = %{id: auth.uid, name: auth.info.name || auth.info.nickname, avatar: auth.info.image}
     authentication = Authenticator.authenticate(auth_params(auth))
-    IO.puts "authentication: #{inspect(authentication)}"
-    IO.puts "User: #{inspect(user)}"
-    # Logger.error "authentication: #{inspect(authentication)}"
-    # Logger.error "User: #{inspect(user)}"
+
     conn
     |> put_flash(:info, "Successfully authenticated.")
     |> put_session(:current_user, user)
@@ -44,7 +41,7 @@ defmodule AuctionWeb.AuthenticationController do
       image: auth.info.image,
       provider: to_string(auth.provider),
       strategy: to_string(auth.strategy),
-      # union_id: get_in(auth, [])
+      union_id: auth.extra.raw_info.user["unionid"],
       token: auth.credentials.token,
       refresh_token: auth.credentials.refresh_token
     }
