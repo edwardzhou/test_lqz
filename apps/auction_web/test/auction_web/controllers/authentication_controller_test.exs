@@ -111,11 +111,13 @@ defmodule AuctionWeb.AuthenticationControllerTest do
 
   describe "new authentication" do
     test "create new user", %{conn: conn} do
+      assert Accounts.get_authentication("o4VnTwMHwR3bex-rikSbEsx2ksi4") == nil
+
       conn =
         conn
         |> assign(:ueberauth_auth, @wechat_auth)
         |> get(auth_path(conn, :callback, :wechat), %{"code" => "test_code"})
-      Logger.info("html_headers => #{inspect(conn.resp_headers)}")
+      
       assert html_response(conn, 302)
       assert Accounts.get_authentication("o4VnTwMHwR3bex-rikSbEsx2ksi4") != nil
     end
