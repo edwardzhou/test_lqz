@@ -25,6 +25,13 @@ defmodule AuctionWeb.AuctionController do
     end
   end
 
+  def show(conn, %{"id" => id, "name" => user_id}) do
+    conn
+    |> assign(:auction_id, id)
+    |> assign(:user_id, user_id)
+    |> render("show.html", auction: nil)
+  end
+
   def show(conn, %{"id" => id}) do
     # auction = Auctions.get_auction!(id)
     current_user = get_session(conn, :current_user)
