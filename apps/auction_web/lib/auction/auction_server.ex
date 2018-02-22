@@ -32,23 +32,27 @@ defmodule AuctionWeb.Auction.AuctionServer do
   Starts the registry.
   """
   def start_link() do
-    GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
+    GenServer.start_link(__MODULE__, :ok, [])
   end
 
-  def bidder_join(bidder_name) do
-    GenServer.cast(__MODULE__, {:bidder_join, bidder_name})
+  def bidder_join(server, bidder_name) do
+    GenServer.call(server, {:bidder_join, bidder_name})
   end
 
-  def new_bid(bidder_name, bid) do
-    GenServer.call(__MODULE__, {:bid, bidder_name, bid})
+  def new_bid(server, bidder_name, bid) do
+    GenServer.call(server, {:bid, bidder_name, bid})
   end
 
-  def shutdown() do
-    GenServer.stop(__MODULE__, :normal)
+  def shutdown(server) do
+    GenServer.stop(server, :normal)
   end
 
-  def restart() do
-    GenServer.call(__MODULE__, {:restart})
+  def restart(server) do
+    GenServer.call(server, {:restart})
+  end
+
+  def get_auction_state(server) do
+    GenServer.call(server, {:get_state})
   end
 
   ## Server Callback
@@ -90,14 +94,14 @@ defmodule AuctionWeb.Auction.AuctionServer do
   end
 
   # def handle_call({:bidder_join, bidder_name}, _from, state) do
-  def handle_cast({:bidder_join, bidder_name}, state) do
+  def handle_call({:bidder_join, bidder_name}, _from, state) do
     state =
       state
       |> add_bidder(bidder_name)
 
     Endpoint.broadcast!("auction:1", "bidder_join", push_back_state(state))
 
-    {:noreply, state}
+    {:reply, {:ok, state}, state}
   end
 
   def handle_call({:bid, bidder_name, bid}, _from, state) do
@@ -146,5 +150,9 @@ defmodule AuctionWeb.Auction.AuctionServer do
     state = put_in(state.last_timer_id, timer_id)
 
     {:noreply, state}
+  end
+
+  def handle_call({:get_state}, _from, state) do
+    {:reply, {:ok, state}, state}
   end
 end
