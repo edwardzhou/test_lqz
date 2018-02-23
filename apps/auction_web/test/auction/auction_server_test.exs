@@ -16,4 +16,26 @@ defmodule AuctionWeb.Auction.AuctionServerTest do
       assert get_in(state, [:participants, "edwardzhou"]) != nil
     end
   end
+
+  describe "bidding" do
+    test "new bid", %{server: server} do
+      {:ok, state} = AuctionServer.new_bid(server, 1, "edwardzhou", 0, 300)
+      assert state[:top_bid][:bidder] == "edwardzhou"
+      assert state[:top_bid][:bid] == 300
+      assert state[:next_token_id] == 2
+    end
+
+    test "stale token_id", %{server: server} do
+      {:error_stale_token_id, state} = AuctionServer.new_bid(server, 2, "edwardzhou", 0, 300)
+    end
+
+    test "non-matched bid", %{server: server} do
+      {:error_stale_bid, state} = AuctionServer.new_bid(server, 1, "edwardzhou", 1000, 200)
+    end
+
+    test "duplicated bid", %{server: server} do
+      {:ok, state} = AuctionServer.new_bid(server, 1, "edwardzhou", 0, 200)
+      {:error_duplicated_bid, state} = AuctionServer.new_bid(server, 2, "edwardzhou", 200, 300)
+    end
+  end
 end

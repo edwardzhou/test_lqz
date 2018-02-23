@@ -6,3 +6,7 @@ erl_crash.dump
 *.ez
 **/log
 **/.elixir_ls
+
+# RubyMine
+.idea/
+
