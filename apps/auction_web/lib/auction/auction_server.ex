@@ -41,7 +41,12 @@ defmodule AuctionWeb.Auction.AuctionServer do
   end
 
   def new_bid(server, token_id, bidder_name, bid, increase) do
-    params = %{token_id: token_id, bidder_name: bidder_name, bid: bid, increase: increase}
+    params = %{
+      token_id: token_id,
+      bidder_name: bidder_name,
+      bid: bid,
+      increase: increase
+    }
     GenServer.call(server, {:bid, params})
   end
 
@@ -56,9 +61,6 @@ defmodule AuctionWeb.Auction.AuctionServer do
   def get_auction_state(server) do
     GenServer.call(server, {:get_state})
   end
-
-  ## guards
-  # defguard stale_token_id(token_id, %{next_token_id: next_token_id} = state) when token_id != next_token_id
 
   ## Server Callback
   def init(:ok) do
