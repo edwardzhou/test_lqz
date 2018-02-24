@@ -11,18 +11,23 @@ defmodule AuctionWeb.Auction.AuctionServerTest do
   describe "start on new auction" do
     test "bidder_join", %{server: server} do
       {:ok, auction_state} = AuctionServer.get_auction_state(server)
-      assert get_in(auction_state, [:participants, "edwardzhou"]) == nil
+      assert auction_state.participants["edwardzhou"] == nil
       {:ok, state} = AuctionServer.bidder_join(server, "edwardzhou")
-      assert get_in(state, [:participants, "edwardzhou"]) != nil
+      assert state.participants["edwardzhou"] != nil
     end
   end
 
   describe "bidding" do
-    test "new bid", %{server: server} do
+    test "bid", %{server: server} do
       {:ok, state} = AuctionServer.new_bid(server, 1, "edwardzhou", 0, 300)
-      assert state[:top_bid][:bidder] == "edwardzhou"
-      assert state[:top_bid][:bid] == 300
-      assert state[:next_token_id] == 2
+      assert state.top_bid.bidder == "edwardzhou"
+      assert state.top_bid.bid == 300
+      assert state.next_token_id == 2
+
+      {:ok, state} = AuctionServer.new_bid(server, 2, "hero", 300, 500)
+      assert state.top_bid.bidder == "hero"
+      assert state.top_bid.bid == 800
+      assert state.next_token_id == 3
     end
 
     test "stale token_id", %{server: server} do
