@@ -14,7 +14,7 @@ defmodule AuctionWeb.Auction.AuctionState do
             last_timer_id: nil,
             # 出价令牌
             next_token_id: 1,
-            # 出价人数 
+            # 出价人数
             bidder_count: 0,
             # 出价次数
             bid_count: 0,
