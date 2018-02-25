@@ -24,7 +24,7 @@ defmodule AuctionWeb.Auction.AuctionRegistryTest do
 
   test "create auction_session returns existing", %{registry: registry} do
     {:ok, auction} = AuctionRegistry.create(registry, 1)
-    {:ok, ^auction} = AuctionRegistry.create(registry, 1)    
+    {:ok, ^auction} = AuctionRegistry.create(registry, 1)
   end
 
   test "shutdown auction_session", %{registry: registry} do
@@ -33,7 +33,6 @@ defmodule AuctionWeb.Auction.AuctionRegistryTest do
     # Process.exit(auction, :shutdown)
     # ref = Process.monitor(auction)
     # assert_receive {:DOWN, ^ref, _, _, _}
-    {:error, nil} = AuctionRegistry.lookup(registry, 1)    
+    {:error, nil} = AuctionRegistry.lookup(registry, 1)
   end
-
 end
