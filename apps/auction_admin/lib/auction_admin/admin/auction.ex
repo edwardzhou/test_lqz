@@ -29,8 +29,8 @@ defmodule AuctionAdmin.ExAdmin.Auction do
       inputs do
         input auction, :name, prompt: "测试"
         input auction, :logo
-        input auction, :starts_at
-        input auction, :ends_at
+        input auction, :starts_at, type: DateTime
+        input auction, :ends_at, type: DateTime
       end
     end
   end

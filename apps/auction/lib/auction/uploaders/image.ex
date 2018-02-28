@@ -1,7 +1,6 @@
 defmodule Auction.Uploaders.Image do
   use Arc.Definition
   use Arc.Ecto.Definition
-  def __storage, do: Arc.Storage.Local
 
   # To add a thumbnail version:
   # @versions [:original, :thumb]
