@@ -1,7 +1,7 @@
 defmodule AuctionWeb.Application do
   use Application
 
-  alias AuctionWeb.Auction.AuctionServer
+  alias AuctionWeb.Auction.AuctionSupervisor
 
   def start(_type, _args) do
     import Supervisor.Spec
@@ -14,7 +14,7 @@ defmodule AuctionWeb.Application do
       supervisor(AuctionWeb.Endpoint, []),
       # Start your own worker by calling: AuctionWeb.Worker.start_link(arg1, arg2, arg3)
       # worker(AuctionWeb.Worker, [arg1, arg2, arg3]),
-      worker(AuctionServer, [])
+      worker(AuctionSupervisor, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

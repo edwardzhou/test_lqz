@@ -2,6 +2,7 @@ defmodule AuctionWeb.Auction.AuctionRegistry do
   use GenServer
 
   alias AuctionWeb.Auction.AuctionServer
+  alias AuctionWeb.Auction.AuctionSupervisor
 
   ## API
 
@@ -44,7 +45,8 @@ defmodule AuctionWeb.Auction.AuctionRegistry do
 
     case names[auction_key] do
       nil ->
-        {:ok, server} = AuctionServer.start_link()
+        {:ok, server} = AuctionSupervisor.start_child(auction_key)
+        # {:ok, server} = AuctionServer.start_link
 
         ref = Process.monitor(server)
         refs = Map.put(refs, ref, auction_key)

@@ -19,14 +19,14 @@ defmodule AuctionWeb.Auction.AuctionServerTest do
 
   describe "bidding" do
     test "bid", %{server: server} do
-      {:ok, state} = AuctionServer.new_bid(server, 1, "edwardzhou", 0, 300)
+      {:ok, state} = AuctionServer.new_bid(server, 1, "edwardzhou", 1000, 200)
       assert state.top_bid.bidder == "edwardzhou"
-      assert state.top_bid.bid == 300
+      assert state.top_bid.bid == 1200
       assert state.next_token_id == 2
 
-      {:ok, state} = AuctionServer.new_bid(server, 2, "hero", 300, 500)
+      {:ok, state} = AuctionServer.new_bid(server, 2, "hero", 1200, 300)
       assert state.top_bid.bidder == "hero"
-      assert state.top_bid.bid == 800
+      assert state.top_bid.bid == 1500
       assert state.next_token_id == 3
     end
 
@@ -35,12 +35,22 @@ defmodule AuctionWeb.Auction.AuctionServerTest do
     end
 
     test "non-matched bid", %{server: server} do
-      {:error_stale_bid, state} = AuctionServer.new_bid(server, 1, "edwardzhou", 1000, 200)
+      {:error_stale_bid, state} = AuctionServer.new_bid(server, 1, "edwardzhou", 0, 200)
     end
 
     test "duplicated bid", %{server: server} do
-      {:ok, state} = AuctionServer.new_bid(server, 1, "edwardzhou", 0, 200)
-      {:error_duplicated_bid, state} = AuctionServer.new_bid(server, 2, "edwardzhou", 200, 300)
+      {:ok, state} = AuctionServer.new_bid(server, 1, "edwardzhou", 1000, 200)
+      {:error_duplicated_bid, state} = AuctionServer.new_bid(server, 2, "edwardzhou", 1200, 300)
+    end
+  end
+
+  describe "withdraw" do
+    test "bid", %{server: server} do
+      # {:ok, state} = AuctionServer.new_bid(server, 1, "edwardzhou", 0, 300)
+      # assert state.top_bid.bidder == "edwardzhou"
+      # assert state.top_bid.bid == 300
+      # assert state.next_token_id == 2
+      # {:ok, state} = AuctionServer.withdraw(server, 2, "edwardzhou", 300)
     end
   end
 end

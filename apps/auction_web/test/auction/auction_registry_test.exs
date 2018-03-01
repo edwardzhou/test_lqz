@@ -29,10 +29,10 @@ defmodule AuctionWeb.Auction.AuctionRegistryTest do
 
   test "shutdown auction_session", %{registry: registry} do
     {:ok, auction} = AuctionRegistry.create(registry, 1)
-    GenServer.stop(auction)
-    # Process.exit(auction, :shutdown)
-    # ref = Process.monitor(auction)
-    # assert_receive {:DOWN, ^ref, _, _, _}
+    # GenServer.stop(auction)
+    Process.exit(auction, :shutdown)
+    ref = Process.monitor(auction)
+    assert_receive {:DOWN, ^ref, _, _, _}
     {:error, nil} = AuctionRegistry.lookup(registry, 1)
   end
 end

@@ -1,4 +1,6 @@
 defmodule AuctionWeb.Auction.AuctionState do
+  alias AuctionWeb.Auction.AuctionState
+
   # 最高出价
   defstruct top_bid: %{bidder: nil, bid: 0},
             # 拍卖id
@@ -18,8 +20,19 @@ defmodule AuctionWeb.Auction.AuctionState do
             bidder_count: 0,
             # 出价次数
             bid_count: 0,
+            # 加价比例
+            increase_rates: [0.1, 0.2, 0.5], # 10%, 20%. 50%
+            increases: [100, 200, 500],
+            # 最后出价时间
+            bid_at: NaiveDateTime.utc_now,
+            status: :on_going,
             # 倒计时
             countdown: 30
+
+  def new_state(id, base_bid) do
+    %AuctionState{auction_id: id, top_bid: %{bidder: nil, bid: base_bid}}
+    |> update_increases
+  end
 
   def push_back_state(state) do
     state
@@ -55,6 +68,18 @@ defmodule AuctionWeb.Auction.AuctionState do
       when bid != last_bid do
     {:error_stale_bid, state}
   end
+  def bid(%{increases: [i1, i2, i3]} = state, %{increase: increase})
+      when increase != i1 and 
+           increase != i2 and
+           increase != i3 do
+    {:error_stale_bid, state}
+  end
+  def bid(%{status: status} = state, _) when status != :on_going do
+    {:error_stale_bid, state}
+  end
+  # def bid(%{bid_at: bid_at} = state, _) do 
+  # end
+
 
   def bid(state, params) do
     token_id = params.token_id
@@ -75,6 +100,8 @@ defmodule AuctionWeb.Auction.AuctionState do
       |> update_bid_count()
       |> update_bidder_count()
       |> inc_token_id()
+      |> update_bid_at()
+      |> update_increases()
 
     {:ok, state}
   end
@@ -107,4 +134,19 @@ defmodule AuctionWeb.Auction.AuctionState do
   def inc_token_id(%{next_token_id: token_id} = auction) do
     %{auction | next_token_id: token_id + 1}
   end
+
+  def update_bid_at(%{bid_at: _bid_at} = auction) do
+    %{auction | bid_at: NaiveDateTime.utc_now}
+  end
+
+  def update_increases(%{top_bid: %{bid: last_bid}} = auction) do
+    base = div(last_bid, 500) * 500
+    base = case rem(last_bid, 500) do
+      0 -> base
+      _ -> base + 500
+    end
+    increases = Enum.map([base * 0.1, base * 0.2, base * 0.5], &(trunc(&1)))
+    %{auction | increases: increases}
+  end
+
 end

@@ -9,7 +9,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
   @doc """
   Starts the auction_server.
   """
-  def start_link() do
+  def start_link(name \\ "") do
     GenServer.start_link(__MODULE__, :ok, [])
   end
 
@@ -42,7 +42,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
 
   ## Server Callback
   def init(:ok) do
-    new_state = %AuctionState{}
+    new_state = AuctionState.new_state(1, 1000)
 
     {:ok, new_state}
   end
