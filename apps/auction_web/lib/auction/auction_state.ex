@@ -21,10 +21,11 @@ defmodule AuctionWeb.Auction.AuctionState do
             # 出价次数
             bid_count: 0,
             # 加价比例
-            increase_rates: [0.1, 0.2, 0.5], # 10%, 20%. 50%
+            # 10%, 20%. 50%
+            increase_rates: [0.1, 0.2, 0.5],
             increases: [100, 200, 500],
             # 最后出价时间
-            bid_at: NaiveDateTime.utc_now,
+            bid_at: NaiveDateTime.utc_now(),
             status: :on_going,
             # 倒计时
             countdown: 30
@@ -68,18 +69,18 @@ defmodule AuctionWeb.Auction.AuctionState do
       when bid != last_bid do
     {:error_stale_bid, state}
   end
+
   def bid(%{increases: [i1, i2, i3]} = state, %{increase: increase})
-      when increase != i1 and 
-           increase != i2 and
-           increase != i3 do
+      when increase != i1 and increase != i2 and increase != i3 do
     {:error_stale_bid, state}
   end
+
   def bid(%{status: status} = state, _) when status != :on_going do
     {:error_stale_bid, state}
   end
+
   # def bid(%{bid_at: bid_at} = state, _) do 
   # end
-
 
   def bid(state, params) do
     token_id = params.token_id
@@ -136,17 +137,19 @@ defmodule AuctionWeb.Auction.AuctionState do
   end
 
   def update_bid_at(%{bid_at: _bid_at} = auction) do
-    %{auction | bid_at: NaiveDateTime.utc_now}
+    %{auction | bid_at: NaiveDateTime.utc_now()}
   end
 
   def update_increases(%{top_bid: %{bid: last_bid}} = auction) do
     base = div(last_bid, 500) * 500
-    base = case rem(last_bid, 500) do
-      0 -> base
-      _ -> base + 500
-    end
-    increases = Enum.map([base * 0.1, base * 0.2, base * 0.5], &(trunc(&1)))
+
+    base =
+      case rem(last_bid, 500) do
+        0 -> base
+        _ -> base + 500
+      end
+
+    increases = Enum.map([base * 0.1, base * 0.2, base * 0.5], &trunc(&1))
     %{auction | increases: increases}
   end
-
 end

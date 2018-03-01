@@ -4,7 +4,7 @@ defmodule AuctionWeb.Auction.AuctionSupervisor do
   alias AuctionWeb.Auction.AuctionServer
 
   ## Client API
-  def start_link() do
+  def start_link do
     DynamicSupervisor.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 

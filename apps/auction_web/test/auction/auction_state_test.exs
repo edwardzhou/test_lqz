@@ -94,7 +94,7 @@ defmodule AuctionWeb.Auction.AuctionStateTest do
       }
       {:ok, state} = state |> AuctionState.bid(params)
       params = %{
-        params | 
+        params |
         token_id: 2,
         bidder_name: "user2",
         bid_base: 1100,
