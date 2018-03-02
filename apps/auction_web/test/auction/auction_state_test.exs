@@ -67,6 +67,20 @@ defmodule AuctionWeb.Auction.AuctionStateTest do
       {:error_duplicated_bid, _} = state |> AuctionState.bid(params)
     end
 
+    test "not on_going", %{state: state} do
+      state = %{
+        state | status: :closed
+      }
+      
+      params = %{
+        token_id: 1,
+        bidder_name: "user1",
+        bid_base: 1000,
+        increase: 100
+      }
+      {:error_closed, state} = state |> AuctionState.bid(params)
+   end
+
     test "successful", %{state: state} do
       params = %{
         token_id: 1,

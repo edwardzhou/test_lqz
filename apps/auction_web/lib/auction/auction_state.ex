@@ -1,5 +1,6 @@
 defmodule AuctionWeb.Auction.AuctionState do
   alias AuctionWeb.Auction.AuctionState
+  use Timex
 
   # 最高出价
   defstruct top_bid: %{bidder: nil, bid: 0},
@@ -25,7 +26,7 @@ defmodule AuctionWeb.Auction.AuctionState do
             increase_rates: [0.1, 0.2, 0.5],
             increases: [100, 200, 500],
             # 最后出价时间
-            bid_at: NaiveDateTime.utc_now(),
+            bid_at: nil,
             status: :on_going,
             # 倒计时
             countdown: 30
@@ -76,11 +77,8 @@ defmodule AuctionWeb.Auction.AuctionState do
   end
 
   def bid(%{status: status} = state, _) when status != :on_going do
-    {:error_stale_bid, state}
+    {:error_closed, state}
   end
-
-  # def bid(%{bid_at: bid_at} = state, _) do 
-  # end
 
   def bid(state, params) do
     token_id = params.token_id
