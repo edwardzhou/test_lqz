@@ -3,6 +3,7 @@ defmodule Auction.Accounts do
   The Accounts context.
   """
 
+  import Ecto
   import Ecto.Query, warn: false
   alias Auction.Repo
 
@@ -132,8 +133,26 @@ defmodule Auction.Accounts do
 
   """
   def get_authentication!(id) when is_integer(id), do: Repo.get!(Authentication, id)
-  def get_authentication(uid) when is_bitstring(uid) do
+
+  @doc """
+  通过uid获取认证
+  """
+  def get_authentication(uid: nil), do: nil
+
+  def get_authentication(uid: uid) do
     Authentication |> Repo.get_by(uid: uid)
+  end
+
+  @doc """
+  通过union_id获取认证
+  """
+  def get_authentication(union_id: nil), do: nil
+
+  def get_authentication(union_id: union_id) do
+    Authentication
+    |> where(union_id: ^union_id)
+    |> first
+    |> Repo.one()
   end
 
   @doc """
@@ -208,5 +227,18 @@ defmodule Auction.Accounts do
     {:ok, new_user} = create_user(Authentication.to_user_attributes(authentication))
     {:ok, _} = update_authentication(authentication, %{user_id: new_user.id})
     {:ok, new_user}
+  end
+
+  @doc """
+  create new user from authentication
+  """
+  def user_from_auth(%Authentication{:union_id => union_id} = auth, nil) do
+    {:ok, user} = create_user(auth)
+    {:ok, _} = update_authentication(auth, %{user_id: user.id})
+    {:ok, user}
+  end
+  def user_from_auth(%Authentication{:union_id => union_id} = auth, prior_auth) do
+    {:ok, _} = update_authentication(auth, %{user_id: prior_auth.user_id})
+    {:ok, prior_auth |> assoc(:user) |> Repo.one()}
   end
 end

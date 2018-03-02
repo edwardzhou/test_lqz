@@ -7,3 +7,4 @@ erl_crash.dump
 *.ez
 **/log
 /.idea
+**/.elixir_ls

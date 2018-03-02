@@ -26,7 +26,6 @@ defmodule AuctionAdmin.ConnCase do
     end
   end
 
-
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Auction.Repo)
     unless tags[:async] do

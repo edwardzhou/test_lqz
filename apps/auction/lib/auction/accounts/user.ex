@@ -19,6 +19,16 @@ defmodule Auction.Accounts.User do
   end
 
   @doc false
+  def changeset(%User{} = user, %Authentication{} = authentication) do
+    attrs = %{
+      nickname: authentication.nickname,
+      email: authentication.email
+    }
+
+    changeset(user, attrs)
+  end
+
+  @doc false
   def changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:username, :nickname, :encrypted_password, :telephone, :email])
