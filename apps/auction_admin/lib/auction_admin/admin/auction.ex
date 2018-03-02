@@ -7,7 +7,7 @@ defmodule AuctionAdmin.ExAdmin.Auction do
     index do
       column :id
       column :logo, fn(auction) ->
-        img src: Image.url(auction.logo)
+        img src: Image.url(auction.logo, :thumb)
       end
       column :starts_at
       column :ends_at

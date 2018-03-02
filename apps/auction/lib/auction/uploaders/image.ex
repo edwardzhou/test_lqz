@@ -3,7 +3,7 @@ defmodule Auction.Uploaders.Image do
   use Arc.Ecto.Definition
 
   # To add a thumbnail version:
-  # @versions [:original, :thumb]
+   @versions [:original, :thumb]
 
   # Whitelist file extensions:
   def validate({file, _}) do
@@ -11,14 +11,17 @@ defmodule Auction.Uploaders.Image do
   end
 
   # Define a thumbnail transformation:
-#  def transform(:thumb, _) do
-#    {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
-#  end
+  def transform(:thumb, _) do
+    {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :jpeg}
+  end
 
-  # Override the persisted filenames:
-  # def filename(version, _) do
-  #   version
-  # end
+  def filename(version, {file, _}) do
+    "#{Path.basename(file.file_name, Path.extname(file.file_name))}_#{version}"
+  end
+
+  def uniq_filename(string) do
+    :crypto.hash(:md5, string) |> Base.encode16
+  end
 
   # Override the storage directory:
   def storage_dir(_version, {_file, _scope}) do

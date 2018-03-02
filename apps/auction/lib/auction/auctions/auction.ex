@@ -13,10 +13,10 @@ defmodule Auction.Auctions.Auction do
 
   @doc false
   def changeset(%Auction.Auctions.Auction{} = auction, attrs \\ %{}) do
-    data_time_attrs = data_time_attrs(attrs)
+    processed_attrs = data_time_attrs(attrs) |> uniq_filename_attrs
     auction
-    |> cast(data_time_attrs, [:name, :starts_at, :ends_at])
-    |> cast_attachments(data_time_attrs, [:logo])
+    |> cast(processed_attrs, [:name, :starts_at, :ends_at])
+    |> cast_attachments(processed_attrs, [:logo])
     |> validate_required([:name, :logo, :starts_at, :ends_at])
   end
 
@@ -27,4 +27,12 @@ defmodule Auction.Auctions.Auction do
   end
 
   def data_time_attrs(attrs) do attrs end
+
+  def uniq_filename_attrs(%{logo: logo} = attrs) do
+    name = :crypto.hash(:md5, logo.path) |> Base.encode16
+    logo = %Plug.Upload{logo | filename: "#{name}#{Path.extname(logo.filename)}"}
+    %{attrs | logo: logo}
+  end
+
+  def uniq_filename_attrs(attrs) do attrs end
 end
