@@ -13,7 +13,7 @@ defmodule Auction.Auctions.Auction do
 
   @doc false
   def changeset(%Auction.Auctions.Auction{} = auction, attrs \\ %{}) do
-    processed_attrs = data_time_attrs(attrs) |> uniq_filename_attrs
+    processed_attrs = attrs |> data_time_attrs |> uniq_filename_attrs
     auction
     |> cast(processed_attrs, [:name, :starts_at, :ends_at])
     |> cast_attachments(processed_attrs, [:logo])

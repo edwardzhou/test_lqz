@@ -19,10 +19,6 @@ defmodule Auction.Uploaders.Image do
     "#{Path.basename(file.file_name, Path.extname(file.file_name))}_#{version}"
   end
 
-  def uniq_filename(string) do
-    :crypto.hash(:md5, string) |> Base.encode16
-  end
-
   # Override the storage directory:
   def storage_dir(_version, {_file, _scope}) do
     "uploads/images"

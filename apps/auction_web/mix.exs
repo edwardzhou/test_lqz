@@ -28,7 +28,8 @@ defmodule AuctionWeb.Mixfile do
         :runtime_tools, 
         :ueberauth,
         :ueberauth_github,
-        :ueberauth_wechat
+        :ueberauth_wechat,
+        :timex
       ]
     ]
   end
