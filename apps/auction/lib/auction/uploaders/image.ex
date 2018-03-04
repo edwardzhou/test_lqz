@@ -12,7 +12,7 @@ defmodule Auction.Uploaders.Image do
 
   # Define a thumbnail transformation:
   def transform(:thumb, _) do
-    {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :jpeg}
+    {:convert, "-strip -thumbnail 200x200^ -gravity center -extent 200x200"}
   end
 
   def filename(version, {file, _}) do
