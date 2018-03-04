@@ -46,11 +46,11 @@ defmodule AuctionWeb.Auction.AuctionServerTest do
 
   describe "withdraw" do
     test "bid", %{server: server} do
-      # {:ok, state} = AuctionServer.new_bid(server, 1, "edwardzhou", 0, 300)
-      # assert state.top_bid.bidder == "edwardzhou"
-      # assert state.top_bid.bid == 300
-      # assert state.next_token_id == 2
-      # {:ok, state} = AuctionServer.withdraw(server, 2, "edwardzhou", 300)
+      {:ok, state} = AuctionServer.new_bid(server, 1, "edwardzhou", 1000, 100)
+      assert state.top_bid.bidder == "edwardzhou"
+      assert state.top_bid.bid == 1100
+      assert state.next_token_id == 2
+      {:ok, state} = AuctionServer.withdraw(server, 2, "edwardzhou", 1100)
     end
   end
 end
