@@ -115,26 +115,70 @@ defmodule AuctionWeb.Auction.AuctionState do
     end
   end
 
+  # def withdraw(
+  #       %{top_bid: %{bidder: bidder, bid: bid}} = state,
+  #       %{bidder_name: bidder_name, bid: bid} = params
+  #     )
+  #     when bidder != bidder_name do
+  #   {:error, state}
+  # end
+
+  def withdraw(
+        %{next_token_id: next_token_id} = state,
+        %{token_id: token_id} = params
+      )
+      when next_token_id != token_id do
+    {:error, state}
+  end
+
+  def withdraw(
+        %{bid_list: []} = state,
+        params
+      ) do
+    {:error, state}
+  end
+
+  def withdraw(
+        %{top_bid: %{bidder: bidder, bid: top_bid}} = state,
+        %{bidder_name: bidder_name, bid: bid} = params
+      )
+      when bidder != bidder_name
+      when top_bid != bid do
+    {:error, state}
+  end
+
+  # def withdraw(
+  #       %{bid_at: bid_at} = state,
+  #       params
+  #     )
+  #     when Timex.diff(Timex.local(), bid_at, :seconds) >= 10do
+  #   {:error, state}
+  # end
+
   def withdraw(state, params) do
     {first, second} = top_two(state.bid_list)
 
-    prev_bid =
+    if Timex.diff(Timex.local(), state.bid_at, :seconds) >= 10 do
+      {:error, state}
+    else
+      prev_bid =
       case second do
         nil -> {nil, state.price_starts}
         %{bidder: bidder, bid: bid} -> {bidder, bid}
       end
 
-    state =
-      state
-      |> update_top_bid(prev_bid)
-      |> add_to_bid_list({first.bidder, -first.bid})
-      |> update_bidder_count()
-      |> inc_token_id()
-      |> update_bid_at()
-      |> update_increases()
-      |> update_commissions()
+      state =
+        state
+        |> update_top_bid(prev_bid)
+        |> add_to_bid_list({first.bidder, -first.bid})
+        |> update_bidder_count()
+        |> inc_token_id()
+        |> update_bid_at()
+        |> update_increases()
+        |> update_commissions()
 
-    {:ok, state}
+      {:ok, state}
+    end
   end
 
   def top_two(list) when not is_list(list), do: {nil, nil}

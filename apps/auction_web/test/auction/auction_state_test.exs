@@ -116,18 +116,149 @@ defmodule AuctionWeb.Auction.AuctionStateTest do
 
       {:ok, state} = state |> AuctionState.bid(params)
 
-      params = %{
-        params
-        | token_id: 2,
-          bidder_name: "user2",
-          bid_base: 1100,
-          increase: 300
-      }
+      params = %{params | token_id: 2}
+      params = %{params | bidder_name: "user2"}
+      params = %{params | bid_base: 1100}
+      params = %{params | increase: 300}
 
       {:ok, state} = state |> AuctionState.bid(params)
       assert state.next_token_id == 3
       assert state.top_bid.bidder == "user2"
       assert state.top_bid.bid == 1400
+    end
+  end
+
+  describe "#withdraw" do
+    test "staled token_id", %{state: state} do
+      state = %{state | top_bid: %{bidder: "user1", bid: 2500}}
+      state = %{state | bid_list: [
+        %{bidder: "user1", bid: 2500}
+      ]}
+      state = %{state | next_token_id: 2}
+
+      params = %{
+        token_id: 1,
+        bidder_name: "user1",
+        bid: 2500
+      }
+
+      {:error, new_state} = state |> AuctionState.withdraw(params)
+      assert new_state.top_bid.bidder == "user1"
+      assert new_state.top_bid.bid == 2500
+      [%{bidder: "user1", bid: 2500} | _] = new_state.bid_list
+      assert new_state.next_token_id == 2
+    end
+
+    test "empty bids", %{state: state} do
+      state = %{state | top_bid: %{bidder: "user1", bid: 2500}}
+      state = %{state | bid_list: []}
+      state = %{state | next_token_id: 1}
+
+      params = %{
+        token_id: 1,
+        bidder_name: "user1",
+        bid: 2500
+      }
+
+      {:error, new_state} = state |> AuctionState.withdraw(params)
+    end
+
+    test "shouldn't withdraw on unmatched bid", %{state: state} do
+      state = %{state | top_bid: %{bidder: "user1", bid: 2500}}
+      state = %{state | bid_list: [
+        %{bidder: "user1", bid: 2500}
+      ]}
+      state = %{state | next_token_id: 2}
+
+      params = %{
+        token_id: 2,
+        bidder_name: "user1",
+        bid: 2000
+      }
+
+      {:error, new_state} = state |> AuctionState.withdraw(params)
+      assert new_state.top_bid.bidder == "user1"
+      assert new_state.top_bid.bid == 2500
+      [%{bidder: "user1", bid: 2500} | _] = new_state.bid_list
+      assert new_state.next_token_id == 2
+    end
+
+    test "shouldn't withdraw other's bid", %{state: state} do
+      state = %{state | top_bid: %{bidder: "user1", bid: 2500}}
+      state = %{state | bid_list: [
+        %{bidder: "user1", bid: 2500}
+      ]}
+      state = %{state | next_token_id: 2}
+
+      params = %{
+        token_id: 2,
+        bidder_name: "user2",
+        bid: 2500
+      }
+
+      {:error, new_state} = state |> AuctionState.withdraw(params)
+      assert new_state.top_bid.bidder == "user1"
+      assert new_state.top_bid.bid == 2500
+      [%{bidder: "user1", bid: 2500} | _] = new_state.bid_list
+      assert new_state.next_token_id == 2
+    end
+
+    test "timeout > 10 seconds", %{state: state} do
+      state = %{state | top_bid: %{bidder: "user1", bid: 2500}}
+      state = %{state | bid_list: [
+        %{bidder: "user1", bid: 2500}
+      ]}
+      state = %{state | next_token_id: 2}
+      state = %{state | bid_at: Timex.local() |> Timex.shift(seconds: -10) }
+
+      params = %{
+        token_id: 2,
+        bidder_name: "user1",
+        bid: 2500
+      }
+
+      {:error, new_state} = state |> AuctionState.withdraw(params)
+    end
+
+    test "success with first bids", %{state: state} do
+      state = %{state | top_bid: %{bidder: "user1", bid: 2500}}
+      state = %{state | bid_list: [
+        %{bidder: "user1", bid: 2500}
+      ]}
+      state = %{state | next_token_id: 2}
+
+      params = %{
+        token_id: 2,
+        bidder_name: "user1",
+        bid: 2500
+      }
+
+      {:ok, new_state} = state |> AuctionState.withdraw(params)
+      assert new_state.top_bid.bidder == nil
+      assert new_state.top_bid.bid == new_state.price_starts
+      [%{bidder: "user1", bid: -2500} | _] = new_state.bid_list
+      assert new_state.next_token_id == 3
+    end
+
+    test "success with more than 2 bids", %{state: state} do
+      state = %{state | top_bid: %{bidder: "user1", bid: 2500}}
+      state = %{state | bid_list: [
+        %{bidder: "user1", bid: 2500}, 
+        %{bidder: "user2", bid: 1500}
+      ]}
+      state = %{state | next_token_id: 3}
+
+      params = %{
+        token_id: 3,
+        bidder_name: "user1",
+        bid: 2500
+      }
+
+      {:ok, new_state} = state |> AuctionState.withdraw(params)
+      assert new_state.top_bid.bidder == "user2"
+      assert new_state.top_bid.bid == 1500
+      [%{bidder: "user1", bid: -2500} | _] = new_state.bid_list
+      assert new_state.next_token_id == 4
     end
   end
 end
