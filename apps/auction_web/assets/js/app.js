@@ -33,18 +33,30 @@ $(function(){
   });
 })
 
+function submit_bid(increase) {
+  bid_msg = window.bid_msg
+  channel.push("new_bid", {
+    token_id: bid_msg.next_token_id, 
+    bid_base: bid_msg.top_bid.bid,
+    increase: increase
+  })  
+}
+
 $(".offer200").on("click", () => {
-  channel.push("new_bid", {increase: 200})
+  let increase = $(".offer200").data("increase")
+  submit_bid(increase)
 });
 
 
 $(".offer500").on("click", () => {
-  channel.push("new_bid", {increase: 500})
+  let increase = $(".offer500").data("increase")
+  submit_bid(increase)
 });
 
 
 $(".offer1000").on("click", () => {
-  channel.push("new_bid", {increase: 1000})
+  let increase = $(".offer1000").data("increase")
+  submit_bid(increase)
 });
 
 $(".restart_bid").on("click", () => {

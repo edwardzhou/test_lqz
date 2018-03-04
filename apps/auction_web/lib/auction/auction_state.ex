@@ -25,15 +25,28 @@ defmodule AuctionWeb.Auction.AuctionState do
             # 10%, 20%. 50%
             increase_rates: [0.1, 0.2, 0.5],
             increases: [100, 200, 500],
+            price_starts: 1000,
             # 最后出价时间
             bid_at: nil,
-            status: :on_going,
+            status: :pending,
+            commission_rate: 3,
+            commissions: 0,
             # 倒计时
             countdown: 30
 
   def new_state(id, base_bid) do
-    %AuctionState{auction_id: id, top_bid: %{bidder: nil, bid: base_bid}}
+    %AuctionState{
+      auction_id: id,
+      top_bid: %{bidder: nil, bid: base_bid},
+      price_starts: base_bid,
+    }
     |> update_increases
+    |> update_commissions()
+
+  end
+
+  def start(state) do
+    %{state | bid_at: Timex.local(), status: :on_going }
   end
 
   def push_back_state(state) do
@@ -89,20 +102,60 @@ defmodule AuctionWeb.Auction.AuctionState do
 
     bid_params = {bidder_name, new_bid}
 
+    %{bid_at: last_bid_at} = state
+
+    case Timex.diff(Timex.local(), last_bid_at, :seconds) do
+      seconds when seconds < 30 ->
+        {:ok, update_state(state, bid_params)}
+
+      {:error, :invalid_date} ->
+        {:ok, update_state(state, bid_params)}
+
+      _ ->
+        {:error_closed, state}
+    end
+  end
+
+  def withdraw(state, params) do
+    {first, second} = top_two(state.bid_list)
+    
+    prev_bid = case second do
+      nil -> {nil, state.price_starts}
+      %{bidder: bidder, bid: bid} -> {bidder, bid}
+    end
+
     state =
       state
-      |> add_bidder(bidder_name)
-      |> update_top_bid(bid_params)
-      |> update_participants(bid_params)
-      |> update_bidders(bid_params)
-      |> add_to_bid_list(bid_params)
-      |> update_bid_count()
+      |> update_top_bid(prev_bid)
+      |> add_to_bid_list({first.bidder, - first.bid})
       |> update_bidder_count()
       |> inc_token_id()
       |> update_bid_at()
       |> update_increases()
-
+      |> update_commissions()
+    
     {:ok, state}
+  end
+
+  def top_two(list) when not is_list(list), do: {nil, nil}
+  def top_two([] = list), do: {nil, nil}
+  def top_two([first] = list), do: {first, nil}
+  def top_two([first, second | _] = list), do: {first, second}
+
+
+  def update_state(state, {bidder_name, _} = bid_params) do
+    state
+    |> add_bidder(bidder_name)
+    |> update_top_bid(bid_params)
+    |> update_participants(bid_params)
+    |> update_bidders(bid_params)
+    |> add_to_bid_list(bid_params)
+    |> update_bid_count()
+    |> update_bidder_count()
+    |> inc_token_id()
+    |> update_bid_at()
+    |> update_increases()
+    |> update_commissions()
   end
 
   def update_top_bid(auction, {bidder_name, new_bid}) do
@@ -135,7 +188,7 @@ defmodule AuctionWeb.Auction.AuctionState do
   end
 
   def update_bid_at(%{bid_at: _bid_at} = auction) do
-    %{auction | bid_at: NaiveDateTime.utc_now()}
+    %{auction | bid_at: Timex.local()}
   end
 
   def update_increases(%{top_bid: %{bid: last_bid}} = auction) do
@@ -149,5 +202,10 @@ defmodule AuctionWeb.Auction.AuctionState do
 
     increases = Enum.map([base * 0.1, base * 0.2, base * 0.5], &trunc(&1))
     %{auction | increases: increases}
+  end
+
+  def update_commissions(%{top_bid: %{bid: last_bid}} = state) do
+    commissions = div(last_bid * state.commission_rate, 100)
+    %{state | commissions: commissions}
   end
 end
