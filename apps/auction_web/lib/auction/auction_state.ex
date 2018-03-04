@@ -38,15 +38,14 @@ defmodule AuctionWeb.Auction.AuctionState do
     %AuctionState{
       auction_id: id,
       top_bid: %{bidder: nil, bid: base_bid},
-      price_starts: base_bid,
+      price_starts: base_bid
     }
     |> update_increases
     |> update_commissions()
-
   end
 
   def start(state) do
-    %{state | bid_at: Timex.local(), status: :on_going }
+    %{state | bid_at: Timex.local(), status: :on_going}
   end
 
   def push_back_state(state) do
@@ -118,22 +117,23 @@ defmodule AuctionWeb.Auction.AuctionState do
 
   def withdraw(state, params) do
     {first, second} = top_two(state.bid_list)
-    
-    prev_bid = case second do
-      nil -> {nil, state.price_starts}
-      %{bidder: bidder, bid: bid} -> {bidder, bid}
-    end
+
+    prev_bid =
+      case second do
+        nil -> {nil, state.price_starts}
+        %{bidder: bidder, bid: bid} -> {bidder, bid}
+      end
 
     state =
       state
       |> update_top_bid(prev_bid)
-      |> add_to_bid_list({first.bidder, - first.bid})
+      |> add_to_bid_list({first.bidder, -first.bid})
       |> update_bidder_count()
       |> inc_token_id()
       |> update_bid_at()
       |> update_increases()
       |> update_commissions()
-    
+
     {:ok, state}
   end
 
@@ -141,7 +141,6 @@ defmodule AuctionWeb.Auction.AuctionState do
   def top_two([] = list), do: {nil, nil}
   def top_two([first] = list), do: {first, nil}
   def top_two([first, second | _] = list), do: {first, second}
-
 
   def update_state(state, {bidder_name, _} = bid_params) do
     state

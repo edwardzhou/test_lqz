@@ -52,7 +52,9 @@ defmodule AuctionWeb.Auction.AuctionServer do
 
   ## Server Callback
   def init(:ok) do
-    new_state = AuctionState.new_state(1, 1000) |> AuctionState.start()
+    new_state =
+      AuctionState.new_state(1, 1000)
+      |> AuctionState.start()
 
     {:ok, new_state}
   end
