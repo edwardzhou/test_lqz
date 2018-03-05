@@ -74,6 +74,24 @@ defmodule AuctionWeb.AuctionChannel do
     {:reply, {:ok, %{}}, socket}
   end
 
+  def handle_in("withdraw", payload, socket) do
+    # broadcast! socket, "on_new_bid", %{new_bid: payload["increase"]}
+    # :timer.send_after(1000, {:countdown, 29})
+    {result, state} = AuctionServer.withdraw(
+      socket.assigns.server, 
+      payload["token_id"],
+      socket.assigns.user_id,
+      payload["bid"]
+    )
+
+    IO.puts("withdraw: #{result}, #{inspect(state)}")
+
+    # state = %AuctionState{ top_bid: %{bidder: socket.assigns.user_id, bid: payload["increase"] } }
+    # broadcast socket, "on_new_bid", state
+
+    {:reply, {result, state}, socket}
+  end
+
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (auction:lobby).
   def handle_in("shout", payload, socket) do
