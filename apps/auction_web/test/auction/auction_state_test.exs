@@ -220,6 +220,23 @@ defmodule AuctionWeb.Auction.AuctionStateTest do
       {:error, new_state} = state |> AuctionState.withdraw(params)
     end
 
+    test "can only withdraw once", %{state: state} do
+      state = %{state | top_bid: %{bidder: "user1", bid: 2500}}
+      state = %{state | bid_list: [
+        %{bidder: "user1", bid: 2500}
+      ]}
+      state = %{state | next_token_id: 2}
+      state = %{state | withdraws: %{"user1" => %{bid: 2500, token_id: 1}} }
+
+      params = %{
+        token_id: 2,
+        bidder_name: "user1",
+        bid: 2500
+      }
+
+      {:error_withdraw_once, new_state} = state |> AuctionState.withdraw(params)
+    end
+
     test "success with first bids", %{state: state} do
       state = %{state | top_bid: %{bidder: "user1", bid: 2500}}
       state = %{state | bid_list: [

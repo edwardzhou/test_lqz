@@ -31,6 +31,7 @@ defmodule AuctionWeb.Auction.AuctionState do
             status: :pending,
             commission_rate: 3,
             commissions: 0,
+            withdraws: %{},
             # 倒计时
             countdown: 30
 
@@ -158,26 +159,32 @@ defmodule AuctionWeb.Auction.AuctionState do
   def withdraw(state, params) do
     {first, second} = top_two(state.bid_list)
 
-    if Timex.diff(Timex.local(), state.bid_at, :seconds) >= 10 do
-      {:error, state}
-    else
-      prev_bid =
-      case second do
-        nil -> {nil, state.price_starts}
-        %{bidder: bidder, bid: bid} -> {bidder, bid}
-      end
+    cond do
+      Timex.diff(Timex.local(), state.bid_at, :seconds) >= 10 ->
+        {:error, state}
+      
+      state.withdraws[first.bidder] != nil ->
+        {:error_withdraw_once, state}
+      
+      true ->
+        prev_bid =
+        case second do
+          nil -> {nil, state.price_starts}
+          %{bidder: bidder, bid: bid} -> {bidder, bid}
+        end
 
-      state =
-        state
-        |> update_top_bid(prev_bid)
-        |> add_to_bid_list({first.bidder, -first.bid})
-        |> update_bidder_count()
-        |> inc_token_id()
-        |> update_bid_at()
-        |> update_increases()
-        |> update_commissions()
+        state =
+          state
+          |> update_top_bid(prev_bid)
+          |> add_to_bid_list({first.bidder, -first.bid})
+          |> add_to_withdraws({first.bidder, first.bid})
+          |> update_bidder_count()
+          |> inc_token_id()
+          |> update_bid_at()
+          |> update_increases()
+          |> update_commissions()
 
-      {:ok, state}
+        {:ok, state}
     end
   end
 
@@ -193,6 +200,7 @@ defmodule AuctionWeb.Auction.AuctionState do
     |> update_participants(bid_params)
     |> update_bidders(bid_params)
     |> add_to_bid_list(bid_params)
+    # |> add_to_withdraws({bidder_name, -1})
     |> update_bid_count()
     |> update_bidder_count()
     |> inc_token_id()
@@ -216,6 +224,14 @@ defmodule AuctionWeb.Auction.AuctionState do
 
   def add_to_bid_list(state, {bidder_name, new_bid}) do
     %{state | bid_list: [%{bidder: bidder_name, bid: new_bid} | state.bid_list]}
+  end
+
+  def add_to_withdraws(state, {bidder_name, bid}) do
+    withdraws =
+      state.withdraws
+      |> Map.put(bidder_name, %{bid: bid})
+
+    %{state | withdraws: withdraws}
   end
 
   def update_bid_count(state) do
