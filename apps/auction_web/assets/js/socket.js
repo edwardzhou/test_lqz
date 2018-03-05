@@ -65,12 +65,77 @@ let render_msg = (msg) => {
     $('.top-bidder').text(msg.top_bid.bidder)
   }
 
-  $(".bidder_count").text(Object.keys(msg.bidders).length)
+  window.bid_msg = msg
+
+  $(".bidder_count").text(msg.bidder_count)
   $(".participant_count").text(msg.participant_count)
+  $(".offer200").text(msg.increases[0])
+  $(".offer200").data("increase", msg.increases[0])
+  $(".offer500").text(msg.increases[1])
+  $(".offer500").data("increase", msg.increases[1])
+  $(".offer1000").text(msg.increases[2])
+  $(".offer1000").data("increase", msg.increases[2])
+
+  let commission = "（加佣金" + msg.commission_rate + "% 即" + msg.commissions + "元)"
+  $(".commission").text(commission)
 }
 
+function show_restart(show) {
+  restart_elem = $(".restart_bid")
+  if (show) {
+    if (restart_elem.css("display") != "block")
+      restart_elem.show()
+  } 
+  else {
+    if (restart_elem.css("display") != "none")
+      restart_elem.hide()
+  }
+}
+
+function element_visible(elem, visible) {
+  if (visible) {
+    if (elem.css("display") != "block")
+    elem.show()
+  } 
+  else {
+    if (elem.css("display") != "none")
+    elem.hide()
+  }
+}
+
+function countdown() {
+  let elem = $(".countdown")
+  if (window.bid_msg == "undefined" || window.bid_msg == null) {
+    element_visible($(".restart_bid"), true)
+    element_visible($(".withdraw_bid"), false)
+    elem.text("--")
+    return
+  }
+
+  element_visible($(".restart_bid"), false)
+  
+  let bid_at = new Date(window.bid_msg.bid_at || new Date())
+  let now = new Date()
+  let count = 30 - Math.round((now - bid_at) / 1000)
+  if (count > 0) {
+    elem.text(count)
+    if (window.bid_msg.top_bid.bidder == window.user_id) {
+      element_visible($(".withdraw_bid"), count > 20)
+    } else {
+      element_visible($(".withdraw_bid"), false)
+    }
+  } else {
+    elem.text('已结束')
+    element_visible($(".restart_bid"), true)
+    element_visible($(".withdraw_bid"), false)
+  }
+
+}
+
+window.setInterval(countdown, 1000)
+
 channel.on("bidder_join", msg => {
-  // console.log("Bidder join: ", msg)
+  console.log("Bidder join: ", msg)
   render_msg(msg)
 })
 
@@ -84,12 +149,19 @@ channel.on("bid_endded", msg => {
 });
 
 channel.on("on_new_bid", msg => {
-  // console.log("on_new_bid:" , msg)
+  console.log("on_new_bid:" , msg)
   render_msg(msg)
 });
 
 channel.on("on_restart", msg => {
+  render_msg(msg)
   channel.push("ping")
+})
+
+channel.on("on_withdraw", msg => {
+  console.log("on_withdraw:" , msg)
+
+  render_msg(msg)
 })
 
 export {socket, channel}

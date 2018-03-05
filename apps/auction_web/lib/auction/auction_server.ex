@@ -28,6 +28,16 @@ defmodule AuctionWeb.Auction.AuctionServer do
     GenServer.call(server, {:bid, params})
   end
 
+  def withdraw(server, token_id, bidder_name, bid) do
+    params = %{
+      token_id: token_id,
+      bidder_name: bidder_name,
+      bid: bid
+    }
+
+    GenServer.call(server, {:withdraw, params})
+  end
+
   def shutdown(server) do
     GenServer.stop(server, :normal)
   end
@@ -42,7 +52,9 @@ defmodule AuctionWeb.Auction.AuctionServer do
 
   ## Server Callback
   def init(:ok) do
-    new_state = AuctionState.new_state(1, 1000)
+    new_state =
+      AuctionState.new_state(1, 1000)
+      |> AuctionState.start()
 
     {:ok, new_state}
   end
@@ -64,11 +76,27 @@ defmodule AuctionWeb.Auction.AuctionServer do
   def handle_call({:bid, params}, _from, state) do
     {ret, state} = AuctionState.bid(state, params)
 
-    Endpoint.broadcast!(
-      "auction:#{state.auction_id}",
-      "on_new_bid",
-      AuctionState.push_back_state(state)
-    )
+    if ret == :ok do
+      Endpoint.broadcast!(
+        "auction:#{state.auction_id}",
+        "on_new_bid",
+        AuctionState.push_back_state(state)
+      )
+    end
+
+    {:reply, {ret, state}, state}
+  end
+
+  def handle_call({:withdraw, params}, _from, state) do
+    {ret, state} = AuctionState.withdraw(state, params)
+
+    if ret == :ok do
+      Endpoint.broadcast!(
+        "auction:#{state.auction_id}",
+        "on_withdraw",
+        AuctionState.push_back_state(state)
+      )
+    end
 
     {:reply, {ret, state}, state}
   end
@@ -78,7 +106,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
       Process.cancel_timer(state.last_timer_id)
     end
 
-    state = %AuctionState{}
+    state = AuctionState.new_state(state.auction_id, 1000) |> AuctionState.start()
 
     Endpoint.broadcast!(
       "auction:#{state.auction_id}",
@@ -86,7 +114,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
       AuctionState.push_back_state(state)
     )
 
-    {:reply, state, state}
+    {:reply, {:ok, state}, state}
   end
 
   def handle_call({:get_state}, _from, state) do
