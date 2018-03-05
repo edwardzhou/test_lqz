@@ -3,8 +3,12 @@ defmodule AuctionWeb.AuctionController do
 
   alias Auction.Auctions
   alias Auction.Auctions.Auction
+  alias AuctionWeb.Auction.AuctionRegistry
 
   def index(conn, _params) do
+    AuctionRegistry.start_link(:registry)
+    AuctionRegistry.create(:registry, 1)
+
     auctions = Auctions.list_auctions()
     render(conn, "index.html", auctions: auctions)
   end
