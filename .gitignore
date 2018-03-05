@@ -1,7 +1,7 @@
 /_build
 /cover
 /deps
-**/uploadyhs
+**/uploads
 /.vscode
 erl_crash.dump
 *.ez
