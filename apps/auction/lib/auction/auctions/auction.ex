@@ -21,14 +21,19 @@ defmodule Auction.Auctions.Auction do
   end
 
   def data_time_attrs(%{ends_at: ends_at, starts_at: starts_at} = attrs) do
-    attrs
-    |> put_in([:ends_at, :minute], ends_at.min)
-    |> put_in([:starts_at, :minute], starts_at.min)
+    if Map.has_key?(ends_at, :min) do
+      attrs
+      |> put_in([:ends_at, :minute], ends_at.min)
+      |> put_in([:starts_at, :minute], starts_at.min)
+    else
+      attrs
+    end
   end
 
   def data_time_attrs(attrs) do attrs end
 
-  def uniq_filename_attrs(%{logo: logo} = attrs) do
+  def uniq_filename_attrs(%{logo: logo} = attrs)
+    when is_map(logo) do
     name = :crypto.hash(:md5, logo.path) |> Base.encode16
     logo = %Plug.Upload{logo | filename: "#{name}#{Path.extname(logo.filename)}"}
     %{attrs | logo: logo}

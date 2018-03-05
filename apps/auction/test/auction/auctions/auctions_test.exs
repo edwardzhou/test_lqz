@@ -6,9 +6,10 @@ defmodule Auction.AuctionsTest do
   describe "auctions" do
     alias Auction.Auctions.Auction
 
-    @valid_attrs %{product_name: "some product_name"}
-    @update_attrs %{product_name: "some updated product_name"}
-    @invalid_attrs %{product_name: nil}
+    @valid_attrs %{name: "some name", ends_at: DateTime.utc_now, starts_at: DateTime.utc_now,
+      logo: %Plug.Upload{path: "./test/test.jpeg", filename: "test.jpeg"}}
+    @update_attrs %{name: "some updated name"}
+    @invalid_attrs %{name: nil}
 
     def auction_fixture(attrs \\ %{}) do
       {:ok, auction} =
@@ -31,7 +32,7 @@ defmodule Auction.AuctionsTest do
 
     test "create_auction/1 with valid data creates a auction" do
       assert {:ok, %Auction{} = auction} = Auctions.create_auction(@valid_attrs)
-      assert auction.product_name == "some product_name"
+      assert auction.name == "some name"
     end
 
     test "create_auction/1 with invalid data returns error changeset" do
@@ -42,7 +43,7 @@ defmodule Auction.AuctionsTest do
       auction = auction_fixture()
       assert {:ok, auction} = Auctions.update_auction(auction, @update_attrs)
       assert %Auction{} = auction
-      assert auction.product_name == "some updated product_name"
+      assert auction.name == "some updated name"
     end
 
     test "update_auction/2 with invalid data returns error changeset" do
