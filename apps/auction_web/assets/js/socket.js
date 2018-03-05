@@ -158,5 +158,11 @@ channel.on("on_restart", msg => {
   channel.push("ping")
 })
 
+channel.on("on_withdraw", msg => {
+  console.log("on_withdraw:" , msg)
+
+  render_msg(msg)
+})
+
 export {socket, channel}
 //export default socket
