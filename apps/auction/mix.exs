@@ -40,7 +40,7 @@ defmodule Auction.Mixfile do
       {:scrivener, "~> 2.0"},
       {:ecto, "~> 2.1"},
       {:arc, "~> 0.8.0"},
-      {:arc_ecto, "~> 0.7.0"}
+      {:arc_ecto, github: "breeze-yang/arc_ecto", branch: "master"},
     ]
   end
 
