@@ -30,7 +30,16 @@ defmodule AuctionAdmin.ExAdmin.Product do
         input product, :grade
         input product, :price
         input product, :specification
-        input product, :description, type: :text
+        input product, :description, type: :text, class: "auction-editor"
+      end
+      javascript do
+        """
+        $(document).ready(function() {
+          var editor = new Simditor({
+            textarea: $('#product_description')
+          });
+        });
+        """
       end
     end
   end
