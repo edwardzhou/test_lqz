@@ -17,10 +17,11 @@ defmodule AuctionAdmin.ExAdmin.Auction do
     show auction do
       attributes_table do
         row :id
+        row :name
         row :logo, fn(auction) -> img src: Image.url(auction.logo) end
         row :starts_at
         row :ends_at
-        row :created_at
+        row :inserted_at
         row :updated_at
       end
     end
