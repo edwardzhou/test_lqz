@@ -32,11 +32,8 @@ config :ex_admin,
   modules: [
     AuctionAdmin.ExAdmin.Dashboard,
     AuctionAdmin.ExAdmin.Authentication,
-    AuctionAdmin.ExAdmin.Auction,
-    AuctionAdmin.ExAdmin.Product
-  ],
-  head_template: {AuctionAdmin.AdminView, "admin_layout.html"}
-
+    AuctionAdmin.ExAdmin.Auction
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
