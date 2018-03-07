@@ -5,11 +5,11 @@ defmodule Auction.Product do
 
 
   schema "products" do
-    field :name, :string
+    field :description, :string
     field :grade, :string, comment: "品相等级"
+    field :name, :string
     field :price, :decimal
     field :specification, :string, comment: "拍品规格"
-    field :description, :string
 
     timestamps()
   end

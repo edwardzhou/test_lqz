@@ -8,6 +8,21 @@ exports.config = {
         "js/admin_lte2.js": ["vendor/admin_lte2.js"],
         "js/jquery.min.js": ["vendor/jquery.min.js"],
       }
+
+      // To use a separate vendor.js bundle, specify two files path
+      // http://brunch.io/docs/config#-files-
+      // joinTo: {
+      //   "js/app.js": /^js/,
+      //   "js/vendor.js": /^(?!js)/
+      // }
+      //
+      // To change the order of concatenation of files, explicitly mention here
+      // order: {
+      //   before: [
+      //     "vendor/js/jquery-2.1.1.js",
+      //     "vendor/js/bootstrap.min.js"
+      //   ]
+      // }
     },
     stylesheets: {
       joinTo: {
@@ -44,11 +59,6 @@ exports.config = {
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/vendor/]
-    },
-    sass: {
-      options: {
-        includePaths: ["node_modules/simditor/styles"]
-      }
     }
   },
 
@@ -59,10 +69,7 @@ exports.config = {
   },
 
   npm: {
-    enabled: true,
-    globals: {
-      Simditor: "simditor"
-    }
+    enabled: true
   }
 };
 
