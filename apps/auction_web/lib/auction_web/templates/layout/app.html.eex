@@ -14,14 +14,11 @@
   </head>
 
   <body>
-    <div class="container wrap">
-      <header class="header wrap">
+    <div class="wrap">
         <div class="top">
           <a class="back" href=""></a>
           <input type="text" placeholder="请输入速拍专场代号快捷进入" />
 	      </div>
-
-      </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>

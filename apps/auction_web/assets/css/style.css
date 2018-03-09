@@ -1161,7 +1161,8 @@ a {text-decoration: none;}
 	display: block;
 }
 .swiper7 .swiper-slide  img{
-	width: 100%;
+	width: 40%;
+	height: 40%;
 	vertical-align: middle;
 }
 .swiper7 .swiper-pagination-bullet-active {

@@ -11,7 +11,7 @@
   <tbody>
 <%= for auction <- @auctions do %>
     <tr>
-      <td><%= auction.product_name %></td>
+      <td><%= auction.name %></td>
 
       <td class="text-right">
         <span><%= link "Show", to: auction_path(@conn, :show, auction), class: "btn btn-default btn-xs" %></span>
