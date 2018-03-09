@@ -1,8 +1,8 @@
 defmodule AuctionWeb.AuctionController do
   use AuctionWeb, :controller
 
-  alias Auction.Auctions
-  alias Auction.Auctions.Auction
+  alias DB.Auctions
+  alias DB.Auctions.Auction
   alias AuctionWeb.Auction.AuctionRegistry
 
   def index(conn, _params) do

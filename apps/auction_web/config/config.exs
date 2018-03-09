@@ -8,7 +8,7 @@ use Mix.Config
 # General application configuration
 config :auction_web,
   namespace: AuctionWeb,
-  ecto_repos: [Auction.Repo]
+  ecto_repos: [DB.Repo]
 
 # Configures the endpoint
 config :auction_web, AuctionWeb.Endpoint,

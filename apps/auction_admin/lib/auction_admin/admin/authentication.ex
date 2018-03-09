@@ -1,7 +1,7 @@
 defmodule AuctionAdmin.ExAdmin.Authentication do
   use ExAdmin.Register
 
-  alias Auction.Accounts.Authentication
+  alias DB.Accounts.Authentication
 
   register_resource Authentication do
     scope :all, default: true

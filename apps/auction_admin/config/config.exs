@@ -8,7 +8,7 @@ use Mix.Config
 # General application configuration
 config :auction_admin,
   namespace: AuctionAdmin,
-  ecto_repos: [Auction.Repo]
+  ecto_repos: [DB.Repo]
 
 # Configures the endpoint
 config :auction_admin, AuctionAdmin.Endpoint,
@@ -27,7 +27,7 @@ config :auction_admin, :generators,
   context_app: false
 
 config :ex_admin,
-  repo: Auction.Repo,
+  repo: DB.Repo,
   module: AuctionAdmin,
   modules: [
     AuctionAdmin.ExAdmin.Dashboard,

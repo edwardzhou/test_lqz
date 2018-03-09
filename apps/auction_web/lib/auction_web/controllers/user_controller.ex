@@ -1,8 +1,8 @@
 defmodule AuctionWeb.UserController do
   use AuctionWeb, :controller
 
-  alias Auction.Accounts
-  alias Auction.Accounts.User
+  alias DB.Accounts
+  alias DB.Accounts.User
 
   def index(conn, _params) do
     users = Accounts.list_users()

@@ -1,8 +1,8 @@
 defmodule AuctionWeb.AuthenticationControllerTest do
   use AuctionWeb.ConnCase
-  alias Auction.Accounts
-  alias Auction.Accounts.{User}
-  alias Auction.Repo
+  alias DB.Accounts
+  alias DB.Accounts.{User}
+  alias DB.Repo
 
   require Ueberauth
   require Logger

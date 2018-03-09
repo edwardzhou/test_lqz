@@ -1,7 +1,7 @@
 defmodule AuctionAdmin.ExAdmin.Auction do
   use ExAdmin.Register
-  alias Auction.Uploaders.Image
-  alias Auction.Auctions.Auction
+  alias DB.Uploaders.Image
+  alias DB.Auctions.Auction
   register_resource Auction do
 
     index do

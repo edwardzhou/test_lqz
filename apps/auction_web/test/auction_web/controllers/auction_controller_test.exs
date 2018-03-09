@@ -1,7 +1,7 @@
 defmodule AuctionWeb.AuctionControllerTest do
   use AuctionWeb.ConnCase
 
-  alias Auction.Auctions
+  alias DB.Auctions
 
   @create_attrs %{product_name: "some product_name"}
   @update_attrs %{product_name: "some updated product_name"}

@@ -1,7 +1,7 @@
 defmodule AuctionWeb.UserControllerTest do
   use AuctionWeb.ConnCase
 
-  alias Auction.Accounts
+  alias DB.Accounts
 
   @create_attrs %{email: "some email", encrypted_password: "some encrypted_password", nickname: "some nickname", telephone: "some telephone", username: "some username"}
   @update_attrs %{email: "some updated email", encrypted_password: "some updated encrypted_password", nickname: "some updated nickname", telephone: "some updated telephone", username: "some updated username"}

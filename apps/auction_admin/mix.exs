@@ -44,7 +44,7 @@ defmodule AuctionAdmin.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:ex_admin, github: "edwardzhou/ex_admin", branch: "phx-1.3"},
-      {:auction, in_umbrella: true},
+      {:db, in_umbrella: true},
       {:cowboy, "~> 1.0"}
     ]
   end

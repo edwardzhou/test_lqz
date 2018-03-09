@@ -5,7 +5,7 @@ defmodule AuctionWeb.AuthenticationController do
   # alias Auction.Accounts
   # alias Auction.Accounts.Authentication
   # alias Ueberauth.Strategy.Helpers
-  alias Auction.Accounts.Authenticator
+  alias DB.Accounts.Authenticator
   require Logger
 
   def callback(%{assigns: %{ueberauth_failure: fails}} = conn, _params) do
