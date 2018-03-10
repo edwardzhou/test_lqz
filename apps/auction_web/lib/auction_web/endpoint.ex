@@ -26,9 +26,7 @@ defmodule AuctionWeb.Endpoint do
     parsers: [:urlencoded, :multipart, :json, Absinthe.Plug.Parser],
     pass: ["*/*"],
     json_decoder: Poison
-  
 
-  
   plug Plug.MethodOverride
   plug Plug.Head
 

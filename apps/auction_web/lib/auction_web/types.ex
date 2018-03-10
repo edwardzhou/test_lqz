@@ -8,7 +8,11 @@ defmodule AuctionWeb.Types do
     field(:id, :id)
     field(:username, :string)
     field(:telephone, :string)
-    field(:authentications, list_of(:authentication), resolve: assoc(:authentications))
+    field(
+      :authentications,
+      list_of(:authentication),
+      resolve: assoc(:authentications)
+      )
   end
 
   object :authentication do

@@ -58,7 +58,6 @@ defmodule AuctionWeb do
     end
   end
 
-
   def schema do
     quote do
       use Absinthe.Schema
