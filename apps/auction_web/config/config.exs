@@ -42,6 +42,10 @@ config :ueberauth, Ueberauth,
     wechat: {Ueberauth.Strategy.Wechat, []}
   ]
 
+config :snowflake,
+  machine_id: 1,   # values are 0 thru 1023 nodes
+  epoch: 1142974214000  # don't change after you decide what your epoch is
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

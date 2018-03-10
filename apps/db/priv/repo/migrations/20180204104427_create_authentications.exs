@@ -18,5 +18,6 @@ defmodule DB.Repo.Migrations.CreateAuthentications do
       timestamps()
     end
 
+    create index(:authentications, [:uid], unique: true)
   end
 end
