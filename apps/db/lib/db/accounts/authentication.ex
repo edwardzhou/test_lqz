@@ -1,4 +1,8 @@
 defmodule DB.Accounts.Authentication do
+  @moduledoc """
+  oauth授权认证信息
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
   alias DB.Accounts.{Authentication, User}
