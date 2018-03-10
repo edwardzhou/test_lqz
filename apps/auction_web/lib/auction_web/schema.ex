@@ -7,9 +7,12 @@ defmodule AuctionWeb.Schema do
   alias AuctionWeb.Resolvers.UserResolver
 
   query name: "Query" do
-    field :accounts_users, list_of(:accounts_user) do
-      arg(:id, non_null(:id))
-      resolve &UserResolver.get/3
+    description("查询")
+
+    field(:accounts_users, list_of(:accounts_user)) do
+      description("获取用户")
+      arg(:id, non_null(:id), description: "用户ID") 
+      resolve(&UserResolver.get/3)
     end
   end
 end
