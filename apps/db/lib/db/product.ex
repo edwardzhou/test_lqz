@@ -5,11 +5,11 @@ defmodule DB.Product do
 
 
   schema "products" do
-    field :description, :string
-    field :grade, :string, comment: "品相等级"
     field :name, :string
+    field :grade, :string, comment: "品相等级"
     field :price, :decimal
     field :specification, :string, comment: "拍品规格"
+    field :description, :string
 
     timestamps()
   end
