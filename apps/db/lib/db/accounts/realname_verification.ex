@@ -32,7 +32,14 @@ defmodule DB.Accounts.RealnameVerification do
       :state,
       :user_id
     ])
-    |> validate_required([:realname, :id_no, :id_pic1, :id_pic2, :state, :user_id])
+    |> validate_required([
+      :realname,
+      :id_no,
+      :id_pic1,
+      :id_pic2,
+      :state,
+      :user_id
+    ])
     |> unsafe_validate_unique([:id_no], Repo)
     |> unsafe_validate_unique([:user_id], Repo)
   end
