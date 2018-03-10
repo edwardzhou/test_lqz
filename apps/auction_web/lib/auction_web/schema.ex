@@ -1,7 +1,10 @@
 defmodule AuctionWeb.Schema do
+  @moduledoc """
+  GraphQL 模式定义
+  """
+
   use AuctionWeb, :schema
   alias AuctionWeb.Resolvers.UserResolver
-  # import_types(AuctionWeb.Types)
 
   query name: "Query" do
     field :accounts_users, list_of(:accounts_user) do

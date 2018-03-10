@@ -1,4 +1,8 @@
 defmodule AuctionWeb.Types do
+  @moduledoc """
+  GraphQL 类型
+  """
+
   use AuctionWeb, :type
   import Ecto.Query
   use Absinthe.Ecto, repo: DB.Repo
