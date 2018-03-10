@@ -32,6 +32,18 @@ defmodule AuctionWeb.Router do
     post "/:provider/callback", AuthenticationController, :callback, as: :auth
   end
 
+  scope "/graphql" do
+    pipe_through [:browser]
+
+    forward "/", Absinthe.Plug, schema: AuctionWeb.Schema
+  end
+
+  scope "/graphiql" do
+    pipe_through [:api]
+
+    forward "/", Absinthe.Plug.GraphiQL, schema: AuctionWeb.Schema
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", AuctionWeb do
   #   pipe_through :api
