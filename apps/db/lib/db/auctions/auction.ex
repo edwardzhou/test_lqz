@@ -13,7 +13,10 @@ defmodule DB.Auctions.Auction do
 
   @doc false
   def changeset(%DB.Auctions.Auction{} = auction, attrs \\ %{}) do
-    processed_attrs = attrs |> data_time_attrs |> uniq_filename_attrs
+    processed_attrs = 
+      attrs
+      |> data_time_attrs
+      |> uniq_filename_attrs
 
     auction
     |> cast(processed_attrs, [:name, :starts_at, :ends_at])
@@ -37,7 +40,11 @@ defmodule DB.Auctions.Auction do
 
   def uniq_filename_attrs(%{logo: logo} = attrs)
       when is_map(logo) do
-    name = :crypto.hash(:md5, logo.path) |> Base.encode16()
+    name = 
+      :md5 
+      |> :crypto.hash(:md5, logo.path)
+      |> Base.encode16()
+      
     logo = %Plug.Upload{logo | filename: "#{name}#{Path.extname(logo.filename)}"}
     %{attrs | logo: logo}
   end

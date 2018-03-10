@@ -1,4 +1,8 @@
 defmodule DB.Accounts.RealnameVerification do
+  @moduledoc """
+  实名认证信息
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
   alias DB.Repo
