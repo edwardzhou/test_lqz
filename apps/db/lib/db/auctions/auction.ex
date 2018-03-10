@@ -42,7 +42,7 @@ defmodule DB.Auctions.Auction do
       when is_map(logo) do
     name =
       :md5
-      |> :crypto.hash(:md5, logo.path)
+      |> :crypto.hash(logo.path)
       |> Base.encode16()
 
     logo = %Plug.Upload{logo | filename: "#{name}#{Path.extname(logo.filename)}"}
