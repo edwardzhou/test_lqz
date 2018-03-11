@@ -29,7 +29,8 @@ defmodule AuctionWeb.Mixfile do
         :ueberauth,
         :ueberauth_github,
         :ueberauth_wechat,
-        :timex
+        :timex,
+        :snowflake
       ]
     ]
   end
@@ -55,6 +56,11 @@ defmodule AuctionWeb.Mixfile do
       {:guardian, "~> 1.0"},
       {:ueberauth_wechat, github: "edwardzhou/ueberauth_wechat"},
       {:timex, "~> 3.2"},
+      {:snowflake, "~> 1.0.0"},
+      {:absinthe, "~> 1.4"},
+      {:absinthe_plug, "~> 1.4"},
+      {:absinthe_ecto, "~> 0.1.3"},
+      {:absinthe_relay, "~> 1.4"},
       {:cowboy, "~> 1.0"}
     ]
   end

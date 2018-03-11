@@ -58,6 +58,32 @@ defmodule AuctionWeb do
     end
   end
 
+  def schema do
+    quote do
+      use Absinthe.Schema
+      use Absinthe.Relay.Schema, :modern
+
+      # alias DcGraph.Resolvers
+      # alias DcGraph.Middleware
+
+      import_types Absinthe.Plug.Types  # type for uploads
+      import_types Absinthe.Type.Custom # type for datetime
+      import_types AuctionWeb.Types
+
+      # node interface do
+      #   resolve_type &Resolvers.Type.resolve/2
+      # end
+
+    end
+  end
+
+  def type do
+    quote do
+      use Absinthe.Schema.Notation
+      use Absinthe.Relay.Schema.Notation, :modern
+    end
+  end
+
   @doc """
   When used, dispatch to the appropriate controller/view/etc.
   """
