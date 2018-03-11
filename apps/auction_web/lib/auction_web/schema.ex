@@ -5,14 +5,25 @@ defmodule AuctionWeb.Schema do
 
   use AuctionWeb, :schema
   alias AuctionWeb.Resolvers.UserResolver
+  alias DB.Repo
+  alias DB.Auctions.Auction
+  import Ecto.Query
 
   query name: "Query" do
     description("查询")
 
     field(:accounts_users, list_of(:accounts_user)) do
-      description("获取用户")
+      description("用户")
       arg(:id, non_null(:id), description: "用户ID")
       resolve(&UserResolver.get/3)
+    end
+
+    field(:auctions, list_of(:auction)) do
+      description("拍卖场次")
+      arg(:id, :id, description: "拍卖场次ID")
+      resolve fn _, _ ->
+        {:ok, Auction |> Repo.all}
+      end
     end
   end
 end
