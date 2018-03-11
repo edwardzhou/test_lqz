@@ -23,7 +23,7 @@ defmodule DB.ProductsTest do
       assert {:ok, %Product{} = product} = Product.create_product(@valid_attrs)
       assert product.name == "some name"
       assert product.grade == "some grade"
-      assert product.price == 111.11
+      assert to_string(product.price) == "111.11"
       assert product.specification == "some specification"
       assert product.description == "some description"
     end
@@ -37,7 +37,7 @@ defmodule DB.ProductsTest do
       assert {:ok, product} = Product.update_product(product, @update_attrs)
       assert %Product{} = product
       assert product.name == "some updated name"
-      assert product.price == 222
+      assert to_string(product.price) == "222"
     end
 
     test "update_product/2 with invalid data returns error changeset" do
