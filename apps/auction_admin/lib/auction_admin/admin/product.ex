@@ -1,6 +1,6 @@
 defmodule AuctionAdmin.ExAdmin.Product do
   use ExAdmin.Register
-  alias Auction.Product
+  alias DB.Product
 
   register_resource Product do
 
@@ -12,17 +12,6 @@ defmodule AuctionAdmin.ExAdmin.Product do
       column :specification
       actions()
     end
-
-#    show auction do
-#      attributes_table do
-#        row :id
-#        row :logo, fn(auction) -> img src: Image.url(auction.logo) end
-#        row :starts_at
-#        row :ends_at
-#        row :created_at
-#        row :updated_at
-#      end
-#    end
 
     form product do
       inputs do
