@@ -12,7 +12,7 @@ msgstr ""
 
 #: lib/auction_admin/templates/page/index.html.eex:2
 msgid "Welcome to %{name}!"
-msgstr "欢迎来到%{name}!"
+msgstr ""
 
 #: lib/auction_admin/templates/page/index.html.eex:3 lib/ex_admin/index.ex:13
 msgid "Auction Name"
