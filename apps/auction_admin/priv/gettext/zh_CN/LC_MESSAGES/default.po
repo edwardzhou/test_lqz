@@ -1,0 +1,36 @@
+## `msgid`s in this file come from POT (.pot) files.
+##
+## Do not add, change, or remove `msgid`s manually here as
+## they're tied to the ones in the corresponding POT file
+## (with the same domain).
+##
+## Use `mix gettext.extract --merge` or `mix gettext.merge`
+## to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: zh_CN\n"
+
+#: lib/auction_admin/templates/page/index.html.eex:2
+msgid "Welcome to %{name}!"
+msgstr "欢迎来到%{name}!"
+
+#: lib/auction_admin/templates/page/index.html.eex:3 lib/ex_admin/index.ex:13
+msgid "Auction Name"
+msgstr "拍卖场次"
+
+#: lib/ex_admin/index.ex:17
+msgid "Starts At"
+msgstr "开始时间"
+
+#: lib/ex_admin/index.ex:18
+msgid "Ends At"
+msgstr "结束时间"
+
+#: lib/auction_admin/admin/auction.ex:9
+msgid "Auctions"
+msgstr "拍卖场次"
+
+#, elixir-format
+#: lib/ex_admin/index.ex:14
+msgid "Auction Logo"
+msgstr "场次图标"

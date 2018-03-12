@@ -32,9 +32,18 @@ config :ex_admin,
   modules: [
     AuctionAdmin.ExAdmin.Dashboard,
     AuctionAdmin.ExAdmin.Authentication,
-    AuctionAdmin.ExAdmin.Auction
+    AuctionAdmin.ExAdmin.Auction,
+    AuctionAdmin.ExAdmin.User
   ]
 
+config :ex_admin,
+  ExAdmin.Gettext,
+  default_locale: "zh_CN"
+
+config :auction_admin,
+  AuctionAdmin.Gettext,
+  default_locale: "zh_CN"
+  
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
