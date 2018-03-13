@@ -18,11 +18,11 @@ msgstr ""
 msgid "Auction Name"
 msgstr "拍卖场次"
 
-#: lib/ex_admin/index.ex:17
+#: lib/ex_admin/form.ex:16 lib/ex_admin/form.ex:16 lib/ex_admin/index.ex:17
 msgid "Starts At"
 msgstr "开始时间"
 
-#: lib/ex_admin/index.ex:18
+#: lib/ex_admin/form.ex:17 lib/ex_admin/form.ex:17 lib/ex_admin/index.ex:18
 msgid "Ends At"
 msgstr "结束时间"
 
@@ -30,7 +30,53 @@ msgstr "结束时间"
 msgid "Auctions"
 msgstr "拍卖场次"
 
-#, elixir-format
 #: lib/ex_admin/index.ex:14
 msgid "Auction Logo"
 msgstr "场次图标"
+
+#: lib/ex_admin/form.ex:13 lib/ex_admin/form.ex:13
+msgid "Commission Amount"
+msgstr "佣金"
+
+#: lib/ex_admin/form.ex:12 lib/ex_admin/form.ex:12
+msgid "Commission Rate"
+msgstr "佣金比例"
+
+#: lib/ex_admin/form.ex:11 lib/ex_admin/form.ex:11
+msgid "Current Price"
+msgstr "当前出价"
+
+#: lib/ex_admin/form.ex:22 lib/ex_admin/form.ex:22 lib/ex_admin/index.ex:13
+msgid "Grade"
+msgstr "等级"
+
+#: lib/ex_admin/form.ex:14 lib/ex_admin/form.ex:14
+msgid "Margin"
+msgstr "利润"
+
+#: lib/ex_admin/form.ex:23 lib/ex_admin/form.ex:23 lib/ex_admin/index.ex:14
+msgid "Price"
+msgstr "价格"
+
+#: lib/ex_admin/form.ex:21 lib/ex_admin/form.ex:21 lib/ex_admin/index.ex:12
+msgid "Product Name"
+msgstr "商品名称"
+
+#: lib/ex_admin/form.ex:24 lib/ex_admin/form.ex:24 lib/ex_admin/form.ex:25
+#: lib/ex_admin/form.ex:25 lib/ex_admin/index.ex:15
+msgid "Specification"
+msgstr "规格"
+
+#: lib/ex_admin/form.ex:15 lib/ex_admin/form.ex:15
+msgid "Start Price"
+msgstr "起拍价"
+
+#, elixir-format
+#: lib/auction_admin/admin/auction_item.ex:7
+msgid "Auction Items"
+msgstr "拍卖项"
+
+#, elixir-format
+#: lib/auction_admin/admin/product.ex:8
+msgid "Products"
+msgstr "商品"
