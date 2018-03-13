@@ -16,22 +16,105 @@ msgid "Welcome to %{name}!"
 msgstr ""
 
 #: lib/auction_admin/templates/page/index.html.eex:3 lib/ex_admin/index.ex:13
+#: lib/ex_admin/index.ex:13
 msgid "Auction Name"
 msgstr ""
 
-#: lib/ex_admin/index.ex:17
+#: lib/ex_admin/form.ex:16 lib/ex_admin/form.ex:16 lib/ex_admin/form.ex:16
+#: lib/ex_admin/form.ex:16 lib/ex_admin/index.ex:17 lib/ex_admin/index.ex:17
 msgid "Starts At"
 msgstr ""
 
-#: lib/ex_admin/index.ex:18
+#: lib/ex_admin/form.ex:17 lib/ex_admin/form.ex:17 lib/ex_admin/form.ex:17
+#: lib/ex_admin/form.ex:17 lib/ex_admin/index.ex:18 lib/ex_admin/index.ex:18
 msgid "Ends At"
 msgstr ""
 
-#: lib/auction_admin/admin/auction.ex:9
+#: lib/auction_admin/admin/auction.ex:9 lib/auction_admin/admin/auction.ex:9
 msgid "Auctions"
 msgstr ""
 
-#, elixir-format
-#: lib/ex_admin/index.ex:14
+#: lib/ex_admin/index.ex:14 lib/ex_admin/index.ex:14
 msgid "Auction Logo"
+msgstr ""
+
+#: lib/ex_admin/form.ex:13 lib/ex_admin/form.ex:13 lib/ex_admin/form.ex:13
+#: lib/ex_admin/form.ex:13
+msgid "Commission Amount"
+msgstr ""
+
+#: lib/ex_admin/form.ex:12 lib/ex_admin/form.ex:12 lib/ex_admin/form.ex:12
+#: lib/ex_admin/form.ex:12
+msgid "Commission Rate"
+msgstr ""
+
+#: lib/ex_admin/form.ex:11 lib/ex_admin/form.ex:11 lib/ex_admin/form.ex:11
+#: lib/ex_admin/form.ex:11
+msgid "Current Price"
+msgstr ""
+
+#: lib/ex_admin/form.ex:22 lib/ex_admin/form.ex:22 lib/ex_admin/form.ex:22
+#: lib/ex_admin/form.ex:22 lib/ex_admin/index.ex:13 lib/ex_admin/index.ex:13
+msgid "Grade"
+msgstr ""
+
+#: lib/ex_admin/form.ex:14 lib/ex_admin/form.ex:14 lib/ex_admin/form.ex:14
+#: lib/ex_admin/form.ex:14
+msgid "Margin"
+msgstr ""
+
+#: lib/ex_admin/form.ex:23 lib/ex_admin/form.ex:23 lib/ex_admin/form.ex:23
+#: lib/ex_admin/form.ex:23 lib/ex_admin/index.ex:14 lib/ex_admin/index.ex:14
+msgid "Price"
+msgstr ""
+
+#: lib/ex_admin/form.ex:21 lib/ex_admin/form.ex:21 lib/ex_admin/form.ex:21
+#: lib/ex_admin/form.ex:21 lib/ex_admin/index.ex:12 lib/ex_admin/index.ex:12
+msgid "Product Name"
+msgstr ""
+
+#: lib/ex_admin/form.ex:24 lib/ex_admin/form.ex:24 lib/ex_admin/form.ex:24
+#: lib/ex_admin/form.ex:24 lib/ex_admin/form.ex:25 lib/ex_admin/form.ex:25
+#: lib/ex_admin/form.ex:25 lib/ex_admin/form.ex:25 lib/ex_admin/index.ex:15
+#: lib/ex_admin/index.ex:15
+msgid "Specification"
+msgstr ""
+
+#: lib/ex_admin/form.ex:15 lib/ex_admin/form.ex:15 lib/ex_admin/form.ex:15
+#: lib/ex_admin/form.ex:15
+msgid "Start Price"
+msgstr ""
+
+#: lib/auction_admin/admin/auction_item.ex:7
+#: lib/auction_admin/admin/auction_item.ex:7
+msgid "Auction Items"
+msgstr ""
+
+#: lib/auction_admin/admin/product.ex:8 lib/auction_admin/admin/product.ex:8
+msgid "Products"
+msgstr ""
+
+#, elixir-format
+#: lib/ex_admin/index.ex:16 lib/ex_admin/index.ex:16
+msgid "Email"
+msgstr ""
+
+#, elixir-format
+#: lib/ex_admin/index.ex:14 lib/ex_admin/index.ex:14
+msgid "Nick Name"
+msgstr ""
+
+#, elixir-format
+#: lib/ex_admin/index.ex:15 lib/ex_admin/index.ex:15
+msgid "Telephone"
+msgstr ""
+
+#, elixir-format
+#: lib/ex_admin/index.ex:13 lib/ex_admin/index.ex:13
+msgid "User Name"
+msgstr ""
+
+#, elixir-format
+#: lib/auction_admin/admin/user.ex:7 lib/auction_admin/admin/user.ex:7
+msgid "Users"
 msgstr ""
