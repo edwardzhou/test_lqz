@@ -34,11 +34,19 @@ config :ex_admin,
     AuctionAdmin.ExAdmin.Authentication,
     AuctionAdmin.ExAdmin.Auction,
     AuctionAdmin.ExAdmin.AuctionItem,
-    AuctionAdmin.ExAdmin.Product
+    AuctionAdmin.ExAdmin.Product,
+    AuctionAdmin.ExAdmin.User
   ],
   head_template: {AuctionAdmin.AdminView, "admin_layout.html"}
 
+config :ex_admin,
+  ExAdmin.Gettext,
+  default_locale: "zh_CN"
 
+config :auction_admin,
+  AuctionAdmin.Gettext,
+  default_locale: "zh_CN"
+  
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
