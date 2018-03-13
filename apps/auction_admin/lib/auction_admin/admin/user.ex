@@ -16,6 +16,5 @@ defmodule AuctionAdmin.ExAdmin.User do
       column :email, label: gettext("Email")
       actions()
     end
-    
   end
 end
