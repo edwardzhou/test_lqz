@@ -11,31 +11,15 @@ defmodule DB.Auctions.Auction do
     timestamps()
   end
 
+
   @doc false
   def changeset(%DB.Auctions.Auction{} = auction, attrs \\ %{}) do
-    processed_attrs =
-      attrs
-      |> data_time_attrs
-      |> uniq_filename_attrs
+    processed_attrs = attrs |> uniq_filename_attrs
 
     auction
     |> cast(processed_attrs, [:name, :starts_at, :ends_at])
     |> cast_attachments(processed_attrs, [:logo])
     |> validate_required([:name, :logo, :starts_at, :ends_at])
-  end
-
-  def data_time_attrs(%{ends_at: ends_at, starts_at: starts_at} = attrs) do
-    if Map.has_key?(ends_at, :min) do
-      attrs
-      |> put_in([:ends_at, :minute], ends_at.min)
-      |> put_in([:starts_at, :minute], starts_at.min)
-    else
-      attrs
-    end
-  end
-
-  def data_time_attrs(attrs) do
-    attrs
   end
 
   def uniq_filename_attrs(%{logo: logo} = attrs)

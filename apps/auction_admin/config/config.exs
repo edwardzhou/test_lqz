@@ -33,8 +33,11 @@ config :ex_admin,
     AuctionAdmin.ExAdmin.Dashboard,
     AuctionAdmin.ExAdmin.Authentication,
     AuctionAdmin.ExAdmin.Auction,
+    AuctionAdmin.ExAdmin.AuctionItem,
+    AuctionAdmin.ExAdmin.Product,
     AuctionAdmin.ExAdmin.User
-  ]
+  ],
+  head_template: {AuctionAdmin.AdminView, "admin_layout.html"}
 
 config :ex_admin,
   ExAdmin.Gettext,
