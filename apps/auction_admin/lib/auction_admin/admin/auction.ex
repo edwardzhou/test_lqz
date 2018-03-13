@@ -14,7 +14,7 @@ defmodule AuctionAdmin.ExAdmin.Auction do
       column :logo, [label: gettext("Auction Logo")], fn(auction) ->
         img src: Image.url(auction.logo, :thumb)
       end
-      column :starts_at, label: gettext "Starts At"
+      column :starts_at, label: gettext("Starts At")
       column :ends_at, label: gettext("Ends At")
       actions()
     end
@@ -22,21 +22,26 @@ defmodule AuctionAdmin.ExAdmin.Auction do
     show auction do
       attributes_table do
         row :id
-        row :logo, fn(auction) -> img src: Image.url(auction.logo) end
-        row :name
-        row :starts_at
-        row :ends_at
+        row :logo, [label: gettext("Auction Logo")], fn(auction) ->
+          img src: Image.url(auction.logo)
+        end
+        row :name, label: gettext("Auction Name")
+        row :starts_at, label: gettext("Starts At")
+        row :ends_at, label: gettext("Ends At")
         row :inserted_at
         row :updated_at
+      end
+      
+      panel gettext("Auction Items") do
       end
     end
 
     form auction do
       inputs do
-        input auction, :name, prompt: "测试"
-        input auction, :logo
-        input auction, :starts_at, type: DateTime
-        input auction, :ends_at, type: DateTime
+        input auction, :name, label: gettext("Auction Name")
+        input auction, :logo, label: gettext("Auction Logo")
+        input auction, :starts_at, type: DateTime, label: gettext("Starts At")
+        input auction, :ends_at, type: DateTime, label: gettext("Ends At")
       end
     end
   end

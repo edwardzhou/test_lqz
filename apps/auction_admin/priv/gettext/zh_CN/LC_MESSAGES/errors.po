@@ -11,34 +11,34 @@ msgstr ""
 "Language: zh_CN\n"
 
 msgid "can't be blank"
-msgstr ""
+msgstr "不能为空"
 
 msgid "has already been taken"
-msgstr ""
+msgstr "已经被使用"
 
 msgid "is invalid"
-msgstr ""
+msgstr "无效"
 
 msgid "must be accepted"
 msgstr ""
 
 msgid "has invalid format"
-msgstr ""
+msgstr "有无效格式"
 
 msgid "has an invalid entry"
-msgstr ""
+msgstr "有无效数据"
 
 msgid "is reserved"
-msgstr ""
+msgstr "是保留的"
 
 msgid "does not match confirmation"
-msgstr ""
+msgstr "与确认信息不匹配"
 
 msgid "is still associated with this entry"
-msgstr ""
+msgstr "依然与本数据关联"
 
 msgid "are still associated with this entry"
-msgstr ""
+msgstr "依然与本数据关联"
 
 msgid "should be %{count} character(s)"
 msgid_plural "should be %{count} character(s)"
@@ -71,16 +71,16 @@ msgstr[0] ""
 msgstr[1] ""
 
 msgid "must be less than %{number}"
-msgstr ""
+msgstr "必须小于%{number}"
 
 msgid "must be greater than %{number}"
-msgstr ""
+msgstr "必须大于%{number}"
 
 msgid "must be less than or equal to %{number}"
-msgstr ""
+msgstr "必须小于等于%{number}"
 
 msgid "must be greater than or equal to %{number}"
-msgstr ""
+msgstr "必须大于等于%{number}"
 
 msgid "must be equal to %{number}"
-msgstr ""
+msgstr "必须等于%{number}"
