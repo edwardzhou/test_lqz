@@ -26,6 +26,10 @@ defmodule AuctionWeb.Types do
       description("手机号码")
     end
 
+    field(:email, :string) do
+      description("邮箱")
+    end
+
     field(:authentications, list_of(:authentication)) do
       resolve(assoc(:authentications))
       description("oauth认证授权")

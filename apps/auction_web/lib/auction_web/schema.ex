@@ -12,7 +12,7 @@ defmodule AuctionWeb.Schema do
   query name: "Query" do
     description("查询")
 
-    field(:accounts_users, list_of(:accounts_user)) do
+    field(:accounts_users, :accounts_user) do
       description("用户")
       arg(:id, non_null(:id), description: "用户ID")
       resolve(&UserResolver.get/3)
@@ -26,4 +26,9 @@ defmodule AuctionWeb.Schema do
       end
     end
   end
+
+  # mutation name: "Mutations" do
+  #   description("数据修改")
+
+  # end
 end
