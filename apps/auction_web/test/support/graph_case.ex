@@ -21,6 +21,8 @@ defmodule AuctionWeb.GraphCase do
   """
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL.Sandbox
+
   using do
     quote do
       import Absinthe.Relay.Node
@@ -38,10 +40,10 @@ defmodule AuctionWeb.GraphCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(DB.Repo)
+    :ok = Sandbox.checkout(DB.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(DB.Repo, {:shared, self()})
+      Sandbox.mode(DB.Repo, {:shared, self()})
     end
 
     :ok
