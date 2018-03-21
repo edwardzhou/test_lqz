@@ -5,6 +5,7 @@ defmodule AuctionWeb.Schema do
 
   use AuctionWeb, :schema
   alias AuctionWeb.Resolvers.UserResolver
+  alias AuctionWeb.Resolvers.UpdateRealnameResolver
   alias DB.Repo
   alias DB.Auctions.Auction
   import Ecto.Query
@@ -27,8 +28,12 @@ defmodule AuctionWeb.Schema do
     end
   end
 
-  # mutation name: "Mutations" do
-  #   description("数据修改")
-
-  # end
+  mutation name: "Mutations" do
+    description("数据修改")
+    
+    field(:update_realname, :realname_verification) do
+      arg(:input, non_null(:realname_verification_input))
+      resolve(&UpdateRealnameResolver.apply_verification/3)
+    end
+  end
 end

@@ -8,6 +8,7 @@ defmodule DB.Accounts do
   alias DB.Repo
 
   alias DB.Accounts.User
+  alias DB.Accounts.RealnameVerification
 
   @doc """
   Returns the list of users.
@@ -241,5 +242,24 @@ defmodule DB.Accounts do
   def user_from_auth(%Authentication{:union_id => union_id} = auth, prior_auth) do
     {:ok, _} = update_authentication(auth, %{user_id: prior_auth.user_id})
     {:ok, prior_auth |> assoc(:user) |> Repo.one()}
+  end
+
+  def get_realname_verification(user_id) do
+    RealnameVerification 
+    |> where(user_id: ^user_id)
+    |> Repo.all
+    |> List.first
+  end
+
+  def create_realname_verification(attrs) do
+    %RealnameVerification{}
+    |> RealnameVerification.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_realname_verification(%RealnameVerification{} = rn, attrs) do
+    rn
+    |> RealnameVerification.changeset(attrs)
+    |> Repo.update()
   end
 end

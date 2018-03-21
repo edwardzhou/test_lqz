@@ -11,6 +11,9 @@ defmodule AuctionWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :put_secure_browser_headers
   end
 
   scope "/", AuctionWeb do
@@ -33,7 +36,7 @@ defmodule AuctionWeb.Router do
   end
 
   scope "/graphql" do
-    pipe_through [:browser]
+    pipe_through [:api]
 
     forward "/", Absinthe.Plug, schema: AuctionWeb.Schema
   end

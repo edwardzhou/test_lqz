@@ -36,6 +36,25 @@ defmodule AuctionWeb.Types do
     end
   end
 
+  object :realname_verification do
+    field(:realname, :string) do
+      description("真实姓名")
+    end
+    field(:id_no, :string) do
+      description("身份证号")
+    end
+    field(:gender, :string) do
+      description("性别")
+    end
+    field(:birthday, :datetime) do
+      description("生日")
+    end
+    field(:state, :string) do
+      description("实名验证状态")
+    end
+    field(:user, :accounts_user, resolve: assoc(:user))
+  end
+
   object :authentication do
     field(:id, :id)
     field(:uid, :string)
@@ -131,5 +150,18 @@ defmodule AuctionWeb.Types do
     field(:specification, :string) do
       description("拍品规格")
     end
+  end
+
+  input_object(:realname_verification_input) do
+    description("实名认证输入")
+
+    field(:id_no, non_null(:string)) do
+      description("身份证号")
+    end
+    field(:realname, non_null(:string)) do
+      description("真实姓名")
+    end
+
+    field(:user_id, non_null(:id))
   end
 end

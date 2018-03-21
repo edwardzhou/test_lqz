@@ -1,4 +1,4 @@
-defmodule DcGraph.Schema.UserTest do
+defmodule AuctionWeb.Schema.UserTest do
   use AuctionWeb.GraphCase
   alias DB.Repo
   alias DB.Accounts
@@ -33,7 +33,11 @@ defmodule DcGraph.Schema.UserTest do
         variables: %{"id" => user.id}
       }
 
-      user = execute_document(q)[:data]["accountsUsers"]
+      result = execute_document(q)
+      errors = result[:errors]
+      assert errors == nil
+
+      user = result[:data]["accountsUsers"]
 
       assert user["username"] == "test1"
       assert user["nickname"] == "Unit tester"
