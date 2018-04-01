@@ -99,14 +99,14 @@ defmodule AuctionWeb.Auction.AuctionStateTest do
       assert state.next_token_id == 2
       assert state.top_bid.bidder == "user1"
       assert state.top_bid.bid == 1100
-      assert state.increases == [150, 300, 750]
+      assert state.increases == [20, 100, 200]
       assert state.participants["user1"] != nil
       assert state.bidders["user1"] != nil
       assert List.first(state.bid_list)[:bidder] == "user1"
       assert List.first(state.bid_list)[:bid] == 1100
     end
 
-    test "multiple successful", %{state: state} do
+    test "sequentially success", %{state: state} do
       params = %{
         token_id: 1,
         bidder_name: "user1",
@@ -119,12 +119,49 @@ defmodule AuctionWeb.Auction.AuctionStateTest do
       params = %{params | token_id: 2}
       params = %{params | bidder_name: "user2"}
       params = %{params | bid_base: 1100}
-      params = %{params | increase: 300}
+      params = %{params | increase: 200}
 
       {:ok, state} = state |> AuctionState.bid(params)
       assert state.next_token_id == 3
       assert state.top_bid.bidder == "user2"
-      assert state.top_bid.bid == 1400
+      assert state.top_bid.bid == 1300
+    end
+  end
+
+  describe "#update_increases" do
+    test "top_bid is nil" do
+      state = AuctionState.new_state(1, 1000) |> AuctionState.start()
+      assert state.increases == [20, 100, 200]
+    end
+
+    test "top_bid < 2000" do
+      state = AuctionState.new_state(1, 1000) |> AuctionState.start()
+      params = %{
+        token_id: 1,
+        bidder_name: "user1",
+        bid_base: 1000,
+        increase: 100
+      }
+      {:ok, state} = state |> AuctionState.bid(params)
+      assert state.top_bid.bid == 1100
+      assert state.increases == [20, 100, 200]
+    end
+
+    test "top_bid = 3000" do
+      state = AuctionState.new_state(1, 3000) |> AuctionState.start()
+      assert state.increases == [50, 200, 500]
+
+      state = AuctionState.new_state(1, 6000) |> AuctionState.start()
+      assert state.increases == [100, 500, 1_000]
+
+      state = AuctionState.new_state(1, 20_000) |> AuctionState.start()
+      assert state.increases == [200, 1_000, 2_000]
+
+      state = AuctionState.new_state(1, 60_000) |> AuctionState.start()
+      assert state.increases == [500, 2_000, 5_000]
+
+      state = AuctionState.new_state(1, 300_000) |> AuctionState.start()
+      assert state.increases == [1_000, 5_000, 10_000]
     end
   end
 

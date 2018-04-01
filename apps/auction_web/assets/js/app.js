@@ -24,7 +24,7 @@ import Swiper from "./swiper.min"
 // window.jQuery = jquery
 // window.$ = jquery
 // window.Swiper
-import {connect_server} from "./auction"
+// import {connect_server} from "./auction"
 
 $(function(){
   var swiper = new Swiper('.swiper7', {
