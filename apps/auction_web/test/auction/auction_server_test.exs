@@ -24,9 +24,9 @@ defmodule AuctionWeb.Auction.AuctionServerTest do
       assert state.top_bid.bid == 1200
       assert state.next_token_id == 2
 
-      {:ok, state} = AuctionServer.new_bid(server, 2, "hero", 1200, 300)
+      {:ok, state} = AuctionServer.new_bid(server, 2, "hero", 1200, 200)
       assert state.top_bid.bidder == "hero"
-      assert state.top_bid.bid == 1500
+      assert state.top_bid.bid == 1400
       assert state.next_token_id == 3
     end
 

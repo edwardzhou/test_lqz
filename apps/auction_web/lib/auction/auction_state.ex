@@ -162,16 +162,16 @@ defmodule AuctionWeb.Auction.AuctionState do
     cond do
       Timex.diff(Timex.local(), state.bid_at, :seconds) >= 10 ->
         {:error, state}
-      
+
       state.withdraws[first.bidder] != nil ->
         {:error_withdraw_once, state}
-      
+
       true ->
         prev_bid =
-        case second do
-          nil -> {nil, state.price_starts}
-          %{bidder: bidder, bid: bid} -> {bidder, bid}
-        end
+          case second do
+            nil -> {nil, state.price_starts}
+            %{bidder: bidder, bid: bid} -> {bidder, bid}
+          end
 
         state =
           state
@@ -250,18 +250,47 @@ defmodule AuctionWeb.Auction.AuctionState do
     %{auction | bid_at: Timex.local()}
   end
 
-  def update_increases(%{top_bid: %{bid: last_bid}} = auction) do
-    base = div(last_bid, 500) * 500
-
-    base =
-      case rem(last_bid, 500) do
-        0 -> base
-        _ -> base + 500
-      end
-
-    increases = Enum.map([base * 0.1, base * 0.2, base * 0.5], &trunc(&1))
-    %{auction | increases: increases}
+  def update_increases(%{top_bid: %{bid: last_bid}} = auction)
+      when last_bid == nil or last_bid < 2_000 do
+    %{auction | increases: [20, 100, 200]}
   end
+
+  def update_increases(%{top_bid: %{bid: last_bid}} = auction)
+      when last_bid < 5_000 do
+    %{auction | increases: [50, 200, 500]}
+  end
+
+  def update_increases(%{top_bid: %{bid: last_bid}} = auction)
+      when last_bid < 10_000 do
+    %{auction | increases: [100, 500, 1_000]}
+  end
+
+  def update_increases(%{top_bid: %{bid: last_bid}} = auction)
+      when last_bid < 50_000 do
+    %{auction | increases: [200, 1_000, 2_000]}
+  end
+
+  def update_increases(%{top_bid: %{bid: last_bid}} = auction)
+      when last_bid < 100_000 do
+    %{auction | increases: [500, 2_000, 5_000]}
+  end
+
+  def update_increases(%{top_bid: %{bid: last_bid}} = auction) do
+    %{auction | increases: [1_000, 5_000, 10_000]}
+  end
+
+  # def update_increases(%{top_bid: %{bid: last_bid}} = auction) do
+  #   base = div(last_bid, 500) * 500
+
+  #   base =
+  #     case rem(last_bid, 500) do
+  #       0 -> base
+  #       _ -> base + 500
+  #     end
+
+  #   increases = Enum.map([base * 0.1, base * 0.2, base * 0.5], &trunc(&1))
+  #   %{auction | increases: increases}
+  # end
 
   def update_commissions(%{top_bid: %{bid: last_bid}} = state) do
     commissions = div(last_bid * state.commission_rate, 100)
