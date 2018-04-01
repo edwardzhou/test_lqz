@@ -11,6 +11,7 @@
 
     <title>Hello Auction!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </head>
 
   <body>
@@ -40,6 +41,5 @@
 		<span>更多拍品</span>
 	</a>
 </div>
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

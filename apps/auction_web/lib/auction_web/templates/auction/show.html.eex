@@ -37,11 +37,15 @@
 		<p>物品简介：原盒，开盒验过货，盒子完好，同箱币以实物为准：1983年11月。</p>
 	</div>
 </div>
-<script>
-  
-</script>
 
 <script>
   window.auction_id = "<%= @auction_id %>";
   window.user_id = "<%= @user_id %>";
+	let connect_server = require('js/socket').connect_server
+
+	$.when($.ready).then(function() {
+		let server = connect_server('', '')
+		window.socket = server.socket
+		window.channel = server.channel
+	})
 </script>
