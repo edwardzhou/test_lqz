@@ -101,4 +101,8 @@ defmodule DB.Auctions do
   def change_auction(%Auction{} = auction) do
     Auction.changeset(auction, %{})
   end
+
+  def load_items(auctions) do
+    auctions |> Repo.preload(:auction_items)
+  end
 end

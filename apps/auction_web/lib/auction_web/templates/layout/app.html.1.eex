@@ -16,10 +16,10 @@
 
   <body>
     <div class="wrap">
-<div class="top">
-	<img src="./images/logo.png" alt="">
-	<a class="search" href=""></a>
-</div>
+        <div class="top">
+          <a class="back" href=""></a>
+          <input type="text" placeholder="请输入速拍专场代号快捷进入" />
+	      </div>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
@@ -30,23 +30,16 @@
 
     </div> <!-- /container -->
     <!--  -->
-<div class="foot clear">
-	<a class="home active" href="">
-		<span>首页</span>
+<div class="quick-foot flex">
+	<a class="flex1 active" href="">
+		<span>快速切换</span>
 	</a>
-	<a class="store" href="">
-		<span>店铺</span>
+	<a class="flex1" href="">
+		<span>下一拍品</span>
 	</a>
-	<a class="tribune" href="">
-		<span>茶馆</span>
-	</a>
-	<a class="gift" href="">
-		<span>工坊</span>
-	</a>
-	<a class="preson" href="">
-		<span>用户</span>
+	<a class="flex1" href="">
+		<span>更多拍品</span>
 	</a>
 </div>
-
   </body>
 </html>
