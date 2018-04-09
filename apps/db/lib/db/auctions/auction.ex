@@ -3,11 +3,16 @@ defmodule DB.Auctions.Auction do
   use Arc.Ecto.Schema
   import Ecto.Changeset
 
+  alias DB.Auctions.AuctionItem
+
   schema "auctions" do
     field(:name, :string)
     field(:logo, DB.Uploaders.Image.Type)
     field(:starts_at, :utc_datetime, comment: "开始时间")
     field(:ends_at, :utc_datetime, comment: "结束时间")
+
+    has_many(:auction_items, AuctionItem)
+
     timestamps()
   end
 

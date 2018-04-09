@@ -1,26 +1,49 @@
-<h2>Listing Auctions</h2>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Product name</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
+<div class="bid">
+	<div class="bid_tit">
+		<div>
+			<i></i><span>竞价热点</span><a href=""></a>
+		</div>
+	</div>
+	<h5 class="subt">30秒速拍竞价</h5>
+	<div class="insearch">
+		<span>专场号：</span>
+		<input type="text" placeholder="请输入30秒速拍专场代码快捷进入">
+		<i></i>
+	</div>
+</div>
 <%= for auction <- @auctions do %>
-    <tr>
-      <td><%= auction.name %></td>
-
-      <td class="text-right">
-        <span><%= link "Show", to: auction_path(@conn, :show, auction), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: auction_path(@conn, :edit, auction), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: auction_path(@conn, :delete, auction), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
-
-<span><%= link "New Auction", to: auction_path(@conn, :new) %></span>
+  <div class="swiper3 swiper-container">
+    <div class="remind flex">
+      <div class="remfl"><span>开拍提醒</span></div>
+      <div class="remfr flex1">
+        <p class="p1"><%= auction.name %><em>代码：SP0001</em></p>
+        <p class="p2"><%=simple_datetime(auction.starts_at)%> 开拍</p>
+      </div>
+    </div>
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <dl class="clear">
+        <%= for item <- auction.auction_items do %>
+          <dd>
+            <a href="">
+              <img src="<%= DB.Uploaders.Image.url(item.item_logo) %>" />
+              <p><%= item.title%></p>
+              <em>起拍价：<%= item.start_price %>元</em>
+            </a>
+          </dd>
+          <%end%>
+        </dl>
+      </div>
+    </div>
+      <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+  </div>
+<%end%>
+<script>
+    // 3
+    var swiper = new Swiper('.swiper3', {
+       	pagination: '.swiper-pagination',
+        paginationClickable: true,
+        autoplay: false
+    });
+</script>
