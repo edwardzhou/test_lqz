@@ -17,8 +17,8 @@ defmodule AuctionWeb.AuthenticationController do
   end
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    user = %{id: auth.uid, name: auth.info.name || auth.info.nickname, avatar: auth.info.image}
-    authentication = Authenticator.authenticate(auth_params(auth))
+    # user = %{id: auth.uid, name: auth.info.name || auth.info.nickname, avatar: auth.info.image}
+    user = authentication = Authenticator.authenticate(auth_params(auth))
 
     conn
     |> put_flash(:info, "Successfully authenticated.")

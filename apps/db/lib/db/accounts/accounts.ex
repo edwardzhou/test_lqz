@@ -40,6 +40,23 @@ defmodule DB.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
   def get_user(id), do: Repo.get(User, id)
 
+  def find_user_by_nickname(nickname) do
+    User
+    |> where(nickname: ^nickname)
+    |> Repo.all
+    |> List.first
+  end
+
+  def find_or_initialize_user_by_nickname(nickname) do
+    case find_user_by_nickname(nickname) do
+      nil -> 
+        {:ok, new_user} = create_user(%{nickname: nickname})
+        new_user
+      
+      user -> user
+    end
+  end
+
   @doc """
   Creates a user.
 

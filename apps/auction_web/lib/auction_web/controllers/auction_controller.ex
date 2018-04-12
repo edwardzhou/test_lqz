@@ -1,6 +1,7 @@
 defmodule AuctionWeb.AuctionController do
   use AuctionWeb, :controller
 
+  alias DB.Accounts
   alias DB.Auctions
   alias DB.Auctions.Auction
   alias AuctionWeb.Auction.AuctionRegistry
@@ -23,16 +24,15 @@ defmodule AuctionWeb.AuctionController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def show(conn, %{"id" => id, "name" => user_id}) do
+  def show(conn, %{"id" => id, "name" => nickname}) do
+    user = Accounts.find_or_initialize_user_by_nickname(nickname)
+    
     conn
-    |> put_layout("auction.html")
-    |> assign(:auction_id, id)
-    |> assign(:user_id, user_id)
-    |> render("show.html", auction: nil)
+    |> put_session(:current_user, user)
+    |> show(%{"id" => id})
   end
 
   def show(conn, %{"id" => id}) do
-    # auction = Auctions.get_auction!(id)
     current_user = get_session(conn, :current_user)
     if current_user == nil do
       conn
@@ -43,7 +43,7 @@ defmodule AuctionWeb.AuctionController do
     conn
     |> put_layout("auction.html")
     |> assign(:auction_id, id)
-    |> assign(:user_id, current_user.name)
+    |> assign(:user_id, current_user.nickname)
     |> render("show.html", auction: nil)
   end
 

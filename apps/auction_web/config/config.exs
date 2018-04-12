@@ -34,7 +34,7 @@ config :logger, :console,
 #   path: "log/auction.log"
   
 config :auction_web, :generators,
-  context_app: :auction
+  context_app: :db
 
 config :ueberauth, Ueberauth,
   providers: [

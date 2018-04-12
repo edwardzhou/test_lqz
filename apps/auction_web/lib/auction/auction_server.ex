@@ -3,6 +3,7 @@ defmodule AuctionWeb.Auction.AuctionServer do
 
   alias AuctionWeb.Auction.AuctionState
   alias AuctionWeb.Endpoint
+  alias DB.Orders
 
   ## Client API
 
@@ -55,6 +56,8 @@ defmodule AuctionWeb.Auction.AuctionServer do
     new_state =
       AuctionState.new_state(1, 1000)
       |> AuctionState.start()
+
+    Process.send_after(self(), {:timing}, 500)
 
     {:ok, new_state}
   end
@@ -119,5 +122,20 @@ defmodule AuctionWeb.Auction.AuctionServer do
 
   def handle_call({:get_state}, _from, state) do
     {:reply, {:ok, state}, state}
+  end
+
+  def handle_info({:timing}, state) do
+    if AuctionState.is_on_going(state) do
+      state = AuctionState.countdown(state)
+
+      unless AuctionState.is_on_going(state) do
+        IO.puts "Auction is closed."
+        order = Orders.create_order_from_auction(state)
+        IO.puts "Order: #{inspect(order)}"
+      end
+    end
+
+    Process.send_after(self(), {:timing}, 500)
+    {:noreply, state}
   end
 end
