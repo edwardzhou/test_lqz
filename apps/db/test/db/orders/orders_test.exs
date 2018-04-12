@@ -1,10 +1,10 @@
 defmodule Db.OrdersTest do
-  use Db.DataCase
+  use DB.DataCase
 
-  alias Db.Orders
+  alias DB.Orders
 
   describe "orders" do
-    alias Db.Orders.Order
+    alias DB.Orders.Order
 
     @valid_attrs %{amount: "120.5", auction_id: 42, auction_item_id: 42, cancelled_at: "2010-04-17 14:00:00.000000Z", commission_amount: "120.5", commission_rate: "120.5", completed_at: "2010-04-17 14:00:00.000000Z", memo: "some memo", paid_at: "2010-04-17 14:00:00.000000Z", payment_id: 42, returned_at: "2010-04-17 14:00:00.000000Z", shipped_at: "2010-04-17 14:00:00.000000Z", state: "some state", user_id: 42}
     @update_attrs %{amount: "456.7", auction_id: 43, auction_item_id: 43, cancelled_at: "2011-05-18 15:01:01.000000Z", commission_amount: "456.7", commission_rate: "456.7", completed_at: "2011-05-18 15:01:01.000000Z", memo: "some updated memo", paid_at: "2011-05-18 15:01:01.000000Z", payment_id: 43, returned_at: "2011-05-18 15:01:01.000000Z", shipped_at: "2011-05-18 15:01:01.000000Z", state: "some updated state", user_id: 43}
