@@ -13,7 +13,7 @@ defmodule AuctionWeb.Endpoint do
   
   plug Plug.Static,
     at: "/", from: :auction_web, gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(css fonts images js favicon.ico robots.txt MP_verify_cBIsjPfTDdC7rr3o.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
