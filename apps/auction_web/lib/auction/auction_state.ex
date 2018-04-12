@@ -6,6 +6,8 @@ defmodule AuctionWeb.Auction.AuctionState do
   defstruct top_bid: %{bidder: nil, bid: 0},
             # 拍卖id
             auction_id: 1,
+            # 拍卖项id
+            auction_item_id: 1,
             # 全部出价信息
             bidders: %{},
             # 出价列表
@@ -56,6 +58,19 @@ defmodule AuctionWeb.Auction.AuctionState do
     |> Map.delete(:bidders)
     |> Map.delete(:last_timer_id)
     |> put_in([:bid_list], Enum.slice(state.bid_list, 0..9))
+  end
+
+  def is_on_going(%{status: status} = state), do: status == :on_going
+
+  def countdown(state) do
+    %{bid_at: last_bid_at} = state
+
+    case Timex.diff(Timex.local(), last_bid_at, :seconds) do
+      seconds when seconds >= 30 ->
+        %{state | status: :closed}
+      _ ->
+        state
+    end
   end
 
   def add_bidder(%{participants: participants} = state, bidder_name) do

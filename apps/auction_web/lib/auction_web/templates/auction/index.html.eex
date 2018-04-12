@@ -27,8 +27,8 @@
           <dd>
             <a href="">
               <img src="<%= DB.Uploaders.Image.url(item.item_logo) %>" />
-              <p><%= item.title%></p>
-              <em>起拍价：<%= item.start_price %>元</em>
+              <p><%= item.title %></p>
+              <p>起拍价：<%= item.start_price %>元</p>
             </a>
           </dd>
           <%end%>
