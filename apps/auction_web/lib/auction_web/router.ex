@@ -19,7 +19,7 @@ defmodule AuctionWeb.Router do
   scope "/", AuctionWeb do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", AuctionController, :index
 
     resources "/auctions", AuctionController
 
