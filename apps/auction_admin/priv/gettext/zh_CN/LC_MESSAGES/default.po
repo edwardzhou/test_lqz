@@ -14,11 +14,6 @@ msgstr ""
 msgid "Welcome to %{name}!"
 msgstr ""
 
-#: lib/auction_admin/templates/page/index.html.eex:3 lib/ex_admin/index.ex:13
-#: lib/ex_admin/index.ex:13
-msgid "Auction Name"
-msgstr "拍卖场次"
-
 #: lib/ex_admin/form.ex:16 lib/ex_admin/form.ex:16 lib/ex_admin/form.ex:16
 #: lib/ex_admin/form.ex:16 lib/ex_admin/index.ex:17 lib/ex_admin/index.ex:17
 msgid "Starts At"
@@ -33,9 +28,19 @@ msgstr "结束时间"
 msgid "Auctions"
 msgstr "拍卖场次"
 
+#: lib/auction_admin/templates/page/index.html.eex:3 lib/ex_admin/index.ex:13
+#: lib/ex_admin/index.ex:13
+msgid "Auction Name"
+msgstr "拍卖场次"
+
 #: lib/ex_admin/index.ex:14 lib/ex_admin/index.ex:14
 msgid "Auction Logo"
 msgstr "场次图标"
+
+#: lib/auction_admin/admin/auction_item.ex:7
+#: lib/auction_admin/admin/auction_item.ex:7
+msgid "Auction Items"
+msgstr "拍卖项"
 
 #: lib/ex_admin/form.ex:13 lib/ex_admin/form.ex:13 lib/ex_admin/form.ex:13
 #: lib/ex_admin/form.ex:13
@@ -67,6 +72,10 @@ msgstr "利润"
 msgid "Price"
 msgstr "价格"
 
+#: lib/auction_admin/admin/product.ex:8 lib/auction_admin/admin/product.ex:8
+msgid "Products"
+msgstr "商品"
+
 #: lib/ex_admin/form.ex:21 lib/ex_admin/form.ex:21 lib/ex_admin/form.ex:21
 #: lib/ex_admin/form.ex:21 lib/ex_admin/index.ex:12 lib/ex_admin/index.ex:12
 msgid "Product Name"
@@ -83,15 +92,6 @@ msgstr "规格"
 #: lib/ex_admin/form.ex:15
 msgid "Start Price"
 msgstr "起拍价"
-
-#: lib/auction_admin/admin/auction_item.ex:7
-#: lib/auction_admin/admin/auction_item.ex:7
-msgid "Auction Items"
-msgstr "拍卖项"
-
-#: lib/auction_admin/admin/product.ex:8 lib/auction_admin/admin/product.ex:8
-msgid "Products"
-msgstr "商品"
 
 #, elixir-format
 #: lib/ex_admin/index.ex:16 lib/ex_admin/index.ex:16
@@ -117,3 +117,9 @@ msgstr "用户名"
 #: lib/auction_admin/admin/user.ex:7 lib/auction_admin/admin/user.ex:7
 msgid "Users"
 msgstr "用户"
+
+msgid "Title"
+msgstr "标题"
+
+msgid "State"
+msgstr "状态"

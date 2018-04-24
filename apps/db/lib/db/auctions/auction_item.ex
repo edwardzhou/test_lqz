@@ -45,4 +45,8 @@ defmodule DB.Auctions.AuctionItem do
   def states_with_trans do
     Enum.map(states, fn {key, _} -> {key, @states_trans[key]} end)
   end
+
+  def trans_state(state) do
+    @states_trans[state]
+  end
 end
