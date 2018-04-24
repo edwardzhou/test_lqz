@@ -1,8 +1,9 @@
 defmodule AuctionAdmin.ExAdmin.AuctionItem do
   use ExAdmin.Register
-  alias DB.Auctions.AuctionItem
   import AuctionAdmin.Gettext
+  alias DB.Auctions.AuctionItem
   alias DB.Auctions
+  alias DB.Products
   alias DB.Uploaders.Image
 
 
@@ -28,6 +29,7 @@ defmodule AuctionAdmin.ExAdmin.AuctionItem do
         input auction_item, :description, label: gettext("Description")
         input auction_item, :specification, label: gettext("Specifiction")
         input auction_item, :auction, collection: Auctions.list_auctions
+        input auction_item, :product, collection: Products.list_products
         input auction_item, :starts_at, type: DateTime, label: gettext("Starts At")
         input auction_item, :ends_at, type: DateTime, label: gettext("Ends At")
       end
@@ -41,6 +43,7 @@ defmodule AuctionAdmin.ExAdmin.AuctionItem do
           img src: Image.url(item.item_logo) 
         end
         row :auction
+        row :product
         row :seq_no
         row :state
         row :grade

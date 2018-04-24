@@ -20,58 +20,8 @@ import "phoenix_html"
 
 // import {socket, channel} from "./socket"
 // import jquery from "./jquery.min"
-import Swiper from "./swiper.min"
+// import Swiper from "./swiper.min"
 // window.jQuery = jquery
 // window.$ = jquery
 // window.Swiper
 // import {connect_server} from "./auction"
-
-$(function(){
-  var swiper = new Swiper('.swiper7', {
-    pagination: '.swiper-pagination',
-    paginationClickable: true,
-    autoplay: 2500
-  });
-})
-
-function submit_bid(increase) {
-  bid_msg = window.bid_msg
-  channel.push("new_bid", {
-    token_id: bid_msg.next_token_id, 
-    bid_base: bid_msg.top_bid.bid,
-    increase: increase
-  })  
-}
-
-$(function() {
-  $(".offer200").on("click", () => {
-    let increase = $(".offer200").data("increase")
-    submit_bid(increase)
-  });
-  
-  
-  $(".offer500").on("click", () => {
-    let increase = $(".offer500").data("increase")
-    submit_bid(increase)
-  });
-  
-  
-  $(".offer1000").on("click", () => {
-    let increase = $(".offer1000").data("increase")
-    submit_bid(increase)
-  });
-  
-  $(".restart_bid").on("click", () => {
-    channel.push("restart")
-  });
-  
-  $(".withdraw_bid").on("click", () => {
-    if (bid_msg.top_bid.bidder != window.user_id)
-      return;
-  
-    channel.push("withdraw", {
-      token_id: bid_msg.next_token_id, 
-      bid: bid_msg.top_bid.bid,
-    });
-  });  
-})

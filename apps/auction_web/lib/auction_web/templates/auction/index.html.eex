@@ -12,7 +12,7 @@
 	</div>
 </div>
 <%= for auction <- @auctions do %>
-  <div class="swiper3 swiper-container">
+  <div class="swiper-container">
     <div class="remind flex">
       <div class="remfl"><span>开拍提醒</span></div>
       <div class="remfr flex1">
@@ -39,11 +39,3 @@
     <div class="swiper-pagination"></div>
   </div>
 <%end%>
-<script>
-    // 3
-    var swiper = new Swiper('.swiper3', {
-       	pagination: '.swiper-pagination',
-        paginationClickable: true,
-        autoplay: false
-    });
-</script>

@@ -21,6 +21,7 @@ defmodule DB.Auctions.AuctionItem do
     field :grade, :string, comment: "拍品等级" 
 
     belongs_to :auction, Auction
+    belongs_to :product, Product
 
     timestamps()
   end
@@ -30,7 +31,7 @@ defmodule DB.Auctions.AuctionItem do
     auction_item
     |> cast(attrs, [:start_price, :starts_at, :ends_at, :current_price, :margin,
       :commission_rate, :commission_amount, :state, :item_logo, :title,
-      :description, :specification, :grade, :auction_id])
+      :description, :specification, :grade, :auction_id, :product_id])
     |> validate_required([:start_price, :starts_at, :current_price, :margin,
       :commission_rate, :commission_amount, :title, :description])
   end
