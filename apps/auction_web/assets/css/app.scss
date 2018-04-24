@@ -1,0 +1,76 @@
+/* This file is for your main application css. */
+
+/* Phoenix flash messages */
+.alert:empty { display: none; }
+
+/* header start */
+.header {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    background-color: #7c4b2e;
+
+    img.brand {
+        height: 40px;
+        margin: 5px auto;
+        vertical-align: middle;
+    }
+}
+
+/* header end */
+
+/* foot start */
+.footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom:0;
+    height: 60px;
+    border-top: 2px solid #d2d2d2;
+    background-color: #fff;
+    z-index: 999;
+
+    a {
+        display: block;
+        float: left;
+        width: 33.3%;
+        padding-top: 35px;
+        text-align: center;
+        span {
+            display: block;
+            color: #999;
+            font-size: 14px;
+            line-height: 25px;
+        }
+    }
+
+    a.home {
+        background:url(../images/icon-home.png) no-repeat center 5px;
+        background-size: 30px;
+    }
+    a.order {
+        background:url(../images/icon-order.png) no-repeat center 5px;
+        background-size: 30px;
+    }
+    a.preson {
+        background:url(../images/icon-person.png) no-repeat center 5px;
+        background-size: 30px;
+    }
+    a:hover span, a.active span {
+        color: #7c4b2e;
+    }
+    a.home:hover, a.home.active {
+        background:url(../images/icon-home-active.png) no-repeat center 5px;
+        background-size: 30px;
+    }
+    a.order:hover, a.order.active {
+        background:url(../images/icon-order-active.png) no-repeat center 5px;
+        background-size: 30px;
+    }
+    a.preson:hover, a.preson.active {
+        background:url(../images/icon-person-active.png) no-repeat center 5px;
+        background-size: 30px;
+    }
+}
+/* foot end */

@@ -1,52 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <title>老钱庄</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <title>老钱庄</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+</head>
+<body>
+  <div>
+    <header class="header">
+      <img class="brand" src="./images/logo.png">
+    </header>
+    <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+    <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
-    <title>Hello Auction!</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-  </head>
+    <main class="container">
+      <%= render @view_module, @view_template, assigns %>
+    </main>
 
-  <body>
-    <div class="wrap">
-<div class="top">
-	<img src="./images/logo.png" alt="">
-	<a class="search" href=""></a>
-</div>
+    <footer class="footer clear">
+      <a class="home active" href="">
+        <span>拍卖专场</span>
+      </a>
+      <a class="order" href="">
+        <span>订单</span>
+      </a>
+      <a class="preson" href="">
+        <span>用户</span>
+      </a>
+    </footer>
+  </div>
+</body>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-
-      <main role="main wrap">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
-
-    </div> <!-- /container -->
-    <!--  -->
-<div class="foot clear">
-	<a class="home active" href="">
-		<span>首页</span>
-	</a>
-	<a class="store" href="">
-		<span>店铺</span>
-	</a>
-	<a class="tribune" href="">
-		<span>茶馆</span>
-	</a>
-	<a class="gift" href="">
-		<span>工坊</span>
-	</a>
-	<a class="preson" href="">
-		<span>用户</span>
-	</a>
-</div>
-
-  </body>
+<script src="<%= static_path(@conn, "/js/app.js") %>"></script>
 </html>
