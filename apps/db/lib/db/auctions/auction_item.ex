@@ -43,6 +43,6 @@ defmodule DB.Auctions.AuctionItem do
 
   @states_trans [draft: "草稿", ready: "就绪", ongoing: "拍卖中", abandoned: "流拍", completed: "完成"]
   def states_with_trans do
-    Enum.map(AuctionItem.states, fn {key, _} -> {key, @states_trans[key]} end)
+    Enum.map(states, fn {key, _} -> {key, @states_trans[key]} end)
   end
 end
