@@ -7,6 +7,7 @@ defmodule DB.Auctions do
   alias DB.Repo
 
   alias DB.Auctions.Auction
+  alias DB.Auctions.AuctionItem
 
   @doc """
   Returns the list of auctions.
@@ -19,6 +20,13 @@ defmodule DB.Auctions do
   """
   def list_auctions do
     Repo.all(Auction)
+  end
+
+  @doc """
+  Returns auctions of state in (ready, ongoning).
+  """
+  def auctionable_auctions do
+    Auction |> where([a], a.state in ["ready", "ongoing"]) |> Repo.all
   end
 
   @doc """
@@ -103,6 +111,7 @@ defmodule DB.Auctions do
   end
 
   def load_items(auctions) do
-    auctions |> Repo.preload(:auction_items)
+    items_query = from i in AuctionItem, where: i.state != "draft"
+    auctions |> Repo.preload([auction_items: items_query])
   end
 end
