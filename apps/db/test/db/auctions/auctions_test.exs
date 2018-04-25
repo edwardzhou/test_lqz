@@ -7,7 +7,7 @@ defmodule DB.AuctionsTest do
     alias DB.Auctions.Auction
 
     @valid_attrs %{name: "some name", ends_at: DateTime.utc_now, starts_at: DateTime.utc_now,
-      logo: %Plug.Upload{path: "./test/test.jpeg", filename: "test.jpeg"}}
+      logo: %Plug.Upload{path: "./test/test.jpeg", filename: "test.jpeg"}, state: "draft"}
     @update_attrs %{name: "some updated name"}
     @invalid_attrs %{name: nil}
 
