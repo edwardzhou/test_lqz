@@ -1,41 +1,25 @@
-<div class="bid">
-	<div class="bid_tit">
-		<div>
-			<i></i><span>竞价热点</span><a href=""></a>
-		</div>
-	</div>
-	<h5 class="subt">30秒速拍竞价</h5>
-	<div class="insearch">
-		<span>专场号：</span>
-		<input type="text" placeholder="请输入30秒速拍专场代码快捷进入">
-		<i></i>
-	</div>
-</div>
-<%= for auction <- @auctions do %>
-  <div class="swiper-container">
-    <div class="remind flex">
-      <div class="remfl"><span>开拍提醒</span></div>
-      <div class="remfr flex1">
-        <p class="p1"><%= auction.name %><em>代码：SP0001</em></p>
-        <p class="p2"><%=simple_datetime(auction.starts_at)%> 开拍</p>
-      </div>
-    </div>
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <dl class="clear">
-        <%= for item <- auction.auction_items do %>
-          <dd>
-            <a href="">
-              <img src="<%= DB.Uploaders.Image.url(item.item_logo) %>" />
-              <p><%= item.title %></p>
-              <p>起拍价：<%= item.start_price %>元</p>
-            </a>
-          </dd>
+<div class="home-index">
+  <h4 class="text-center">即将开拍</h4>
+  <div class="auctionable-auctions">
+    <%= for auction <- @auctions do %>
+      <div class="auction">
+        <p class="auction-name"><%= auction.name %></p>
+        <p class="auction-field auction-em">
+          共<em> <%= length auction.auction_items %></em> 件 /
+          出价<em> <%= length auction.auction_items %></em> 次
+        </p>
+        <p class="auction-field">开始：<%=simple_datetime(auction.starts_at)%></p>
+        <p class="auction-field">结束：<%=simple_datetime(auction.ends_at)%></p>
+        <div class="auction-items">
+          <%= for x <- 0..7, is_map(Enum.at(auction.auction_items, x)) do %>
+            <%item = Enum.at(auction.auction_items, x)%>
+            <div class="grid">
+              <img class="img-responsive" src="<%= img_url(item.item_logo) %>">
+            </div>
           <%end%>
-        </dl>
+        </div>
       </div>
-    </div>
-      <!-- Add Pagination -->
-    <div class="swiper-pagination"></div>
+    <%end%>
   </div>
-<%end%>
+</div>
+
