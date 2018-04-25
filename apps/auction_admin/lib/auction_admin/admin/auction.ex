@@ -26,7 +26,9 @@ defmodule AuctionAdmin.ExAdmin.Auction do
       attributes_table do
         row :id
         row :logo, [label: gettext("Auction Logo")], fn(auction) ->
-          img src: Image.url(auction.logo, :thumb)
+          a href: Image.url(auction.logo), target: "_blank" do
+            img src: Image.url(auction.logo, :thumb)
+          end
         end
         row :name, label: gettext("Auction Name")
         row :state, [label: gettext("State")], fn(auction) ->
