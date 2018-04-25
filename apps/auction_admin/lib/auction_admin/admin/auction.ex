@@ -14,7 +14,10 @@ defmodule AuctionAdmin.ExAdmin.Auction do
       column :logo, [label: gettext("Auction Logo")], fn(auction) ->
         img src: Image.url(auction.logo, :thumb)
       end
-      column :starts_at, label: gettext "Starts At"
+      column :state, [label: gettext("State")], fn(auction) ->
+        Auction.trans_state(auction.state)
+      end
+      column :starts_at, label: gettext("Starts At")
       column :ends_at, label: gettext("Ends At")
       actions()
     end
@@ -22,21 +25,27 @@ defmodule AuctionAdmin.ExAdmin.Auction do
     show auction do
       attributes_table do
         row :id
-        row :logo, fn(auction) -> img src: Image.url(auction.logo) end
-        row :name
-        row :starts_at
-        row :ends_at
-        row :inserted_at
-        row :updated_at
+        row :logo, [label: gettext("Auction Logo")], fn(auction) ->
+          img src: Image.url(auction.logo, :thumb)
+        end
+        row :name, label: gettext("Auction Name")
+        row :state, [label: gettext("State")], fn(auction) ->
+          Auction.trans_state(auction.state)
+        end
+        row :starts_at, label: gettext("Starts At")
+        row :ends_at, label: gettext("Ends At")
+        row :inserted_at, label: gettext("Inserted At")
+        row :updated_at, label: gettext("Updated At")
       end
     end
 
     form auction do
       inputs do
-        input auction, :name
-        input auction, :logo
-        input auction, :starts_at, type: DateTime
-        input auction, :ends_at, type: DateTime
+        input auction, :name, label: gettext("Auction Name")
+        input auction, :logo, label: gettext("Auction Logo")
+        input auction, :state, collection: Auction.states_with_trans, label: gettext("State")
+        input auction, :starts_at, type: DateTime, label: gettext("Starts At")
+        input auction, :ends_at, type: DateTime, label: gettext("Ends At")
       end
     end
   end
