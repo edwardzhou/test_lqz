@@ -15,7 +15,6 @@ defmodule AuctionWeb.AuctionController do
       |> Auctions.load_items()
       
     conn
-    |> put_layout("app.html")
     |> render("index.html", auctions: auctions)
   end
 

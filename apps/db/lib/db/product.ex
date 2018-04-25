@@ -15,8 +15,6 @@ defmodule DB.Product do
   end
 
   @doc false
-  def get_product!(id), do: Repo.get!(Product, id)
-
   def changeset(%Product{} = product, attrs) do
     product
     |> cast(attrs, [:name, :price, :specification, :grade, :description])

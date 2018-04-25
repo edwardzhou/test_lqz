@@ -39,6 +39,7 @@ defmodule DB.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:scrivener, "~> 2.0"},
       {:ecto, "~> 2.1"},
+      {:ecto_enum, "~> 1.0"},
       {:arc, "~> 0.8.0"},
       {:arc_ecto, github: "breeze-yang/arc_ecto", branch: "master"},
     ]
