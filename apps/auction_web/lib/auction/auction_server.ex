@@ -131,6 +131,11 @@ defmodule AuctionWeb.Auction.AuctionServer do
       unless AuctionState.is_on_going(state) do
         IO.puts "Auction is closed."
         order = Orders.create_order_from_auction(state)
+        Endpoint.broadcast!(
+          "auction:#{state.auction_id}",
+          "on_auction_end",
+          AuctionState.push_back_state(state)
+        )            
         IO.puts "Order: #{inspect(order)}"
       end
     end
