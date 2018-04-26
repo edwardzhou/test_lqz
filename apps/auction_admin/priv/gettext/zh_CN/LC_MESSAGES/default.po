@@ -14,6 +14,11 @@ msgstr ""
 msgid "Welcome to %{name}!"
 msgstr ""
 
+msgid "Inserted At"
+msgstr "新建时间"
+
+msgid "Updated At"
+msgstr "更新时间"
 #: lib/ex_admin/form.ex:16 lib/ex_admin/form.ex:16 lib/ex_admin/form.ex:16
 #: lib/ex_admin/form.ex:16 lib/ex_admin/index.ex:17 lib/ex_admin/index.ex:17
 msgid "Starts At"
