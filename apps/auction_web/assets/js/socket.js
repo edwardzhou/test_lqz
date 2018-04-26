@@ -165,6 +165,10 @@ let connect_server = (url, user_id) => {
     render_msg(msg)
   })
 
+  channel.on("on_auction_end", msg => {
+    console.log("on_auction_end", msg)
+  })
+
  return {socket: socket, channel: channel}
 }
 
