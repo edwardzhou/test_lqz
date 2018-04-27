@@ -128,3 +128,6 @@ msgstr "标题"
 
 msgid "State"
 msgstr "状态"
+
+msgid "Description"
+msgstr "描述"

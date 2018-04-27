@@ -28,7 +28,7 @@ defmodule AuctionAdmin.ExAdmin.AuctionItem do
         input auction_item, :start_price, label: gettext("Start Price")
         input auction_item, :grade, label: gettext("Grade")
         input auction_item, :description, label: gettext("Description")
-        input auction_item, :specification, label: gettext("Specifiction")
+        input auction_item, :specification, label: gettext("Specification")
         input auction_item, :state, collection: AuctionItem.states_with_trans, label: gettext("State")
         input auction_item, :starts_at, type: DateTime, label: gettext("Starts At")
         input auction_item, :ends_at, type: DateTime, label: gettext("Ends At")
@@ -46,7 +46,7 @@ defmodule AuctionAdmin.ExAdmin.AuctionItem do
       column :state, [label: gettext("State")], fn(item) ->
         AuctionItem.trans_state(item.state)
       end
-      column :starts_at, label: gettext "Starts At"
+      column :starts_at, label: gettext("Starts At")
       column :ends_at, label: gettext("Ends At")
       actions()
     end
@@ -54,25 +54,27 @@ defmodule AuctionAdmin.ExAdmin.AuctionItem do
     show auction_item do
       attributes_table do
         row :id
-        row :title
-        row :item_logo, fn(item) -> 
+        row :title, label: gettext("Title")
+        row :item_logo, [label: gettext("Auction Logo")], fn(item) ->
           img src: Image.url(item.item_logo) 
         end
-        row :auction
-        row :product
+        row :auction, label: gettext("Auctions")
+        row :product, label: gettext("Products")
         row :seq_no
-        row :state
-        row :grade
-        row :commission_rate
-        row :commission_amount
-        row :start_price
-        row :current_price
-        row :description
-        row :specification
-        row :starts_at
-        row :ends_at
-        row :inserted_at
-        row :updated_at
+        row :state, [label: gettext("State")], fn(item) ->
+          AuctionItem.trans_state(item.state)
+        end
+        row :grade, label: gettext("Grade")
+        row :commission_rate, label: gettext("Commission Rate")
+        row :commission_amount, label: gettext("Commission Amount")
+        row :start_price, label: gettext("Start Price")
+        row :current_price, label: gettext("Current Price")
+        row :description, label: gettext("Description")
+        row :specification, label: gettext("Specification")
+        row :starts_at, label: gettext("Starts At")
+        row :ends_at, label: gettext("Ends At")
+        row :inserted_at, label: gettext("Inserted At")
+        row :updated_at, label: gettext("Updated At")
       end
     end
   end
