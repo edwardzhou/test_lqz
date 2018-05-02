@@ -1,25 +1,26 @@
-<div class="home-index">
+<div class="auction-index">
   <h4 class="text-center">即将开拍</h4>
   <div class="auctionable-auctions">
     <%= for auction <- @auctions do %>
-      <div class="auction">
-        <p class="auction-name"><%= auction.name %></p>
-        <p class="auction-field auction-em">
-          共<em> <%= length auction.auction_items %></em> 件 /
-          出价<em> <%= length auction.auction_items %></em> 次
-        </p>
-        <p class="auction-field">开始：<%=simple_datetime(auction.starts_at)%></p>
-        <p class="auction-field">结束：<%=simple_datetime(auction.ends_at)%></p>
-        <div class="auction-items">
-          <%= for x <- 0..7, is_map(Enum.at(auction.auction_items, x)) do %>
-            <%item = Enum.at(auction.auction_items, x)%>
-            <div class="grid">
-              <img class="img-responsive" src="<%= img_url(item.item_logo) %>">
-            </div>
-          <%end%>
-        </div>
+      <div class="auction auction-intro">
+        <a href="<%= auction_path(@conn, :show, auction.id)%>">
+          <p class="auction-name"><%= auction.name %></p>
+          <p class="auction-field auction-em">
+            共<em> <%= length auction.auction_items %></em> 件 /
+            出价<em> <%= length auction.auction_items %></em> 次
+          </p>
+          <p class="auction-field">开始：<%=simple_datetime(auction.starts_at)%></p>
+          <p class="auction-field">结束：<%=simple_datetime(auction.ends_at)%></p>
+          <div class="auction-items">
+            <%= for x <- 0..7, is_map(Enum.at(auction.auction_items, x)) do %>
+              <%item = Enum.at(auction.auction_items, x)%>
+              <div class="grid">
+                <img class="img-responsive" src="<%= img_url(item.item_logo) %>">
+              </div>
+            <%end%>
+          </div>
+        </a>
       </div>
     <%end%>
   </div>
 </div>
-

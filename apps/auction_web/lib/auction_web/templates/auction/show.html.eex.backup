@@ -1,0 +1,51 @@
+
+	<!-- 轮播 1  -->
+	<div class="swiper7 swiper-container">
+	    <div class="swiper-wrapper">
+	        <div class="swiper-slide"><a href=""><img src="<%= static_path(@conn, "/images/pic1.jpg") %>" alt=""></a></div>
+	        <div class="swiper-slide"><a href=""><img src="<%= static_path(@conn, "/images/pro1.jpg") %>" alt=""></a></div>
+	        <div class="swiper-slide"><a href=""><img src="<%= static_path(@conn, "/images/pro2.jpg") %>" alt=""></a></div>
+	        <div class="swiper-slide"><a href=""><img src="<%= static_path(@conn, "/images/pic1.jpg") %>" alt=""></a></div>
+	    </div>
+	    <!-- Add Pagination -->
+	    <div class="swiper-pagination"></div>
+	</div>
+	<div class="flex white-wrap">
+		<div class="reckon-time flex1">
+			<p class="p1">1978年2分硬币原盒壹盒</p>
+			<p class="p2">拍卖倒计时<em class="countdown">30</em>秒</p>
+		</div>
+		<div class="cancel-price">
+			<a href="javascript:void(0)" class="restart_bid">重新开始</a>
+			<a href="javascript:void(0)" class="withdraw_bid">撤销出价</a>
+		</div>
+	</div>
+	<div class="offer clear">
+		<div><a class="offer200" href="javascript:void(0)"></a></div>
+		<div><a class="offer500" href="javascript:void(0)"></a></div>
+		<div><a class="offer1000" href="javascript:void(0)"></a></div>
+	</div>
+	<div class="quick-info">
+		<p>当前最高价： <span class="top-bid">0</span> <em class="commission">（加佣金3％即2400元）</em></p>
+		<p>最高竞价：<span class="top-bidder">未有出价</span></p>
+		<p>当前应价：<span class="bidder_count">0</span>人</p>
+		<p>围观人员：<span class="participant_count">0</span>人</p>
+	</div>
+	<div class="quick-info">
+		<p>起拍底价：0.00</p>
+		<p>拍品编号：201210234743490</p>
+		<p>物品简介：原盒，开盒验过货，盒子完好，同箱币以实物为准：1983年11月。</p>
+	</div>
+</div>
+
+<script>
+  window.auction_id = "<%= @auction_id %>";
+  window.user_id = "<%= @user_id %>";
+	let connect_server = require('js/socket').connect_server
+
+	$.when($.ready).then(function() {
+		let server = connect_server('', '')
+		window.socket = server.socket
+		window.channel = server.channel
+	})
+</script>

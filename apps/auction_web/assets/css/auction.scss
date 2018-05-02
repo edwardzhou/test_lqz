@@ -1,0 +1,40 @@
+.auction-intro, .auction-item-intro{
+  p { margin-bottom: 3px; }
+  .auction-name {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .auction-em em {
+    color: red;
+  }
+
+  .auction-field {
+    color: #999;
+  }
+}
+
+.auction-index {
+  .auction {
+    padding: 7px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  .auction-items {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -5px;
+  }
+
+  .auction-items .grid{
+    width: 25%;
+    padding: 5px;
+  }
+}
+
+.auction-show {
+  .auction-items .media {
+    p { margin-bottom: 3px; }
+
+  }
+}

@@ -14,32 +14,40 @@ defmodule AuctionWeb.AuctionController do
     |> render("index.html", auctions: auctions)
   end
 
-  def new(conn, _params) do
-    changeset = Auctions.change_auction(%Auction{})
-    render(conn, "new.html", changeset: changeset)
-  end
-
-  def show(conn, %{"id" => id, "name" => nickname}) do
-    user = Accounts.find_or_initialize_user_by_nickname(nickname)
-    
-    conn
-    |> put_session(:current_user, user)
-    |> show(%{"id" => id})
-  end
-
   def show(conn, %{"id" => id}) do
-    current_user = get_session(conn, :current_user)
-    if current_user == nil do
-      conn
-      |> redirect(to: "/auth/wechat")
-      |> halt
-    end
-
+    auction = Auctions.get_auction!(id) |> Auctions.load_items()
     conn
-    |> put_layout("auction.html")
-    |> assign(:auction_id, id)
-    |> assign(:user_id, current_user.nickname)
-    |> render("show.html", auction: nil)
+    |> render("show.html", auction: auction)
   end
+
+
+#  原先Edward的逻辑
+#  def new(conn, _params) do
+#    changeset = Auctions.change_auction(%Auction{})
+#    render(conn, "new.html", changeset: changeset)
+#  end
+
+#  def show(conn, %{"id" => id, "name" => nickname}) do
+#    user = Accounts.find_or_initialize_user_by_nickname(nickname)
+#
+#    conn
+#    |> put_session(:current_user, user)
+#    |> show(%{"id" => id})
+#  end
+#
+#  def show(conn, %{"id" => id}) do
+#    current_user = get_session(conn, :current_user)
+#    if current_user == nil do
+#      conn
+#      |> redirect(to: "/auth/wechat")
+#      |> halt
+#    end
+#
+#    conn
+#    |> put_layout("auction.html")
+#    |> assign(:auction_id, id)
+#    |> assign(:user_id, current_user.nickname)
+#    |> render("show.html", auction: nil)
+#  end
 
 end

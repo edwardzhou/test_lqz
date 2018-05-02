@@ -13,7 +13,7 @@
 <body>
   <div>
     <header class="header">
-      <img class="brand" src="./images/logo.png">
+      <img class="brand" src="/images/logo.png">
     </header>
     <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
     <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
@@ -23,13 +23,13 @@
     </main>
 
     <footer class="footer clear">
-      <a class="home active" href="">
+      <a class="home active" href="<%= auction_path(@conn, :index)%>">
         <span>拍卖专场</span>
       </a>
       <a class="order" href="">
         <span>订单</span>
       </a>
-      <a class="preson" href="">
+      <a class="user" href="">
         <span>用户</span>
       </a>
     </footer>
