@@ -3,6 +3,11 @@
 /* Phoenix flash messages */
 .alert:empty { display: none; }
 
+a {
+    color: #404040 !important;
+    text-decoration: none;
+}
+
 /* header start */
 .header {
     position: relative;
@@ -53,7 +58,7 @@
         background:url(../images/icon-order.png) no-repeat center 5px;
         background-size: 30px;
     }
-    a.preson {
+    a.user {
         background:url(../images/icon-person.png) no-repeat center 5px;
         background-size: 30px;
     }
@@ -68,7 +73,7 @@
         background:url(../images/icon-order-active.png) no-repeat center 5px;
         background-size: 30px;
     }
-    a.preson:hover, a.preson.active {
+    a.user:hover, a.user.active {
         background:url(../images/icon-person-active.png) no-repeat center 5px;
         background-size: 30px;
     }
