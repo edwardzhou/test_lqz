@@ -1,4 +1,4 @@
-<div class="auction-show" style="margin-top: 20px;">
+<div class="auction-show">
   <div class="auction-intro">
     <img class="img-responsive" src="<%= img_url(@auction.logo) %>">
     <p class="auction-name"><%= @auction.name %></p>
@@ -9,21 +9,23 @@
     </p>
     <p class="auction-field">
       <%= simple_datetime(@auction.starts_at) %> 至 <%= simple_datetime(@auction.ends_at) %>
-     </p>
+    </p>
   </div>
 
   <div class="auction-items" style="margin-top: 20px;">
     <%= for item <- @auction.auction_items do %>
       <div class="media">
-        <div class="media-left">
-          <img class="media-object" src="<%= img_url(item.item_logo) %>" height="86">
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading"><%= item.title %></h4>
-          <p>起拍价格: <%= item.start_price %></p>
-          <p>当前价格: <%= item.current_price %></p>
-          <p>开拍时间: <%= simple_datetime(item.starts_at) %></p>
-        </div>
+        <a href="<%= auction_auction_item_path(@conn, :show, @auction.id, item.id)%>">
+          <div class="media-left">
+            <img class="media-object" src="<%= img_url(item.item_logo) %>" height="85">
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading"><%= item.title %></h4>
+            <p>起拍价格: <%= item.start_price %></p>
+            <p>当前价格: <%= item.current_price %></p>
+            <p>开拍时间: <%= simple_datetime(item.starts_at) %></p>
+          </div>
+        </a>
       </div>
     <%end%>
   </div>

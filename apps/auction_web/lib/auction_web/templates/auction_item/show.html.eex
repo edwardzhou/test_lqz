@@ -1,0 +1,80 @@
+<div class="auction-item-show">
+  <div id="item-slide-images" class="carousel slide" data-ride="carousel">
+   <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#item-slide-images" data-slide-to="0" class="active"></li>
+      <li data-target="#item-slide-images" data-slide-to="1"></li>
+    </ol>
+
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <img src="/uploads/images/83A197F0E0DECD6971BD24085741B413_original.png" alt="...">
+      </div>
+      <div class="item">
+        <img src="/uploads/images/83A197F0E0DECD6971BD24085741B413_original.png" alt="...">
+      </div>
+    </div>
+
+   <!-- Controls -->
+    <a class="left carousel-control" href="#item-slide-images" role="button" data-slide="prev">
+      <span class="icon-prev" aria-hidden="true"></span>
+    </a>
+    <a class="right carousel-control" href="#item-slide-images" role="button" data-slide="next">
+      <span class="icon-next" aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div class="item-title item-panel">
+    <h4><%= @item.title%></h4>
+    <div class="media" style="margin-top: 0">
+      <div class="media-left" style="white-space: nowrap;">
+        <span style="color:#999; font-size: 18px;">RMB</span>
+        <P style="color:#197553 ;font-size: 15px;">起拍价</P>
+      </div>
+      <div class="media-body">
+        <span style="font-size: 34px; color:#217F5C; margin-left: 10px">400</span>
+        <span style="color:#999; margin-left: 10px">(0.04万元)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="item-title item-panel">
+    <div class="row" style="font-size: 15px;">
+      <div class="col-xs-6">当前价 ￥500</div>
+      <div class="col-xs-6">加价幅度 ￥100 </div>
+      <hr>
+      <div class="col-xs-6">手续费 ￥500 </div>
+      <div class="col-xs-6">保证金 ￥100 </div>
+    </div>
+  </div>
+
+  <div class="item-panel">
+    <p style="font-size: 15px;">出价记录</p>
+
+    <div class="bid-items" style="color:#999">
+      <div class="row">
+        <div class="col-xs-2">
+        <img src="https://l.ruby-china.org/user/avatar/27473/229e19.jpeg!sm" height="25">
+        </div>
+        <div class="col-xs-3">景沣</div>
+        <div class="col-xs-4">05-03 20:06:06</div>
+        <div class="col-xs-3">￥800</div>
+      </div>
+    </div>
+
+    <div class="bid-items">
+      <div class="row">
+        <div class="col-xs-2">
+        <img src="https://l.ruby-china.org/user/avatar/27473/229e19.jpeg!sm" height="25">
+        </div>
+        <div class="col-xs-3">景沣</div>
+        <div class="col-xs-4">05-03 20:06:06</div>
+        <div class="col-xs-3">￥800</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="item-panel">
+    <%= raw(@item.product.description) %>
+  </div>
+</div>

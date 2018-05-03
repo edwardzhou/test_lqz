@@ -21,7 +21,9 @@ defmodule AuctionWeb.Router do
 
     get "/", AuctionController, :index
 
-    resources "/auctions", AuctionController
+    resources "/auctions", AuctionController do
+      resources "items", AuctionItemController, only: [:show]
+    end
 
     resources "/users", UserController
   end

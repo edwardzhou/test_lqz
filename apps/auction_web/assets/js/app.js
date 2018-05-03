@@ -25,3 +25,9 @@ import "phoenix_html"
 // window.$ = jquery
 // window.Swiper
 // import {connect_server} from "./auction"
+
+window.App = {
+  goBack: function(){
+    window.history.back();
+  }
+}

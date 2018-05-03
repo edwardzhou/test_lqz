@@ -12,30 +12,18 @@
   <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-  <div>
-    <header class="header">
-      <img class="brand" src="/images/logo.png">
-    </header>
-    <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-    <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+  <header style="padding:15px 7px; font-size: 18px">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true" onclick="App.goBack()"></span>
+    <span style="margin-left: 7px"><%= page_title(assigns)%></span>
+  </header>
+  <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+  <p class="alert alert-danger" role="alert"><%= get_flash(@conn,:error) %></p>
 
-    <main class="container">
-      <%= render @view_module, @view_template, assigns %>
-    </main>
-
-    <footer class="footer clear">
-      <a class="home active" href="<%= auction_path(@conn, :index)%>">
-        <span>拍卖专场</span>
-      </a>
-      <a class="order" href="">
-        <span>订单</span>
-      </a>
-      <a class="user" href="">
-        <span>用户</span>
-      </a>
-    </footer>
-  </div>
+  <main>
+    <%= render @view_module, @view_template, assigns %>
+  </main>
 </body>
 
 <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </html>
