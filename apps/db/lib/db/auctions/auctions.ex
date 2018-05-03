@@ -8,6 +8,7 @@ defmodule DB.Auctions do
 
   alias DB.Auctions.Auction
   alias DB.Auctions.AuctionItem
+  alias DB.Product
 
   @doc """
   Returns the list of auctions.
@@ -110,7 +111,9 @@ defmodule DB.Auctions do
     Auction.changeset(auction, %{})
   end
 
-  def get_item!(id), do: Repo.get!(AuctionItem, id)
+  def get_item!(id) do
+    Repo.get!(AuctionItem, id) |> Repo.preload([:product, :auction])
+  end
 
   def load_items(auctions) do
     items_query = from i in AuctionItem, where: i.state != "draft"

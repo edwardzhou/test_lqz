@@ -38,3 +38,21 @@
 
   }
 }
+
+.auction-item-show{
+  background: #F6F6F6;
+  .item-panel{
+    background: #fff;
+    padding: 10px 15px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+  }
+
+  .bid-items{
+    color: #999;
+    .row{
+      padding: 5px 0;
+    }
+  }
+}
