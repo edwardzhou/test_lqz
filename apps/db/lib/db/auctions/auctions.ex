@@ -110,6 +110,8 @@ defmodule DB.Auctions do
     Auction.changeset(auction, %{})
   end
 
+  def get_item!(id), do: Repo.get!(AuctionItem, id)
+
   def load_items(auctions) do
     items_query = from i in AuctionItem, where: i.state != "draft"
     auctions |> Repo.preload([auction_items: items_query])
