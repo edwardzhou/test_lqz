@@ -20,7 +20,7 @@ jobs:
       # specify any bash command here prefixed with `run: `
       - run:
           name: build and test
-          commmand: |
+          command: |
             cd auction
             export HEX_HTTP_TIMEOUT=120
             mix local.hex --force
