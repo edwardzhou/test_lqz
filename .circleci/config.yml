@@ -22,7 +22,7 @@ jobs:
           name: build and test
           commmand: |
             cd auction
-            export HEX_HTTP_TIMEOUT=120 \
+            export HEX_HTTP_TIMEOUT=120
             mix local.hex --force
             mix local.rebar --force
             mix deps.get
