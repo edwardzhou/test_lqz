@@ -1,0 +1,12 @@
+/_build
+/cover
+/deps
+**/uploads
+/.vscode
+erl_crash.dump
+*.ez
+**/log
+**/.elixir_ls
+**/.DS_Store
+# RubyMine
+.idea/
