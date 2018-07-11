@@ -19,7 +19,8 @@ jobs:
 
       # specify any bash command here prefixed with `run: `
       - run:
-        commmand: |
+        name: build and test
+        commmand: |+
           cd auction
           export HEX_HTTP_TIMEOUT=120
           mix local.hex --force
@@ -27,3 +28,9 @@ jobs:
           mix deps.get
           mix ecto.create
           mix test
+      # - run: cd auction
+      # - run: mix local.hex --force
+      # - run: mix local.rebar --force
+      # - run: mix deps.get
+      # - run: mix ecto.create
+      # - run: mix test
