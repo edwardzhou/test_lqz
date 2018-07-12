@@ -28,6 +28,7 @@ jobs:
             mix deps.get
             mix deps.compile
             mix compile
+            mix test
 
   deploy:
     docker:
