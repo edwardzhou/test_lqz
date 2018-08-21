@@ -24,6 +24,7 @@ defmodule Auction.Umbrella.Mixfile do
   defp deps do
     [
       # {:logger_file_backend, "~> 0.0.9"}
+      {:distillery, "~> 1.5"},
       {:timex, "~> 3.2"}
     ]
   end
