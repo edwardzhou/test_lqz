@@ -7,17 +7,21 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :auction_web, AuctionWeb.Endpoint,
+  # http: [
+  #   ip: fn ->
+  #     case :inet_parse.address(to_charlist(System.get_env("IP"))) do
+  #       {:ok, ip} -> ip
+  #       _ -> nil
+  #     end
+  #   end.() || {0, 0, 0, 0},
+  #   port: System.get_env("PORT") || 14000
+  # ],
   http: [
-    ip: fn -> 
-      case :inet_parse.address(to_charlist(System.get_env("IP"))) do
-        {:ok, ip} -> ip
-        _ -> nil
-      end
-    end.() || {0, 0, 0, 0},
-    port: System.get_env("PORT") || 4000
+    port: System.get_env("PORT") || 14000
   ],
   url: [host: System.get_env("URL_HOST"), port: System.get_env("URL_PORT") || 80],
   debug_errors: true,
+  server: true,
   code_reloader: true,
   check_origin: false,
   watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",

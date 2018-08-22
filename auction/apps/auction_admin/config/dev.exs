@@ -7,7 +7,10 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :auction_admin, AuctionAdmin.Endpoint,
-  http: [port: 4100],
+  http: [
+    port: System.get_env("ADMIN_PORT") || 14100
+  ],
+  url: [host: System.get_env("ADMIN_URL_HOST"), port: System.get_env("ADMIN_URL_PORT") || 80],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
