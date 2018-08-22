@@ -44,6 +44,7 @@ RUN sed -i "s/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g" /etc/apk/repositories
 #     coreutils
 
 RUN ln -nfs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+ && ln -nfs /usr/share/zoneinfo/Asia/Shanghai /etc/timezone \
  && sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd
 
 ADD . /app
