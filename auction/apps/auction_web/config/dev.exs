@@ -8,7 +8,7 @@ use Mix.Config
 # with brunch.io to recompile .js and .css sources.
 config :auction_web, AuctionWeb.Endpoint,
   # http: [
-  #   ip: fn -> 
+  #   ip: fn ->
   #     case :inet_parse.address(to_charlist(System.get_env("IP"))) do
   #       {:ok, ip} -> ip
   #       _ -> nil
